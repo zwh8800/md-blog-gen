@@ -12,4 +12,6 @@ func Route(r *gin.Engine) {
 	r.GET("/page/:page", index.Index)
 	r.GET("/tag/:tag", index.Tag)
 	r.GET("/note/:id", index.Note)
+
+	r.Static("/static", "./static")
 }

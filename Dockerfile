@@ -10,6 +10,7 @@ ADD ./template /app/template
 
 VOLUME /app/log
 VOLUME /app/config
+VOLUME /app/static
 
 EXPOSE 3336
 
