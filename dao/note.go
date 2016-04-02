@@ -62,7 +62,8 @@ func CountNote(sess *dbr.Session) (int64, error) {
 func NotesByPage(sess *dbr.Session, page, limit int64) ([]*model.Note, error) {
 	offset := page * limit
 	noteList := make([]*model.Note, 0)
-	if _, err := sess.Select("*").From(model.NoteTableName).OrderBy("timestamp desc").
+	if _, err := sess.Select("*").From(model.NoteTableName).
+		Where("removed is false").OrderBy("timestamp desc").
 		Offset(uint64(offset)).Limit(uint64(limit)).LoadStructs(&noteList); err != nil {
 		return nil, err
 	}
