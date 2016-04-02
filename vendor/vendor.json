@@ -1,0 +1,106 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "github.com/PuerkitoBio/goquery",
+			"revision": "4126223a86db8598275b29db04d511cfdab67cf1",
+			"revisionTime": "2016-02-16T20:35:17-05:00"
+		},
+		{
+			"path": "github.com/andybalholm/cascadia",
+			"revision": "3ad29d1ad1c4f2023e355603324348cf1f4b2d48",
+			"revisionTime": "2015-07-30T10:44:59-07:00"
+		},
+		{
+			"path": "github.com/gin-gonic/gin",
+			"revision": "00b10c30a00cdba00ba288154052b9e29ec4d0bf",
+			"revisionTime": "2016-02-24T19:46:12+01:00"
+		},
+		{
+			"path": "github.com/gin-gonic/gin/binding",
+			"revision": "00b10c30a00cdba00ba288154052b9e29ec4d0bf",
+			"revisionTime": "2016-02-24T19:46:12+01:00"
+		},
+		{
+			"path": "github.com/gin-gonic/gin/render",
+			"revision": "00b10c30a00cdba00ba288154052b9e29ec4d0bf",
+			"revisionTime": "2016-02-24T19:46:12+01:00"
+		},
+		{
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "71f003c6e927d2550713e7637affb769977ece78",
+			"revisionTime": "2016-02-24T11:20:26+01:00"
+		},
+		{
+			"path": "github.com/gocraft/dbr",
+			"revision": "3f9c5fed829fa517ce584d4450d8cccfbb822afa",
+			"revisionTime": "2016-02-29T22:05:22+02:00"
+		},
+		{
+			"path": "github.com/gocraft/dbr/dialect",
+			"revision": "3f9c5fed829fa517ce584d4450d8cccfbb822afa",
+			"revisionTime": "2016-02-29T22:05:22+02:00"
+		},
+		{
+			"path": "github.com/golang/glog",
+			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
+			"revisionTime": "2016-01-25T21:49:56+01:00"
+		},
+		{
+			"path": "github.com/golang/protobuf/proto",
+			"revision": "552c7b9542c194800fd493123b3798ef0a832032",
+			"revisionTime": "2016-02-26T12:45:00+11:00"
+		},
+		{
+			"path": "github.com/manucorporat/sse",
+			"revision": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d",
+			"revisionTime": "2016-01-26T19:01:36+01:00"
+		},
+		{
+			"path": "github.com/robfig/cron",
+			"revision": "0f39cf7ebc65a602f45692f9894bd6a193faf8fa",
+			"revisionTime": "2016-03-29T11:39:55-04:00"
+		},
+		{
+			"path": "golang.org/x/net/context",
+			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
+			"revisionTime": "2016-02-25T17:50:37Z"
+		},
+		{
+			"path": "golang.org/x/net/html",
+			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
+			"revisionTime": "2016-02-25T17:50:37Z"
+		},
+		{
+			"path": "golang.org/x/net/html/atom",
+			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
+			"revisionTime": "2016-02-25T17:50:37Z"
+		},
+		{
+			"path": "gopkg.in/gcfg.v1",
+			"revision": "083575c3955c85df16fe9590cceab64d03f5eb6e",
+			"revisionTime": "2016-01-04T08:39:46+09:00"
+		},
+		{
+			"path": "gopkg.in/gcfg.v1/scanner",
+			"revision": "083575c3955c85df16fe9590cceab64d03f5eb6e",
+			"revisionTime": "2016-01-04T08:39:46+09:00"
+		},
+		{
+			"path": "gopkg.in/gcfg.v1/token",
+			"revision": "083575c3955c85df16fe9590cceab64d03f5eb6e",
+			"revisionTime": "2016-01-04T08:39:46+09:00"
+		},
+		{
+			"path": "gopkg.in/gcfg.v1/types",
+			"revision": "083575c3955c85df16fe9590cceab64d03f5eb6e",
+			"revisionTime": "2016-01-04T08:39:46+09:00"
+		},
+		{
+			"path": "gopkg.in/go-playground/validator.v8",
+			"revision": "014792cf3e266caff1e916876be12282b33059e0",
+			"revisionTime": "2016-02-23T15:26:51-05:00"
+		}
+	]
+}
