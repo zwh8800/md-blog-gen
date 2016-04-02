@@ -12,11 +12,11 @@
     <h1 data-anchor-id="38rx">程序员和小女生</h1>
     <hr>
     <div class="md-section-divider"></div>
-    <ol data-anchor-id="aid6">
+    <ul data-anchor-id="aid6">
         {{ range $key, $value := .noteList }}
         <li><a href="/note/{{ $value.Id }}">{{ $value.Title }}</a></li>
         {{ end }}
-    </ol>
+    </ul>
 
     <div style="overflow: hidden;">
         {{if .hasPrevPage}}
