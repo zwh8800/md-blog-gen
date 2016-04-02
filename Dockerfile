@@ -2,6 +2,9 @@ FROM alpine:3.3
 MAINTAINER zwh8800 <496781108@qq.com>
 
 WORKDIR /app
+
+RUN apk update && apk add ca-certificates
+
 ADD ./md-blog-gen /app
 ADD ./template /app/template
 
