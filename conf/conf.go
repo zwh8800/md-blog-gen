@@ -14,6 +14,7 @@ type config struct {
 	Env struct {
 		Prod       bool
 		ServerPort string
+		StaticDir  string
 	}
 	Spider struct {
 		StartUrl  string

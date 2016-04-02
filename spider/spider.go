@@ -1,15 +1,24 @@
 package spider
 
 import (
+	"log"
+	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/golang/glog"
 
+	"path"
+
+	"os"
+
+	"io"
+
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func findBlogTagUl(doc *goquery.Document) *goquery.Selection {
@@ -82,13 +91,50 @@ func findTagListMap(doc *goquery.Document) map[int64][]*model.Tag {
 	return tagListMap
 }
 
+func downloadImg(src string) (string, error) {
+	resp, err := http.Get(src)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	outFilename := path.Join(conf.Conf.Env.StaticDir, "img", util.MD5(src))
+
+	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return "", err
+	}
+	if _, err := io.Copy(outFile, resp.Body); err != nil {
+		return "", err
+	}
+
+	return outFilename, nil
+}
+
 func findNoteContent(note *model.Note) {
 	doc, err := goquery.NewDocument(note.Url)
 	if err != nil {
 		glog.Errorln(err)
 		return
 	}
-	html, err := doc.Find("#wmd-preview").Html()
+	content := doc.Find("#wmd-preview")
+	content.Find("img").Each(func(i int, s *goquery.Selection) {
+		src, ok := s.Attr("src")
+		if !ok {
+			return
+		}
+		log.Println("src -> ", src)
+		dest, err := downloadImg(src)
+		if err != nil {
+			glog.Errorln(err)
+			return
+		}
+		log.Println("dest -> ", dest)
+
+		s.SetAttr("src", "/"+dest)
+	})
+
+	html, err := content.Html()
 	if err != nil {
 		glog.Warning(err)
 		return
