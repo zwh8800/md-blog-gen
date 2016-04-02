@@ -45,7 +45,7 @@ spiderTag="blog" # 你要抓取的tag
 ```bash
 git clone https://github.com/zwh8800/md-blog-gen
 cd md-blog-gen/
-go build
+CGO_ENABLED=0 go build
 docker build -t zwh8800/md-blog-gen .
 docker run -d -v log:/app/log -v config:/app/config --name blog zwh8800/md-blog-gen
 ```
