@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="theme theme-white">
+<head>
+    <meta charset="utf-8">
+    <title>程序员和小女生</title>
+    <link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
+</head>
+<body class="theme theme-white">
+<div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
+    <div class="md-section-divider"></div>
+    <div class="md-section-divider"></div>
+    <h1 data-anchor-id="38rx">程序员和小女生</h1>
+    <hr>
+    <div class="md-section-divider"></div>
+    <ol data-anchor-id="aid6">
+        {{ range $key, $value := .noteList }}
+        <li><a href="/note/{{ $value.Id }}">{{ $value.Title }}</a></li>
+        {{ end }}
+    </ol>
+
+    <div style="overflow: hidden;">
+        {{if .hasPrevPage}}
+        <a href="/page/{{ .prevPage }}">上一页</a>
+        {{end}}
+        {{if .hasNextPage}}
+        <a href="/page/{{ .nextPage }}" style="float: right;">下一页</a>
+        {{end}}
+    </div>
+    <div class="md-section-divider"></div><hr>
+    <p data-anchor-id="odpq">津 ICP 备 14005803 号 - 2</p>
+</div>
+</body>
+</html>
