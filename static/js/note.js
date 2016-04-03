@@ -1,6 +1,6 @@
 (function ($) {
     $(function () {
-        var script = '<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script><script type="text/javascript">window.changyan.api.config({appid: "cyskgEYXj", conf: "prod_7cfa6ac36d43f0c53cd1cd5eb8ba5701"});</script>';
+        var script = '<script>(function(){var d=document,s=d.createElement("script");s.src="//lengzzz.disqus.com/embed.js";s.setAttribute("data-timestamp",+new Date());(d.head||d.body).appendChild(s)})();</script>';
         var $window = $(window);
         var $comment = $('#comment');
         var $body = $('body');
