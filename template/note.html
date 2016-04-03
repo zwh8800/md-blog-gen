@@ -9,17 +9,13 @@
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .note.UnescapedContent }}
     <div class="md-section-divider"></div><hr>
-    <!--高速版-->
-    <div id="SOHUCS" sid="note-{{ .note.Id }}"></div>
-    <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
-    <script type="text/javascript">
-        window.changyan.api.config({
-            appid: 'cyskgEYXj',
-            conf: 'prod_7cfa6ac36d43f0c53cd1cd5eb8ba5701'
-        });
-    </script>
+    <div id="comment">
+        <div id="SOHUCS" sid="note-{{ .note.Id }}">评论加载中...</div>
+    </div>
     <div class="md-section-divider"></div><hr>
     <a href="/"><-返回</a>
 </div>
+<script src="/static/js/jquery-2.2.2.min.js"></script>
+<script src="/static/js/note.js"></script>
 </body>
 </html>
