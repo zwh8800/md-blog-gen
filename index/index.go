@@ -15,7 +15,7 @@ func Index(c *gin.Context) {
 	if err != nil {
 		page = 1
 	}
-	noteList, maxPage, err := service.NotesOrderByTime(page, limit)
+	noteList, tagListMap, maxPage, err := service.NotesOrderByTime(page, limit)
 	if err != nil {
 		errorHandler(c, http.StatusInternalServerError, err)
 		return
@@ -27,5 +27,6 @@ func Index(c *gin.Context) {
 		"nextPage":    page + 1,
 		"curPage":     page,
 		"noteList":    noteList,
+		"tagListMap":  tagListMap,
 	})
 }

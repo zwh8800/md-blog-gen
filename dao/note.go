@@ -18,6 +18,7 @@ func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
 		}
 	}
 	if found {
+		note.Id = oldNote.Id
 		if _, err := tx.Update(model.NoteTableName).
 			Set("title", note.Title).Set("content", note.Content).
 			Set("timestamp", note.Timestamp).Set("removed", note.Removed).
@@ -25,10 +26,16 @@ func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
 			return err
 		}
 	} else {
-		if _, err := tx.InsertInto(model.NoteTableName).Columns("unique_id",
-			"title", "url", "content", "timestamp").Record(note).Exec(); err != nil {
+		result, err := tx.InsertInto(model.NoteTableName).Columns("unique_id",
+			"title", "url", "content", "timestamp").Record(note).Exec()
+		if err != nil {
 			return err
 		}
+		lastId, err := result.LastInsertId()
+		if err != nil {
+			return err
+		}
+		note.Id = lastId
 	}
 	return nil
 }

@@ -21,7 +21,7 @@ func DeleteNoteTagsNotExist(tx *dbr.Tx, note *model.Note, tagList []*model.Tag) 
 	for _, tag := range tagList {
 		tagIdList = append(tagIdList, tag.Id)
 	}
-	_, err := tx.DeleteFrom(model.NoteTagTableName).Where("tag_id not in ?", tagIdList).Exec()
+	_, err := tx.DeleteFrom(model.NoteTagTableName).Where("note_id = ? and tag_id not in ?", note.Id, tagIdList).Exec()
 
 	return err
 }
