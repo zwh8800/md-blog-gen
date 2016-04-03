@@ -2,7 +2,7 @@
 <html class="theme theme-white">
 <head>
     <meta charset="utf-8">
-    <title>{{ .tag.Name }} - 程序员和小女生</title>
+    <title>程序员和小女生</title>
     <link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
 </head>
 <body class="theme theme-white">
@@ -12,13 +12,18 @@
     <h1>程序员和小女生</h1>
     <hr>
     <div class="md-section-divider"></div>
-    <a href="/tag">所有分类</a>
-    <h2>{{ .tag.Name }}</h2>
+    {{ $saveNoteListMap := .noteListMap }}
+    {{ range $key, $value := .tagList}}
+    {{ $noteList := index $saveNoteListMap $value.Id }}
+    {{ if $noteList }}
+    <h2>{{ $value.Name }}</h2>
     <ul>
-        {{ range $key, $value := .noteList }}
-            <li><a href="/note/{{$value.Id}}">{{$value.Title}}</a></li>
+        {{ range $key, $value := $noteList }}
+        <li><a href="/note/{{$value.Id}}">{{$value.Title}}</a></li>
         {{ end }}
     </ul>
+    {{ end }}
+    {{ end }}
 
     <div class="md-section-divider"></div><hr>
     <a href="/"><-返回</a>

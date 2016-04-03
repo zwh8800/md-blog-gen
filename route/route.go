@@ -10,6 +10,7 @@ func Route(r *gin.Engine) {
 
 	r.GET("/", index.Index)
 	r.GET("/page/:page", index.Index)
+	r.GET("/tag", index.AllTag)
 	r.GET("/tag/:tag", index.Tag)
 	r.GET("/note/:id", index.Note)
 

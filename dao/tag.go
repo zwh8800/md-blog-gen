@@ -6,6 +6,33 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
+func TagById(sess *dbr.Session, id int64) (*model.Tag, error) {
+	tag := &model.Tag{}
+	if err := sess.Select("*").From(model.TagTableName).
+		Where("id = ?", id).LoadStruct(tag); err != nil {
+		return nil, err
+	}
+	return tag, nil
+}
+
+func TagByName(sess *dbr.Session, name string) (*model.Tag, error) {
+	tag := &model.Tag{}
+	if err := sess.Select("*").From(model.TagTableName).
+		Where("name = ?", name).LoadStruct(tag); err != nil {
+		return nil, err
+	}
+	return tag, nil
+}
+
+func Tags(sess *dbr.Session) ([]*model.Tag, error) {
+	tagList := make([]*model.Tag, 0)
+	if _, err := sess.Select("*").From(model.TagTableName).
+		LoadStructs(&tagList); err != nil {
+		return nil, err
+	}
+	return tagList, nil
+}
+
 func TagsByNoteId(sess *dbr.Session, noteId int64) ([]*model.Tag, error) {
 	tagList := make([]*model.Tag, 0)
 	if _, err := sess.Select("Tag.id", "Tag.name").From(model.TagTableName).
