@@ -152,5 +152,5 @@ func Go() {
 	if err := service.SaveNoteList(noteList, tagListMap); err != nil {
 		glog.Error(err)
 	}
-	glog.Info("spider ended")
+	glog.Info("spider finished")
 }
