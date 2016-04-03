@@ -76,3 +76,14 @@ func NotesByPage(sess *dbr.Session, page, limit int64) ([]*model.Note, error) {
 	}
 	return noteList, nil
 }
+
+func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
+	noteList := make([]*model.Note, 0)
+	if _, err := sess.Select("Note.id", "Note.unique_id", "Note.title",
+		"Note.url", "Note.content", "Note.timestamp", "Note.removed").From(model.NoteTableName).
+		Join(model.NoteTagTableName, "Note.id = NoteTag.note_id").Where("tag_id = ? and removed is false", tagId).
+		LoadStructs(&noteList); err != nil {
+		return nil, err
+	}
+	return noteList, nil
+}

@@ -9,19 +9,19 @@
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <div class="md-section-divider"></div>
     <div class="md-section-divider"></div>
-    <h1 data-anchor-id="38rx">程序员和小女生</h1>
+    <h1>程序员和小女生</h1>
     <div style="min-height: 65vh;">
         {{ $saveTagListMap := .tagListMap }}
         {{ range $key, $value := .noteList }}
         <hr>
         <div class="md-section-divider">
         </div>
-        <h2 data-anchor-id="d36k" id="docker-学习笔记">
+        <h2 id="docker-学习笔记">
             <a href="/note/{{$value.Id}}">
                 {{$value.Title}}
             </a>
         </h2>
-        <p data-anchor-id="j0be">
+        <p>
             {{ $tagList := index $saveTagListMap $value.Id }}
             {{ range $key, $value := $tagList }}
             <a href="/tag/{{$value.Id}}">
@@ -31,7 +31,7 @@
             </a>
             {{ end }}
         </p>
-        <p data-anchor-id="8wfg">
+        <p>
             {{$value.Preview}}
         </p>
         {{ end }}
@@ -46,7 +46,7 @@
         {{end}}
     </div>
     <div class="md-section-divider"></div><hr>
-    <p data-anchor-id="odpq">津 ICP 备 14005803 号 - 2</p>
+    <p>津 ICP 备 14005803 号 - 2</p>
 </div>
 </body>
 </html>
