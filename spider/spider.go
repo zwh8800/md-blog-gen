@@ -147,11 +147,10 @@ func Go() {
 	tagListMap := findTagListMap(doc)
 	for _, note := range noteList {
 		findNoteContent(note)
-		glog.Infof("spidered: %#v\n", *note)
 	}
 
 	if err := service.SaveNoteList(noteList, tagListMap); err != nil {
 		glog.Error(err)
 	}
-	glog.Info("spider ended")
+	glog.Info("spider finished")
 }
