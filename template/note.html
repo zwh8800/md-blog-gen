@@ -10,12 +10,18 @@
     {{ .note.UnescapedContent }}
     <div class="md-section-divider"></div><hr>
     <div id="comment">
-        <div id="SOHUCS" sid="note-{{ .note.Id }}">评论加载中...</div>
+        <div id="disqus_thread">评论加载中...</div>
     </div>
     <div class="md-section-divider"></div><hr>
     <a href="/"><-返回</a>
 </div>
 <script src="/static/js/jquery-2.2.2.min.js"></script>
 <script src="/static/js/note.js"></script>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://lengzzz.com/note/{{ .note.Id }}';
+        this.page.identifier = 'note-{{ .note.Id }}';
+    };
+</script>
 </body>
 </html>
