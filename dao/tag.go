@@ -8,7 +8,7 @@ import (
 
 func TagsByNoteId(sess *dbr.Session, noteId int64) ([]*model.Tag, error) {
 	tagList := make([]*model.Tag, 0)
-	if _, err := sess.Select("id", "name").From(model.TagTableName).
+	if _, err := sess.Select("Tag.id", "Tag.name").From(model.TagTableName).
 		Join(model.NoteTagTableName, "Tag.id = NoteTag.tag_id").Where("note_id = ?", noteId).
 		LoadStructs(&tagList); err != nil {
 		return nil, err

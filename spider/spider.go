@@ -1,19 +1,15 @@
 package spider
 
 import (
-	"log"
+	"io"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/golang/glog"
-
-	"path"
-
-	"os"
-
-	"io"
 
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/model"
@@ -123,13 +119,11 @@ func findNoteContent(note *model.Note) {
 		if !ok {
 			return
 		}
-		log.Println("src -> ", src)
 		dest, err := downloadImg(src)
 		if err != nil {
 			glog.Errorln(err)
 			return
 		}
-		log.Println("dest -> ", dest)
 
 		s.SetAttr("src", "/"+dest)
 	})
