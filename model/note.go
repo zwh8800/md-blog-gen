@@ -38,6 +38,7 @@ func (obj *Note) FillContent(content string) {
 }
 
 func (obj *Note) Preview() string {
+	const maxLength = 200
 	src := obj.Content
 	//将HTML标签全转换成小写
 	re, _ := regexp.Compile("\\<[\\S\\s]+?\\>")
@@ -60,9 +61,9 @@ func (obj *Note) Preview() string {
 	src = re.ReplaceAllString(src, "\n")
 
 	runes := ([]rune)(src)
-	if len(runes) < 100 {
+	if len(runes) < maxLength {
 		return string(runes)
 	} else {
-		return string(runes[:100])
+		return string(runes[:maxLength])
 	}
 }
