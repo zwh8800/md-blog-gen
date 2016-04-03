@@ -7,10 +7,11 @@ RUN apk update && apk add ca-certificates
 
 ADD ./md-blog-gen /app
 ADD ./template /app/template
+ADD ./static /app/static
 
 VOLUME /app/log
 VOLUME /app/config
-VOLUME /app/static
+VOLUME /app/static/img
 
 EXPOSE 3336
 
