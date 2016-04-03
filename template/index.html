@@ -24,11 +24,7 @@
         <p>
             {{ $tagList := index $saveTagListMap $value.Id }}
             {{ range $key, $value := $tagList }}
-            <a href="/tag/{{$value.Id}}">
-                <code>
-                    {{- $value.Name -}}
-                </code>
-            </a>
+            <a href="/tag/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
             {{ end }}
         </p>
         <p>
