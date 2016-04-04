@@ -13,7 +13,7 @@ func PushUrlToBaidu(urls []string) error {
 	}
 	buffer := &bytes.Buffer{}
 	for _, url := range urls {
-		buffer.WriteString(url)
+		buffer.WriteString(url + "\r\n")
 	}
 
 	if _, err := http.Post(conf.Conf.UrlPush.Baidu, "text/plain", buffer); err != nil {
