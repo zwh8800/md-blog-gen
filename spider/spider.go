@@ -94,7 +94,7 @@ func downloadImg(src string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	outFilename := path.Join(conf.Conf.Env.StaticDir, "img", util.MD5(src))
+	outFilename := path.Join(conf.Conf.Site.StaticUrl, "img", util.MD5(src))
 
 	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {

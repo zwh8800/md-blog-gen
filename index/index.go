@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
 )
 
@@ -21,7 +22,8 @@ func Index(c *gin.Context) {
 		errorHandler(c, http.StatusInternalServerError, err)
 		return
 	}
-	c.HTML(http.StatusOK, "index.html", gin.H{
+
+	c.Render(http.StatusOK, render.NewRender("index.html", gin.H{
 		"hasPrevPage": page > 1,
 		"prevPage":    page - 1,
 		"hasNextPage": page < maxPage,
@@ -30,5 +32,5 @@ func Index(c *gin.Context) {
 		"noteList":    noteList,
 		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
-	})
+	}))
 }

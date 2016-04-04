@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html class="theme theme-white">
-<head>
-    <meta charset="utf-8">
-    <title> {{ .err }}</title>
-    <link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
-</head>
-<body class="theme theme-white">
+{{ define "title" }}{{ .err }} - {{ .site.Name }}{{ end }}
+{{ define "moreHeaders" }}
+{{ end }}
+{{ define "moreStyles" }}
+{{ end }}
+{{ define "moreScripts" }}
+{{ end }}
+{{ define "content" }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .err }}
 </div>
-</body>
-</html>
+{{ end }}
+
+{{ template "layout.html" . }}

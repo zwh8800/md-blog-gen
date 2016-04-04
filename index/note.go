@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
 )
 
@@ -22,8 +23,8 @@ func Note(c *gin.Context) {
 		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
-	c.HTML(http.StatusOK, "note.html", gin.H{
+	c.Render(http.StatusOK, render.NewRender("note.html", gin.H{
 		"note": note,
 		"site": conf.Conf.Site,
-	})
+	}))
 }

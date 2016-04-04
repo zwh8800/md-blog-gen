@@ -1,30 +1,30 @@
-<!DOCTYPE html>
-<html class="theme theme-white">
-<head>
-    <meta charset="utf-8">
-    <title>水能载舟 亦可赛艇</title>
-    <link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
-</head>
-<body class="theme theme-white">
+{{ define "title" }}
+{{ .site.Name }}
+{{ end }}
+{{ define "moreHeaders" }}{{ end }}
+{{ define "moreStyles" }}{{ end }}
+{{ define "moreScripts" }}{{ end }}
+{{ define "content" }}
+{{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <div class="md-section-divider"></div>
     <div class="md-section-divider"></div>
-    <h1>水能载舟 亦可赛艇</h1>
+    <h1>{{ $site.Name }}</h1>
     <div style="min-height: 65vh;">
         {{ $saveTagListMap := .tagListMap }}
         {{ range $key, $value := .noteList }}
         <hr>
         <div class="md-section-divider">
         </div>
-        <h2 id="docker-学习笔记">
-            <a href="/note/{{$value.Id}}">
+        <h2>
+            <a href="/{{ $site.NoteUrl }}/{{$value.Id}}">
                 {{$value.Title}}
             </a>
         </h2>
         <p>
             {{ $tagList := index $saveTagListMap $value.Id }}
             {{ range $key, $value := $tagList }}
-            <a href="/tag/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
+            <a href="/{{ $site.TagUrl }}/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
             {{ end }}
         </p>
         <p>
@@ -35,14 +35,15 @@
 
     <div style="overflow: hidden;">
         {{if .hasPrevPage}}
-        <a href="/page/{{ .prevPage }}">上一页</a>
+        <a href="/{{ $site.PageUrl }}/{{ .prevPage }}">上一页</a>
         {{end}}
         {{if .hasNextPage}}
-        <a href="/page/{{ .nextPage }}" style="float: right;">下一页</a>
+        <a href="/{{ $site.PageUrl }}/{{ .nextPage }}" style="float: right;">下一页</a>
         {{end}}
     </div>
     <div class="md-section-divider"></div><hr>
     <p>津 ICP 备 14005803 号 - 2</p>
 </div>
-</body>
-</html>
+{{ end }}
+
+{{ template "layout.html" . }}

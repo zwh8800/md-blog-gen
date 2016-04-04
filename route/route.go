@@ -9,8 +9,6 @@ import (
 )
 
 func Route(r *gin.Engine) {
-	r.LoadHTMLGlob("template/*")
-
 	r.GET("/", index.Index)
 	r.GET(path.Join(util.GetPageBase(), ":page"), index.Index)
 	r.GET(util.GetTagBase(), index.AllTag)
