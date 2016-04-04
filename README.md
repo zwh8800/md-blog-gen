@@ -28,15 +28,26 @@ open http://localhost:3336/
 ```ini
 [dbConf]
 driver="mysql"
-dsn="username:password@tcp(127.0.0.1:3306)/mdblog?charset=utf8mb4&parseTime=true"
+dsn="username:password@tcp(mysql:3306)/mdblog?charset=utf8mb4&parseTime=true"
 
 [env]
-prod=false
+prod=true
 serverPort=3336
 
 [spider]
-startUrl="https://www.zybuluo.com/zwh8800/note/332154" # 你的随便一篇发布在cmd markdown的文章
-spiderTag="blog" # 你要抓取的tag
+startUrl="https://www.zybuluo.com/zwh8800/note/332154"
+spiderTag="blog"
+
+[urlPush]
+baidu="http://data.zz.baidu.com/urls?site=lengzzz.com&token=xxxxxxx"
+
+[site]
+name="水能载舟 亦可赛艇"
+baseUrl="https://lengzzz.com/"
+noteUrl="note"
+tagUrl="tag"
+pageUrl="page"
+staticUrl="static"
 
 ```
 记着把注释删掉哦
