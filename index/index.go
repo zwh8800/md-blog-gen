@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
+
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
@@ -20,6 +22,7 @@ func Index(c *gin.Context) {
 	}
 	noteList, tagListMap, maxPage, err := service.NotesOrderByTime(page, limit)
 	if err != nil {
+		glog.Error(err)
 		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}

@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
+
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/render"
@@ -15,6 +17,7 @@ import (
 func AllTag(c *gin.Context) {
 	tagList, noteListMap, err := service.AllNotesTags()
 	if err != nil {
+		glog.Error(err)
 		errorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
 		return
 	}
@@ -42,6 +45,7 @@ func Tag(c *gin.Context) {
 		tag, noteList, err = service.NotesByTagName(tagName)
 	}
 	if err != nil {
+		glog.Error(err)
 		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
