@@ -14,7 +14,6 @@ type config struct {
 	Env struct {
 		Prod       bool
 		ServerPort string
-		StaticDir  string
 	}
 	Spider struct {
 		StartUrl  string
@@ -24,11 +23,12 @@ type config struct {
 		Baidu string
 	}
 	Site struct {
-		Name    string
-		BaseUrl string
-		NoteUrl string
-		TagUrl  string
-		PageUrl string
+		Name      string
+		BaseUrl   string
+		NoteUrl   string
+		TagUrl    string
+		PageUrl   string
+		StaticUrl string
 	}
 }
 
