@@ -8,6 +8,9 @@ import (
 )
 
 func PushUrlToBaidu(urls []string) error {
+	if !conf.Conf.Env.Prod {
+		return nil
+	}
 	buffer := &bytes.Buffer{}
 	for _, url := range urls {
 		buffer.WriteString(url)
