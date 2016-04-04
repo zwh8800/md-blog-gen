@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/service"
 )
 
@@ -28,5 +29,6 @@ func Index(c *gin.Context) {
 		"curPage":     page,
 		"noteList":    noteList,
 		"tagListMap":  tagListMap,
+		"site":        conf.Conf.Site,
 	})
 }

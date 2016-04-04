@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/service"
 )
@@ -19,6 +20,7 @@ func AllTag(c *gin.Context) {
 	c.HTML(http.StatusOK, "allTag.html", gin.H{
 		"tagList":     tagList,
 		"noteListMap": noteListMap,
+		"site":        conf.Conf.Site,
 	})
 }
 
@@ -44,5 +46,6 @@ func Tag(c *gin.Context) {
 	c.HTML(http.StatusOK, "tag.html", gin.H{
 		"tag":      tag,
 		"noteList": noteList,
+		"site":     conf.Conf.Site,
 	})
 }
