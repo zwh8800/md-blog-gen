@@ -23,6 +23,13 @@ type config struct {
 	UrlPush struct {
 		Baidu string
 	}
+	Site struct {
+		Name    string
+		BaseUrl string
+		NoteUrl string
+		TagUrl  string
+		PageUrl string
+	}
 }
 
 var Conf config

@@ -154,7 +154,7 @@ func Go() {
 	}
 	urls := make([]string, 0, len(noteList))
 	for _, note := range noteList {
-		urls = append(urls, "https://lengzzz.com/note/"+strconv.FormatInt(note.Id, 10))
+		urls = append(urls, util.GetNoteUrl(note.Id))
 	}
 	util.PushUrlToBaidu(urls)
 
