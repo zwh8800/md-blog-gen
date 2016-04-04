@@ -1,6 +1,7 @@
 package index
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -19,7 +20,7 @@ func Index(c *gin.Context) {
 	}
 	noteList, tagListMap, maxPage, err := service.NotesOrderByTime(page, limit)
 	if err != nil {
-		errorHandler(c, http.StatusInternalServerError, err)
+		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
 

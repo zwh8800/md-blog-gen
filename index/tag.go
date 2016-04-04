@@ -1,6 +1,7 @@
 package index
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -14,7 +15,7 @@ import (
 func AllTag(c *gin.Context) {
 	tagList, noteListMap, err := service.AllNotesTags()
 	if err != nil {
-		errorHandler(c, http.StatusInternalServerError, err)
+		errorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
 		return
 	}
 
@@ -41,7 +42,7 @@ func Tag(c *gin.Context) {
 		tag, noteList, err = service.NotesByTagName(tagName)
 	}
 	if err != nil {
-		errorHandler(c, http.StatusInternalServerError, err)
+		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
 	c.Render(http.StatusOK, render.NewRender("tag.html", gin.H{
