@@ -152,5 +152,11 @@ func Go() {
 	if err := service.SaveNoteList(noteList, tagListMap); err != nil {
 		glog.Error(err)
 	}
+	urls := make([]string, 0, len(noteList))
+	for _, note := range noteList {
+		urls = append(urls, "https://lengzzz.com/note/"+strconv.FormatInt(note.Id, 10))
+	}
+	util.PushUrlToBaidu(urls)
+
 	glog.Info("spider finished")
 }

@@ -20,6 +20,9 @@ type config struct {
 		StartUrl  string
 		SpiderTag string
 	}
+	UrlPush struct {
+		Baidu string
+	}
 }
 
 var Conf config
