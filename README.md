@@ -31,23 +31,23 @@ driver="mysql"
 dsn="username:password@tcp(mysql:3306)/mdblog?charset=utf8mb4&parseTime=true"
 
 [env]
-prod=true
+prod=true # 区分生产环境和测试环境
 serverPort=3336
 
 [spider]
-startUrl="https://www.zybuluo.com/zwh8800/note/332154"
-spiderTag="blog"
+startUrl="https://www.zybuluo.com/zwh8800/note/332154" # 你的随便一篇发布在cmd markdown的文章
+spiderTag="blog" # 你要抓取的tag
 
 [urlPush]
-baidu="http://data.zz.baidu.com/urls?site=lengzzz.com&token=xxxxxxx"
+baidu="http://data.zz.baidu.com/urls?site=lengzzz.com&token=xxxxxxx" # 向百度搜索推送url收录的url
 
 [site]
-name="水能载舟 亦可赛艇"
-baseUrl="https://lengzzz.com/"
-noteUrl="note"
-tagUrl="tag"
-pageUrl="page"
-staticUrl="static"
+name="水能载舟 亦可赛艇" # 网站名称
+baseUrl="https://lengzzz.com/" # 网站首页
+noteUrl="note" # 文字的url
+tagUrl="tag" # tag的url
+pageUrl="page" # page的url
+staticUrl="static" # 静态文件的url
 
 ```
 记着把注释删掉哦
