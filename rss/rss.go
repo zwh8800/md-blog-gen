@@ -3,8 +3,6 @@ package rss
 import (
 	"errors"
 	"net/http"
-	"path"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +34,7 @@ func Rss(c *gin.Context) {
 	for _, note := range noteList {
 		feed.Items = append(feed.Items, &feeds.Item{
 			Title:       note.Title,
-			Link:        &feeds.Link{Href: path.Join(conf.Conf.Site.NoteUrl, strconv.FormatInt(note.Id, 10))},
+			Link:        &feeds.Link{Href: util.GetNoteUrl(note.Id)},
 			Description: note.Preview(),
 			Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
 			Created:     note.Timestamp,
