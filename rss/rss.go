@@ -35,7 +35,7 @@ func Rss(c *gin.Context) {
 		feed.Items = append(feed.Items, &feeds.Item{
 			Title:       note.Title,
 			Link:        &feeds.Link{Href: util.GetNoteUrl(note.Id)},
-			Description: note.Preview(),
+			Description: note.Content,
 			Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
 			Created:     note.Timestamp,
 		})
