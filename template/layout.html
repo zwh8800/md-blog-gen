@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>{{ template "title" . }}</title>
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{ .site.BaseUrl }}{{ .site.RssUrl }}">
     <link href="https://www.zybuluo.com/static/assets/template-theme-white.css" rel="stylesheet" media="screen">
     {{ template "moreHeaders" . }}
     {{ template "moreStyles" . }}

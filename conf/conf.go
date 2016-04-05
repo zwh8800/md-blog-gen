@@ -23,12 +23,15 @@ type config struct {
 		Baidu string
 	}
 	Site struct {
-		Name      string
-		BaseUrl   string
-		NoteUrl   string
-		TagUrl    string
-		PageUrl   string
-		StaticUrl string
+		Name        string
+		BaseUrl     string
+		NoteUrl     string
+		TagUrl      string
+		PageUrl     string
+		RssUrl      string
+		StaticUrl   string
+		AuthorName  string
+		AuthorEmail string
 	}
 }
 

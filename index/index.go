@@ -23,7 +23,7 @@ func Index(c *gin.Context) {
 	noteList, tagListMap, maxPage, err := service.NotesOrderByTime(page, limit)
 	if err != nil {
 		glog.Error(err)
-		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
 
