@@ -60,6 +60,14 @@ CGO_ENABLED=0 go build
 docker build -t zwh8800/md-blog-gen .
 docker run -d -v log:/app/log -v config:/app/config --name blog zwh8800/md-blog-gen
 ```
+图省事可以从docker hub上拉
+```bash
+docker pull zwh8800/md-blog-gen/
+# 国内可以拉这个 速度快一些
+docker pull registry.aliyuncs.com/zwh8800/md-blog-gen
+docker run -d -v log:/app/log -v config:/app/config --name blog zwh8800/md-blog-gen
+
+```
 
 服务启停使用：
 ```bash
