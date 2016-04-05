@@ -1,0 +1,52 @@
+package rss
+
+import (
+	"errors"
+	"net/http"
+	"path"
+	"strconv"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
+	"github.com/gorilla/feeds"
+
+	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/index"
+	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
+)
+
+func Rss(c *gin.Context) {
+	feed := feeds.Feed{
+		Title:       conf.Conf.Site.Name,
+		Link:        &feeds.Link{Href: conf.Conf.Site.BaseUrl},
+		Description: conf.Conf.Site.Name,
+		Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
+		Created:     time.Now(),
+	}
+	feed.Items = make([]*feeds.Item, 0)
+
+	noteList, _, _, err := service.NotesOrderByTime(1, 10)
+	if err != nil {
+		glog.Error(err)
+		index.ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		return
+	}
+	for _, note := range noteList {
+		feed.Items = append(feed.Items, &feeds.Item{
+			Title:       note.Title,
+			Link:        &feeds.Link{Href: path.Join(conf.Conf.Site.NoteUrl, strconv.FormatInt(note.Id, 10))},
+			Description: note.Preview(),
+			Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
+			Created:     note.Timestamp,
+		})
+	}
+
+	util.WriteContentType(c.Writer, []string{"application/xml; charset=utf-8"})
+	if err := feed.WriteRss(c.Writer); err != nil {
+		glog.Error(err)
+		index.ErrorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
+		return
+	}
+}

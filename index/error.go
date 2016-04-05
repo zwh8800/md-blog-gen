@@ -7,7 +7,7 @@ import (
 	"github.com/zwh8800/md-blog-gen/render"
 )
 
-func errorHandler(c *gin.Context, status int, err error) {
+func ErrorHandler(c *gin.Context, status int, err error) {
 	c.Render(status, render.NewRender("error.html", gin.H{
 		"err":  err,
 		"site": conf.Conf.Site,

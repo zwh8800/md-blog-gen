@@ -18,13 +18,13 @@ func Note(c *gin.Context) {
 	id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		glog.Error(err)
-		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
 	note, err := service.NoteById(id)
 	if err != nil {
 		glog.Error(err)
-		errorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
 	c.Render(http.StatusOK, render.NewRender("note.html", gin.H{
