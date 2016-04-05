@@ -53,6 +53,11 @@
 			"revisionTime": "2016-02-26T12:45:00+11:00"
 		},
 		{
+			"path": "github.com/gorilla/feeds",
+			"revision": "441264de03a8117ed530ae8e049d8f601a33a099",
+			"revisionTime": "2016-02-07T08:22:05-08:00"
+		},
+		{
 			"path": "github.com/manucorporat/sse",
 			"revision": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d",
 			"revisionTime": "2016-01-26T19:01:36+01:00"
