@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zwh8800/md-blog-gen/index"
-	"github.com/zwh8800/md-blog-gen/util"
 	"github.com/zwh8800/md-blog-gen/rss"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func Route(r *gin.Engine) {
