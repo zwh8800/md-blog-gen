@@ -15,7 +15,7 @@
     <h1>{{ $site.Name }}</h1>
     <hr>
     <div class="md-section-divider"></div>
-    <a href="/{{ $site.TagUrl }}">所有分类</a>
+    <a href="/{{ $site.TagUrl }}">[所有分类]</a>
     <h2>{{ .tag.Name }}</h2>
     <ul>
         {{ range $key, $value := .noteList }}
@@ -24,7 +24,7 @@
     </ul>
 
     <div class="md-section-divider"></div><hr>
-    <a href="/"><-返回</a>
+    <a href="/">[返回]</a>
 </div>
 {{ end }}
 

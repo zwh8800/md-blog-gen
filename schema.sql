@@ -4,7 +4,7 @@ USE `mdblog`;
 --
 -- Host: 127.0.0.1    Database: mdblog
 -- ------------------------------------------------------
--- Server version	5.7.11
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,8 +33,10 @@ CREATE TABLE `Note` (
   `timestamp` datetime DEFAULT NULL,
   `removed` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `timestamp` (`timestamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  KEY `timestamp` (`timestamp`),
+  KEY `unique_id` (`unique_id`),
+  KEY `removed` (`removed`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +48,8 @@ DROP TABLE IF EXISTS `NoteTag`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `NoteTag` (
   `note_id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`note_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,9 +62,10 @@ DROP TABLE IF EXISTS `Tag`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -73,4 +77,4 @@ CREATE TABLE `Tag` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-02 21:12:46
+-- Dump completed on 2016-04-05 15:19:21

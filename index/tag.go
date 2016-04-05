@@ -22,7 +22,7 @@ func AllTag(c *gin.Context) {
 		return
 	}
 
-	c.Render(http.StatusOK, render.NewRender("allTag.html", gin.H{
+	c.Render(http.StatusOK, render.NewRender("all_tag.html", gin.H{
 		"tagList":     tagList,
 		"noteListMap": noteListMap,
 		"site":        conf.Conf.Site,
