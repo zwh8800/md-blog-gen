@@ -14,16 +14,39 @@
     <hr>
     <div class="md-section-divider"></div>
     {{ $saveNoteListMap := .noteListMap }}
+    {{ $saveTagListMap := .tagListMap }}
     {{ range $key, $value := .tagList}}
-    {{ $noteList := index $saveNoteListMap $value.Id }}
-    {{ if $noteList }}
-    <h2>{{ $value.Name }}</h2>
-    <ul>
-        {{ range $key, $value := $noteList }}
-        <li><a href="/{{ $site.NoteUrl }}/{{$value.Id}}">{{$value.Title}}</a></li>
+        {{ $noteList := index $saveNoteListMap $value.Id }}
+        {{ if $noteList }}
+            <h2>{{ $value.Name }}</h2>
+            <ul>
+                {{ range $key, $value := $noteList }}
+                    <li>
+                        <hr>
+                        <div class="md-section-divider">
+                        </div>
+                        <h2>
+                            <a href="/{{ $site.NoteUrl }}/{{$value.Id}}">
+                                {{$value.Title}}
+                            </a>
+                        </h2>
+                        <p>
+                            {{ $tagList := index $saveTagListMap $value.Id }}
+                            {{ range $key, $value := $tagList }}
+                            <a href="/{{ $site.TagUrl }}/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
+                            {{ end }}
+                        </p>
+                        <p>
+                            {{$value.Preview}}
+                        </p>
+                        <h6>
+                            <i class="icon-time"></i>
+                            {{ $value.FormattedTimestamp }}
+                        </h6>
+                    </li>
+                {{ end }}
+            </ul>
         {{ end }}
-    </ul>
-    {{ end }}
     {{ end }}
 
     <div class="md-section-divider"></div><hr>
