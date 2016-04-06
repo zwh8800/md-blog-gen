@@ -67,3 +67,7 @@ func (obj *Note) Preview() string {
 		return string(runes[:maxLength])
 	}
 }
+
+func (obj *Note) FormattedTimestamp() string {
+	return obj.Timestamp.Format("2006-01-02 15:04")
+}
