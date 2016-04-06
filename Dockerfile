@@ -3,7 +3,7 @@ MAINTAINER zwh8800 <496781108@qq.com>
 
 WORKDIR /app
 
-RUN apk update && apk add ca-certificates
+RUN apk update && apk add ca-certificates && echo "Asia/Shanghai" > /etc/timezone
 
 ADD ./md-blog-gen /app
 ADD ./template /app/template
