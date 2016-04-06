@@ -5,8 +5,7 @@
         var $comment = $('#comment');
         var $body = $('body');
         var loaded = false;
-
-        $window.scroll(function () {
+        function checkAndLoad() {
             if (loaded) {
                 return;
             }
@@ -15,6 +14,9 @@
 
                 loaded = true;
             }
-        })
+        }
+        checkAndLoad();
+
+        $window.scroll(checkAndLoad)
     });
 })(jQuery);
