@@ -15,7 +15,7 @@ import (
 )
 
 func AllTag(c *gin.Context) {
-	tagList, noteListMap, err := service.AllNotesTags()
+	tagList, noteListMap, tagListMap, err := service.AllNotesTags()
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
@@ -25,6 +25,7 @@ func AllTag(c *gin.Context) {
 	c.Render(http.StatusOK, render.NewRender("all_tag.html", gin.H{
 		"tagList":     tagList,
 		"noteListMap": noteListMap,
+		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
 	}))
 }
@@ -39,10 +40,11 @@ func Tag(c *gin.Context) {
 	}
 	var tag *model.Tag
 	var noteList []*model.Note
+	var tagListMap map[int64][]*model.Tag
 	if useId {
-		tag, noteList, err = service.NotesByTagId(tagId)
+		tag, noteList, tagListMap, err = service.NotesByTagId(tagId)
 	} else {
-		tag, noteList, err = service.NotesByTagName(tagName)
+		tag, noteList, tagListMap, err = service.NotesByTagName(tagName)
 	}
 	if err != nil {
 		glog.Error(err)
@@ -50,8 +52,9 @@ func Tag(c *gin.Context) {
 		return
 	}
 	c.Render(http.StatusOK, render.NewRender("tag.html", gin.H{
-		"tag":      tag,
-		"noteList": noteList,
-		"site":     conf.Conf.Site,
+		"tag":        tag,
+		"noteList":   noteList,
+		"tagListMap": tagListMap,
+		"site":       conf.Conf.Site,
 	}))
 }

@@ -17,11 +17,30 @@
     <div class="md-section-divider"></div>
     <a href="/{{ $site.TagUrl }}">[所有分类]</a>
     <h2>{{ .tag.Name }}</h2>
-    <ul>
-        {{ range $key, $value := .noteList }}
-        <li><a href="/{{ $site.NoteUrl }}/{{$value.Id}}">{{$value.Title}}</a></li>
+    {{ $saveTagListMap := .tagListMap }}
+    {{ range $key, $value := .noteList }}
+    <hr>
+    <div class="md-section-divider">
+    </div>
+    <h2>
+        <a href="/{{ $site.NoteUrl }}/{{$value.Id}}">
+            {{$value.Title}}
+        </a>
+    </h2>
+    <p>
+        {{ $tagList := index $saveTagListMap $value.Id }}
+        {{ range $key, $value := $tagList }}
+        <a href="/{{ $site.TagUrl }}/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
         {{ end }}
-    </ul>
+    </p>
+    <p>
+        {{$value.Preview}}
+    </p>
+    <h6>
+        <i class="icon-time"></i>
+        {{ $value.FormattedTimestamp }}
+    </h6>
+    {{ end }}
 
     <div class="md-section-divider"></div><hr>
     <a href="/">[返回]</a>
