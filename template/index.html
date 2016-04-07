@@ -1,3 +1,5 @@
+{{ template "layout" . }}
+
 {{ define "title" }}
 {{ .site.Name }}
 {{ end }}
@@ -50,5 +52,3 @@
     <p>{{ $site.ICP }}</p>
 </div>
 {{ end }}
-
-{{ template "layout" . }}
