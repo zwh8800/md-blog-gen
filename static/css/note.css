@@ -5,6 +5,8 @@
 	background: #fff;
 	margin-top: -100px;
 	margin-left: 10px;
+	box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+	z-index: 10000;
 }
 .qrcode.hidden {
 	display: none;
