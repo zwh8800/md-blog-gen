@@ -20,9 +20,11 @@ func BaiduPush() {
 	for _, note := range noteList {
 		urls = append(urls, util.GetNoteUrl(note.Id))
 	}
-	if err := util.PushUrlToBaidu(urls); err != nil {
+	respData, err := util.PushUrlToBaidu(urls)
+	if err != nil {
 		glog.Error(err)
 		return
 	}
+	glog.Infoln("Baidu response: ", string(respData))
 	glog.Infoln("Baidu push finish")
 }
