@@ -4,6 +4,7 @@
 {{ define "moreHeaders" }}
 {{ end }}
 {{ define "moreStyles" }}
+<link href="/static/css/note.css" rel="stylesheet" media="screen">
 {{ end }}
 {{ define "moreScripts" }}
 <script src="/static/js/jquery-2.2.2.min.js"></script>
@@ -18,6 +19,11 @@
 {{ define "content" }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .note.UnescapedContent }}
+
+    <div>
+        <a class="qrcode-button" href="javascript:void(0)"><i class="icon-qrcode"></i></a>
+        <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}">
+    </div>
     <div class="md-section-divider"></div><hr>
     <div id="comment">
         <div id="disqus_thread">评论加载中...</div>

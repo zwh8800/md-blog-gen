@@ -8,9 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 
+	"html/template"
+
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func Note(c *gin.Context) {
@@ -27,8 +30,14 @@ func Note(c *gin.Context) {
 		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
+	qrcodeDataUrl, err := util.GenerateQrcodePngDataUrl(util.GetNoteUrl(id))
+	if err != nil {
+		glog.Error(err)
+	}
+
 	c.Render(http.StatusOK, render.NewRender("note.html", gin.H{
-		"note": note,
-		"site": conf.Conf.Site,
+		"note":          note,
+		"site":          conf.Conf.Site,
+		"qrcodeDataUrl": template.URL(qrcodeDataUrl),
 	}))
 }
