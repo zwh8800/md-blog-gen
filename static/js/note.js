@@ -17,6 +17,12 @@
         }
         checkAndLoad();
 
-        $window.scroll(checkAndLoad)
+        $window.scroll(checkAndLoad);
+
+        var $qrcode = $('.qrcode');
+        var $qrcodeBtn = $('.qrcode-button');
+        $qrcodeBtn.click(function () {
+            $qrcode.toggleClass('hidden');
+        });
     });
 })(jQuery);
