@@ -10,7 +10,7 @@ import (
 
 const (
 	templateDir = "template"
-	layout      = "layout.html"
+	commonDir   = "common"
 )
 
 type Render struct {
@@ -30,7 +30,10 @@ func NewRender(template string, data interface{}) *Render {
 func (r *Render) Render(w http.ResponseWriter) error {
 	util.WriteContentType(w, []string{"text/html; charset=utf-8"})
 	t := template.New("")
-	if _, err := t.ParseFiles(path.Join(templateDir, layout), r.template); err != nil {
+	if _, err := t.ParseGlob(path.Join(templateDir, commonDir, "*")); err != nil {
+		return err
+	}
+	if _, err := t.ParseFiles(r.template); err != nil {
 		return err
 	}
 	return t.ExecuteTemplate(w, r.templateName, r.data)

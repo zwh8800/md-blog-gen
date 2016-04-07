@@ -1,3 +1,5 @@
+{{ template "layout" . }}
+
 {{ define "title" }}{{ .err }} - {{ .site.Name }}{{ end }}
 {{ define "moreHeaders" }}
 <meta http-equiv="refresh" content="3;url={{ .site.BaseUrl }}">
@@ -12,5 +14,3 @@
     <p>3秒后跳回<a href="{{ .site.BaseUrl }}">主页</a></p>
 </div>
 {{ end }}
-
-{{ template "layout.html" . }}
