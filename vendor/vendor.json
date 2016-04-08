@@ -83,6 +83,36 @@
 			"revisionTime": "2016-03-29T11:39:55-04:00"
 		},
 		{
+			"path": "github.com/tdewolff/buffer",
+			"revision": "43cef5ba7b6ce99cc410632dad46cf1c6c97026e",
+			"revisionTime": "2015-11-03T09:35:53+01:00"
+		},
+		{
+			"path": "github.com/tdewolff/minify",
+			"revision": "bcdb7dc220ccc0d7c30bde0f32ce2ce47e49de98",
+			"revisionTime": "2016-03-20T16:23:55+01:00"
+		},
+		{
+			"path": "github.com/tdewolff/minify/html",
+			"revision": "bcdb7dc220ccc0d7c30bde0f32ce2ce47e49de98",
+			"revisionTime": "2016-03-20T16:23:55+01:00"
+		},
+		{
+			"path": "github.com/tdewolff/parse",
+			"revision": "3c847ecc915d4611b5b799773b848e60a3fd4178",
+			"revisionTime": "2016-03-27T13:19:10+02:00"
+		},
+		{
+			"path": "github.com/tdewolff/parse/html",
+			"revision": "3c847ecc915d4611b5b799773b848e60a3fd4178",
+			"revisionTime": "2016-03-27T13:19:10+02:00"
+		},
+		{
+			"path": "github.com/tdewolff/strconv",
+			"revision": "9b189f5be77f33c46776f24dbddb2a7ab32af214",
+			"revisionTime": "2016-02-29T23:21:02+01:00"
+		},
+		{
 			"path": "golang.org/x/net/context",
 			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
 			"revisionTime": "2016-02-25T17:50:37Z"
