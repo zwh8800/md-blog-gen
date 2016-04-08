@@ -10,13 +10,18 @@ import (
 )
 
 func Route(r *gin.Engine) {
-	r.GET("/", index.Index)
-	r.GET(path.Join(util.GetPageBase(), ":page"), index.Index)
-	r.GET(util.GetTagBase(), index.AllTag)
-	r.GET(path.Join(util.GetTagBase(), ":tag"), index.Tag)
-	r.GET(path.Join(util.GetNoteBase(), ":id"), index.Note)
-
-	r.GET("/rss", rss.Rss)
+	indexGroup := r.Group("/")
+	{
+		indexGroup.GET("/", index.Index)
+		indexGroup.GET(path.Join(util.GetPageBase(), ":page"), index.Index)
+		indexGroup.GET(util.GetTagBase(), index.AllTag)
+		indexGroup.GET(path.Join(util.GetTagBase(), ":tag"), index.Tag)
+		indexGroup.GET(path.Join(util.GetNoteBase(), ":id"), index.Note)
+	}
+	rssGroup := r.Group("/rss")
+	{
+		rssGroup.GET("", rss.Rss)
+	}
 
 	r.Static("/static", "./static")
 }
