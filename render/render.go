@@ -1,9 +1,13 @@
 package render
 
 import (
+	"bytes"
 	"html/template"
 	"net/http"
 	"path"
+
+	"github.com/tdewolff/minify"
+	"github.com/tdewolff/minify/html"
 
 	"github.com/zwh8800/md-blog-gen/util"
 )
@@ -12,6 +16,13 @@ const (
 	templateDir = "template"
 	commonDir   = "common"
 )
+
+var m *minify.M
+
+func init() {
+	m = minify.New()
+	m.AddFunc("text/html", html.Minify)
+}
 
 type Render struct {
 	templateName string
@@ -36,5 +47,11 @@ func (r *Render) Render(w http.ResponseWriter) error {
 	if _, err := t.ParseFiles(r.template); err != nil {
 		return err
 	}
-	return t.ExecuteTemplate(w, r.templateName, r.data)
+	buf := &bytes.Buffer{}
+
+	if err := t.ExecuteTemplate(buf, r.templateName, r.data); err != nil {
+		return err
+	}
+
+	return m.Minify("text/html", w, buf)
 }
