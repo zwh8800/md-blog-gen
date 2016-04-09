@@ -18,7 +18,7 @@ func AllTag(c *gin.Context) {
 	tagList, noteListMap, tagListMap, err := service.AllNotesTags()
 	if err != nil {
 		glog.Error(err)
-		ErrorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}
 
