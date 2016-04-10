@@ -1,8 +1,6 @@
 package pusher
 
 import (
-	"math"
-
 	"github.com/golang/glog"
 
 	"github.com/zwh8800/md-blog-gen/service"
@@ -11,7 +9,7 @@ import (
 
 func BaiduPush() {
 	glog.Infoln("Baidu push start")
-	noteList, _, _, err := service.NotesOrderByTime(0, math.MaxInt64)
+	noteList, _, _, err := service.NotesOrderByTime(0, 10)
 	if err != nil {
 		glog.Error(err)
 		return
