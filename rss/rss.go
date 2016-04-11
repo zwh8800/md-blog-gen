@@ -44,7 +44,7 @@ func Rss(c *gin.Context) {
 	util.WriteContentType(c.Writer, []string{"application/xml; charset=utf-8"})
 	if err := feed.WriteRss(c.Writer); err != nil {
 		glog.Error(err)
-		index.ErrorHandler(c, http.StatusInternalServerError, errors.New("Service unavailable"))
+		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}
 }

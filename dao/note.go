@@ -77,6 +77,17 @@ func NotesByPage(sess *dbr.Session, page, limit int64) ([]*model.Note, error) {
 	return noteList, nil
 }
 
+func NoteIdsByPage(sess *dbr.Session, page, limit int64) ([]int64, error) {
+	offset := page * limit
+	noteIdList := make([]int64, 0)
+	if _, err := sess.Select("id").From(model.NoteTableName).
+		Where("removed is false").OrderBy("timestamp desc").
+		Offset(uint64(offset)).Limit(uint64(limit)).LoadValues(&noteIdList); err != nil {
+		return nil, err
+	}
+	return noteIdList, nil
+}
+
 func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
 	noteList := make([]*model.Note, 0)
 	if _, err := sess.Select("Note.id", "Note.unique_id", "Note.title",
