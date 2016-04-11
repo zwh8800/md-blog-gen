@@ -45,11 +45,11 @@ func configure() {
 func startServer() {
 	glog.Infoln("starting...")
 
-	r := gin.Default()
-	route.Route(r)
 	if conf.Conf.Env.Prod {
 		gin.SetMode(gin.ReleaseMode)
 	}
+	r := gin.Default()
+	route.Route(r)
 
 	go func() {
 		err := r.Run(fmt.Sprintf("%v:%v", "", conf.Conf.Env.ServerPort))
