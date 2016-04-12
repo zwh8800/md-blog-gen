@@ -51,5 +51,5 @@ func (obj *Note) Preview() string {
 }
 
 func (obj *Note) FormattedTimestamp() string {
-	return obj.Timestamp.Local().Format("2006-01-02 15:04")
+	return obj.Timestamp.Local().Format("2006-01-02 15:04 PM")
 }
