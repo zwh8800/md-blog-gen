@@ -4,6 +4,7 @@
 {{ .note.Title }} - {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
+<meta name="description" content="{{ .note.Preview }}">
 {{ end }}
 {{ define "moreStyles" }}
 <link href="/static/css/note.css" rel="stylesheet" media="screen">

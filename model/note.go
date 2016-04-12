@@ -1,10 +1,11 @@
 package model
 
 import (
+	"bytes"
 	"html/template"
-	"regexp"
-	"strings"
 	"time"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 const NoteTableName = "Note"
@@ -38,34 +39,15 @@ func (obj *Note) FillContent(content string) {
 }
 
 func (obj *Note) Preview() string {
-	const maxLength = 200
 	src := obj.Content
-	//将HTML标签全转换成小写
-	re, _ := regexp.Compile("\\<[\\S\\s]+?\\>")
-	src = re.ReplaceAllStringFunc(src, strings.ToLower)
+	buffer := bytes.NewBufferString(src)
 
-	//去除STYLE
-	re, _ = regexp.Compile("\\<style[\\S\\s]+?\\</style\\>")
-	src = re.ReplaceAllString(src, "")
-
-	//去除SCRIPT
-	re, _ = regexp.Compile("\\<script[\\S\\s]+?\\</script\\>")
-	src = re.ReplaceAllString(src, "")
-
-	//去除所有尖括号内的HTML代码，并换成换行符
-	re, _ = regexp.Compile("\\<[\\S\\s]+?\\>")
-	src = re.ReplaceAllString(src, "\n")
-
-	//去除连续的换行符
-	re, _ = regexp.Compile("\\s{2,}")
-	src = re.ReplaceAllString(src, "\n")
-
-	runes := ([]rune)(src)
-	if len(runes) < maxLength {
-		return string(runes)
-	} else {
-		return string(runes[:maxLength])
+	doc, err := goquery.NewDocumentFromReader(buffer)
+	if err != nil {
+		return ""
 	}
+
+	return goquery.NewDocumentFromNode(doc.Find("p").Get(1)).Text()
 }
 
 func (obj *Note) FormattedTimestamp() string {
