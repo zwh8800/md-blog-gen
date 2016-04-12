@@ -218,6 +218,32 @@ func main() {
 id: 1234; page: 1; name: manu; message: this_is_great
 ```
 
+### Another example: upload file
+
+References issue [#548](https://github.com/gin-gonic/gin/issues/548).
+
+```go
+func main() {
+	router := gin.Default()
+
+	router.POST("/upload", func(c *gin.Context) {
+
+	        file, header , err := c.Request.FormFile("upload")
+	        filename := header.Filename
+	        fmt.Println(header.Filename)
+	        out, err := os.Create("./tmp/"+filename+".png")
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	        defer out.Close()
+	        _, err = io.Copy(out, file)
+	        if err != nil {
+	            log.Fatal(err)
+	        }   
+	})
+	router.Run(":8080")
+}
+```
 
 #### Grouping routes
 ```go
@@ -274,7 +300,7 @@ func main() {
 
 	// Authorization group
 	// authorized := r.Group("/", AuthRequired())
-	// exactly the same than:
+	// exactly the same as:
 	authorized := r.Group("/")
 	// per group middleware! in this case we use the custom created
 	// AuthRequired() middleware just in the "authorized" group.
@@ -590,7 +616,7 @@ func main() {
 	// /admin/secrets endpoint
 	// hit "localhost:8080/admin/secrets
 	authorized.GET("/secrets", func(c *gin.Context) {
-		// get user, it was setted by the BasicAuth middleware
+		// get user, it was set by the BasicAuth middleware
 		user := c.MustGet(gin.AuthUserKey).(string)
 		if secret, ok := secrets[user]; ok {
 			c.JSON(http.StatusOK, gin.H{"user": user, "secret": secret})
@@ -619,7 +645,7 @@ func main() {
 			// simulate a long task with time.Sleep(). 5 seconds
 			time.Sleep(5 * time.Second)
 
-			// note than you are using the copied context "c_cp", IMPORTANT
+			// note that you are using the copied context "cCp", IMPORTANT
 			log.Println("Done! in path " + cCp.Request.URL.Path)
 		}()
 	})
@@ -667,18 +693,17 @@ func main() {
 #### Graceful restart or stop
 
 Do you want to graceful restart or stop your web server?
-There be some ways.
+There are some ways this can be done.
 
-We can using fvbock/endless to replace the default ListenAndServe
-
-Refer the issue for more details:
-
-https://github.com/gin-gonic/gin/issues/296
+We can use [fvbock/endless](https://github.com/fvbock/endless) to replace the default `ListenAndServe`. Refer issue [#296](https://github.com/gin-gonic/gin/issues/296) for more details.
 
 ```go
 router := gin.Default()
 router.GET("/", handler)
 // [...]
 endless.ListenAndServe(":4242", router)
-
 ```
+
+An alternative to endless:
+
+* [manners](https://github.com/braintree/manners): A polite Go HTTP server that shuts down gracefully.
