@@ -1,0 +1,10 @@
+.pager {
+	overflow: hidden;
+}
+.pager .next-page {
+	float: right;
+}
+
+.note-list {
+	min-height: 65vh;
+}

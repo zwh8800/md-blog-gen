@@ -4,7 +4,9 @@
 {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}{{ end }}
-{{ define "moreStyles" }}{{ end }}
+{{ define "moreStyles" }}
+<link href="/static/css/index.css" rel="stylesheet" media="screen">
+{{ end }}
 {{ define "moreScripts" }}{{ end }}
 {{ define "content" }}
 {{ $site := .site }}
