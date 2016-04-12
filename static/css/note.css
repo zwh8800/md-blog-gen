@@ -17,3 +17,14 @@
 .qrcode-button:hover {
 	text-decoration: none;
 }
+
+.pager {
+	overflow: hidden;
+}
+.pager .next-page {
+	float: right;
+}
+
+.note-list {
+	min-height: 65vh;
+}
