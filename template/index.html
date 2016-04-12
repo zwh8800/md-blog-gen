@@ -3,11 +3,14 @@
 {{ define "title" }}
 {{ .site.Name }}
 {{ end }}
-{{ define "moreHeaders" }}{{ end }}
+{{ define "moreHeaders" }}
+<meta name="description" content="{{ .site.Description }}">
+{{ end }}
 {{ define "moreStyles" }}
 <link href="/static/css/index.css" rel="stylesheet" media="screen">
 {{ end }}
-{{ define "moreScripts" }}{{ end }}
+{{ define "moreScripts" }}
+{{ end }}
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">

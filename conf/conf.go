@@ -24,6 +24,7 @@ type config struct {
 	}
 	Site struct {
 		Name        string
+		Description string
 		BaseUrl     string
 		NoteUrl     string
 		TagUrl      string
