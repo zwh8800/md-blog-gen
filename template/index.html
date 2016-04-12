@@ -12,7 +12,7 @@
     <div class="md-section-divider"></div>
     <div class="md-section-divider"></div>
     <h1>{{ $site.Name }}</h1>
-    <a href="/{{ $site.RssUrl }}" target="_blank"><i class="icon-rss"></i></a>
+    <a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
     <div style="min-height: 65vh;">
         {{ $saveTagListMap := .tagListMap }}
         {{ range $key, $value := .noteList }}
@@ -49,6 +49,9 @@
         {{end}}
     </div>
     <div class="md-section-divider"></div><hr>
-    <p>{{ $site.ICP }}</p>
+    <p>
+        <small>{{ $site.ICP }}</small><br>
+        <a href="/sitemap.xml"><small>sitemap.xml</small></a>
+    </p>
 </div>
 {{ end }}

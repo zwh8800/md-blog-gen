@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/zwh8800/md-blog-gen/index"
 	"github.com/zwh8800/md-blog-gen/rss"
+	"github.com/zwh8800/md-blog-gen/sitemap"
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
@@ -21,6 +22,10 @@ func Route(r *gin.Engine) {
 	rssGroup := r.Group("/rss")
 	{
 		rssGroup.GET("", rss.Rss)
+	}
+	sitemapGroup := r.Group("/sitemap.xml")
+	{
+		sitemapGroup.GET("", sitemap.SiteMap)
 	}
 
 	r.Static("/static", "./static")

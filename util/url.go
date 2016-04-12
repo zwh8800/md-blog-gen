@@ -47,6 +47,21 @@ func GetTagUrl(id int64) string {
 	return baseUrl.ResolveReference(u).String()
 }
 
+func GetTagNameUrl(name string) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := path.Join(GetTagBase(), name)
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}
+
 func GetPageBase() string {
 	return "/" + conf.Conf.Site.PageUrl
 }
