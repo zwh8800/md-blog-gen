@@ -34,6 +34,7 @@ type config struct {
 		AuthorName  string
 		AuthorEmail string
 		NotePerPage int64
+		Language    string
 		ICP         string
 	}
 }
