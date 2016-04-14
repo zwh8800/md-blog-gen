@@ -1,7 +1,7 @@
 ﻿{{ template "layout" . }}
 
 {{ define "title" }}
-{{ .note.Title }} - {{ .site.Name }}
+{{ .note.Title }} | {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
 <meta name="description" content="{{ .note.Preview }}">
