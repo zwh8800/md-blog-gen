@@ -25,7 +25,7 @@ func Rss(c *gin.Context) {
 	}
 	feed.Items = make([]*feeds.Item, 0)
 
-	noteList, _, _, err := service.NotesOrderByTime(1, 10)
+	noteList, _, _, err := service.NotesOrderByTime(1, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		index.ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))

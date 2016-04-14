@@ -33,6 +33,7 @@ type config struct {
 		StaticUrl   string
 		AuthorName  string
 		AuthorEmail string
+		NotePerPage int64
 		ICP         string
 	}
 }

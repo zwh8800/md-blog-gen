@@ -3,13 +3,14 @@ package pusher
 import (
 	"github.com/golang/glog"
 
+	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func BaiduPush() {
 	glog.Infoln("Baidu push start")
-	noteIdList, _, err := service.NoteIdsOrderByTime(0, 10)
+	noteIdList, _, err := service.NoteIdsOrderByTime(0, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		return
