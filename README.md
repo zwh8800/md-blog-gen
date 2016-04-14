@@ -43,11 +43,16 @@ baidu="http://data.zz.baidu.com/urls?site=lengzzz.com&token=xxxxxxx" # 向百度
 
 [site]
 name="水能载舟 亦可赛艇" # 网站名称
+description="冷zzZ和hzzZ的博客，热爱Linux，自称全栈，目前就职于美餐" # 描述
 baseUrl="https://lengzzz.com/" # 网站首页
 noteUrl="note" # 文字的url
 tagUrl="tag" # tag的url
 pageUrl="page" # page的url
+rssUrl="rss"
 staticUrl="static" # 静态文件的url
+authorName="LengzzZ"
+authorEmail="496781108@qq.com"
+icp="津 ICP 备 14005803 号 - 2"
 
 ```
 记着把注释删掉哦

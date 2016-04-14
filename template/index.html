@@ -16,7 +16,7 @@
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <div class="md-section-divider"></div>
     <div class="md-section-divider"></div>
-    <h1>{{ $site.Name }}</h1>
+    <a href="{{ $site.BaseUrl }}" class="no-color"><h1>{{ $site.Name }}</h1></a>
     <a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
     <div class="note-list">
         {{ $saveTagListMap := .tagListMap }}
@@ -45,9 +45,9 @@
         {{ end }}
     </div>
 
-    <div class="pager">
+    <div class="page">
         {{if .hasPrevPage}}
-        <a href="/{{ $site.PageUrl }}/{{ .prevPage }}">上一页</a>
+        <a href="/{{ $site.PageUrl }}/{{ .prevPage }}" class="prev-page">上一页</a>
         {{end}}
         {{if .hasNextPage}}
         <a href="/{{ $site.PageUrl }}/{{ .nextPage }}" class="next-page">下一页</a>
