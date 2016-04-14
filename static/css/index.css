@@ -1,7 +1,14 @@
-.pager {
+a.no-color {
+	color: #000;
+}
+
+.page {
 	overflow: hidden;
 }
-.pager .next-page {
+.page .prev-page {
+	float: left;
+}
+.page .next-page {
 	float: right;
 }
 

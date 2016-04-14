@@ -4,6 +4,7 @@
 {{ define "moreHeaders" }}
 {{ end }}
 {{ define "moreStyles" }}
+<link href="/static/css/index.css" rel="stylesheet" media="screen">
 {{ end }}
 {{ define "moreScripts" }}
 {{ end }}
@@ -12,7 +13,7 @@
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <div class="md-section-divider"></div>
     <div class="md-section-divider"></div>
-    <h1>水能载舟 亦可赛艇</h1>
+    <a href="{{ $site.BaseUrl }}" class="no-color"><h1>{{ $site.Name }}</h1></a>
     <hr>
     <div class="md-section-divider"></div>
     {{ $saveNoteListMap := .noteListMap }}

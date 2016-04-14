@@ -13,7 +13,7 @@ func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag,
 	if err != nil {
 		return nil, nil, 0, err
 	}
-	maxPage := noteCount/limit + 1
+	maxPage := (noteCount-1)/limit + 1
 
 	page-- //数据库层的页数从0开始数
 	noteList, err := dao.NotesByPage(sess, page, limit)
@@ -38,7 +38,7 @@ func NotesWithoutTagOrderByTime(page, limit int64) ([]*model.Note, int64, error)
 	if err != nil {
 		return nil, 0, err
 	}
-	maxPage := noteCount/limit + 1
+	maxPage := (noteCount-1)/limit + 1
 
 	page-- //数据库层的页数从0开始数
 	noteList, err := dao.NotesByPage(sess, page, limit)
@@ -55,7 +55,7 @@ func NoteIdsOrderByTime(page, limit int64) ([]int64, int64, error) {
 	if err != nil {
 		return nil, 0, err
 	}
-	maxPage := noteCount/limit + 1
+	maxPage := (noteCount-1)/limit + 1
 
 	page-- //数据库层的页数从0开始数
 	noteIdList, err := dao.NoteIdsByPage(sess, page, limit)
