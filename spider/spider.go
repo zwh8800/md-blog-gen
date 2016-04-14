@@ -107,6 +107,15 @@ func downloadImg(src string) (string, error) {
 	return outFilename, nil
 }
 
+func handleTag(content *goquery.Selection) {
+	content.Find("h1").Next().Find("code").Each(func(i int, s *goquery.Selection) {
+		if s.Text() == conf.Conf.Spider.SpiderTag {
+			s.Remove()
+		}
+		s.WrapAllHtml(`<a href="/tag/` + s.Text() + `"></a>`)
+	})
+}
+
 func findNoteContent(note *model.Note) {
 	doc, err := goquery.NewDocument(note.Url)
 	if err != nil {
@@ -127,6 +136,7 @@ func findNoteContent(note *model.Note) {
 
 		s.SetAttr("src", "/"+dest)
 	})
+	handleTag(content)
 
 	html, err := content.Html()
 	if err != nil {
