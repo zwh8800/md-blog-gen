@@ -23,7 +23,7 @@ func main() {
 	configure()
 	startServer()
 	handleSignal()
-	glog.Infoln("graceful shutdown")
+	glog.Infoln("gracefully shutdown")
 }
 
 func configure() {
