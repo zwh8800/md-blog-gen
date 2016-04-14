@@ -50,5 +50,17 @@ func SiteMap(c *gin.Context) {
 		})
 	}
 
+	_, maxPage, err := service.NotesWithoutTagOrderByTime(0, conf.Conf.Site.NotePerPage)
+	if err != nil {
+		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+	for i := int64(1); i <= maxPage; i++ {
+		s.Add(&sitemap.Item{
+			Link:    util.GetPageUrl(i),
+			Updated: time.Now(),
+		})
+	}
+
 	c.XML(http.StatusOK, s)
 }
