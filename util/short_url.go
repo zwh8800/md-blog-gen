@@ -32,7 +32,8 @@ func ShortenUrl(url string) []string {
 		// 将30bit分成6份, 每份5bit
 		for j := 0; j < 6; j++ {
 			// 0x3d = 0b00111101, 多取一位, 扔自己一位
-			// 巧妙之处, 解决了5bit不够索引62个字符的尴尬
+			// 巧妙之处, 既解决了5bit不够索引62个字符的尴尬
+			// 又使index不会超出62, 厉害厉害
 			index := partUint & 0x3d
 
 			shortUrlBuffer.WriteRune(charTable[index])
