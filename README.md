@@ -52,6 +52,7 @@ rssUrl="rss"
 staticUrl="static" # 静态文件的url
 authorName="LengzzZ"
 authorEmail="496781108@qq.com"
+notePerPage=10
 icp="津 ICP 备 14005803 号 - 2"
 
 ```
