@@ -3,6 +3,7 @@
 {{ define "title" }}{{ .err }} | {{ .site.Name }}{{ end }}
 {{ define "moreHeaders" }}
 <meta http-equiv="refresh" content="3;url={{ .site.BaseUrl }}">
+<meta name="description" content="{{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
 {{ end }}
