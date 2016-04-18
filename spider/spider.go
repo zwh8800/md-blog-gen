@@ -1,6 +1,8 @@
 package spider
 
 import (
+	"bytes"
+	"html/template"
 	"io"
 	"net/http"
 	"os"
@@ -119,6 +121,20 @@ func handleTag(content *goquery.Selection) {
 	})
 }
 
+func handleTime(content *goquery.Selection, timestamp time.Time) {
+	t := template.Must(template.New("time").Parse(`<h6>
+        <i class="icon-time"></i>
+        {{ .Format "2006-01-02 15:04 PM" }}
+    </h6>`))
+	output := &bytes.Buffer{}
+
+	if err := t.Execute(output, timestamp); err != nil {
+		panic(err)
+	}
+
+	content.Find("h1").Next().AfterHtml(output.String())
+}
+
 func findNoteContent(note *model.Note) {
 	doc, err := goquery.NewDocument(note.Url)
 	if err != nil {
@@ -140,6 +156,7 @@ func findNoteContent(note *model.Note) {
 		s.SetAttr("src", "/"+dest)
 	})
 	handleTag(content)
+	handleTime(content, note.Timestamp.Local())
 
 	html, err := content.Html()
 	if err != nil {
