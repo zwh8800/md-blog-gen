@@ -14,7 +14,6 @@ import (
 )
 
 func Index(c *gin.Context) {
-	const limit = 10
 	pageStr := c.Param("page")
 	page, err := strconv.ParseInt(pageStr, 10, 64)
 	if err != nil {
