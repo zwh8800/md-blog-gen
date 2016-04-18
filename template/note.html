@@ -23,10 +23,18 @@
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .note.UnescapedContent }}
 
-    <div>
-        <a class="qrcode-button" href="javascript:void(0)"><i class="icon-qrcode"></i></a>
-        <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" title="二维码" alt="二维码">
-    </div>
+    <p>
+        <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
+        <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
+    </p>
+    <p>
+        <small>
+            本文使用
+            <a href="{{ .site.LicenseUrl }}" target="_blank">{{ .site.LicenseName }}</a>
+            协议
+        </small>
+    </p>
+
     <div class="md-section-divider"></div><hr>
     <div id="comment">
         <div id="disqus_thread">评论加载中...</div>
