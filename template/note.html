@@ -22,7 +22,7 @@
 {{ define "content" }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .note.UnescapedContent }}
-
+    <div class="md-section-divider"></div><hr>
     <p>
         <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
         <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
@@ -30,7 +30,7 @@
     <p>
         <small>
             本文使用
-            <a href="{{ .site.LicenseUrl }}" target="_blank">{{ .site.LicenseName }}</a>
+            <a href="{{ .site.LicenseUrl }}" target="_blank">{{ .site.LicenseName }} <i class="icon-external-link"></i></a>
             协议
         </small>
     </p>
