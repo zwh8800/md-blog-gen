@@ -35,6 +35,8 @@ type config struct {
 		AuthorEmail string
 		NotePerPage int64
 		Language    string
+		LicenseName string
+		LicenseUrl  string
 		ICP         string
 	}
 }
