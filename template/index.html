@@ -31,6 +31,7 @@
             </a>
         </h2>
         <p>
+            <i class="icon-tags"></i>
             {{ $tagList := index $saveTagListMap $value.Id }}
             {{ range $key, $value := $tagList }}
             <a href="/{{ $site.TagUrl }}/{{$value.Id}}"><code>{{- $value.Name -}}</code></a>
