@@ -109,6 +109,9 @@ func downloadImg(src string) (string, error) {
 
 func handleTag(content *goquery.Selection) {
 	content.Find("h1").Next().Find("code").Each(func(i int, s *goquery.Selection) {
+		if i == 0 {
+			s.BeforeHtml(`<i class="icon-tags"></i>`)
+		}
 		if s.Text() == conf.Conf.Spider.SpiderTag {
 			s.Remove()
 		}
