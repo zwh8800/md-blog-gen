@@ -39,6 +39,12 @@ type config struct {
 		LicenseUrl  string
 		ICP         string
 	}
+	Social struct {
+		Github   string
+		Weibo    string
+		Twitter  string
+		Linkedin string
+	}
 }
 
 var Conf config
