@@ -19,6 +19,19 @@
     <div class="md-section-divider"></div>
     <a href="{{ $site.BaseUrl }}" class="no-color"><h1>{{ $site.Name }}</h1></a>
     <a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
+    {{ if .social.Github }}
+    <a href="{{ .social.Github }}" target="_blank" title="github"><i class="icon-github"></i></a>
+    {{ end}}
+    {{ if .social.Weibo }}
+    <a href="{{ .social.Weibo }}" target="_blank" title="github"><i class="icon-weibo"></i></a>
+    {{ end}}
+    {{ if .social.Twitter }}
+    <a href="{{ .social.Twitter }}" target="_blank" title="github"><i class="icon-twitter"></i></a>
+    {{ end}}
+    {{ if .social.Linkedin }}
+    <a href="{{ .social.Linkedin }}" target="_blank" title="github"><i class="icon-linkedin"></i></a>
+    {{ end}}
+
     <div class="note-list">
         {{ $saveTagListMap := .tagListMap }}
         {{ range $key, $value := .noteList }}
