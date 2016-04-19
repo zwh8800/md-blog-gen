@@ -19,7 +19,7 @@
     <a href="{{ $site.BaseUrl }}" class="no-color"><h1>{{ $site.Name }}</h1></a>
     <hr>
     <div class="md-section-divider"></div>
-    <a href="/{{ $site.TagUrl }}">[所有分类]</a>
+    <a href="/{{ $site.TagUrl }}">所有分类 <i class="icon-chevron-right"></i> </a>
     <h2>{{ .tag.Name }}</h2>
     {{ $saveTagListMap := .tagListMap }}
     {{ range $key, $value := .noteList }}
@@ -48,6 +48,6 @@
     {{ end }}
 
     <div class="md-section-divider"></div><hr>
-    <a href="/">[返回]</a>
+    <a href="/"><i class="icon-chevron-left"></i> 返回</a>
 </div>
 {{ end }}

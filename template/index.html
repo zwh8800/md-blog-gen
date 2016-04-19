@@ -39,7 +39,7 @@
         <div class="md-section-divider">
         </div>
         <h2>
-            <a href="/{{ $site.NoteUrl }}/{{$value.Id}}">
+            <a class="no-color" href="/{{ $site.NoteUrl }}/{{$value.Id}}">
                 {{$value.Title}}
             </a>
         </h2>
@@ -62,10 +62,10 @@
 
     <div class="page">
         {{if .hasPrevPage}}
-        <a href="/{{ $site.PageUrl }}/{{ .prevPage }}" class="prev-page">上一页</a>
+        <a href="/{{ $site.PageUrl }}/{{ .prevPage }}" class="prev-page"><i class="icon-chevron-left"></i> 上一页</a>
         {{end}}
         {{if .hasNextPage}}
-        <a href="/{{ $site.PageUrl }}/{{ .nextPage }}" class="next-page">下一页</a>
+        <a href="/{{ $site.PageUrl }}/{{ .nextPage }}" class="next-page">下一页 <i class="icon-chevron-right"></i></a>
         {{end}}
     </div>
     <div class="md-section-divider"></div><hr>
