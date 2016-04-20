@@ -37,7 +37,7 @@
             var $document = $(document);
             $window.scroll(function () {
                 var progress = $window.scrollTop() / ($document.height() - $window.height());
-                NProgress.set(progress);
+                NProgress.set(progress == 1 ? 0.9999 : progress);
             });
         }, 1000);
     })
