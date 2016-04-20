@@ -26,6 +26,18 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
+
+    <link rel='stylesheet' href='/static/css/nprogress.css'/>
+    <script src="/static/js/jquery-2.2.2.min.js"></script>
+    <script src='/static/js/nprogress.js'></script>
+    <script>
+        $(document).ready(function () {
+            NProgress.start();
+        });
+        $(window).load(function () {
+            NProgress.done();
+        });
+    </script>
     {{ template "moreHeaders" . }}
     {{ template "moreStyles" . }}
 </head>

@@ -25,4 +25,20 @@
             $qrcode.toggleClass('hidden');
         });
     });
+    $(function () {
+        setTimeout(function () {
+            NProgress.configure({
+                showSpinner: false,
+                trickle: false,
+                minimum: 0
+            });
+
+            var $window = $(window);
+            var $document = $(document);
+            $window.scroll(function () {
+                var progress = $window.scrollTop() / ($document.height() - $window.height());
+                NProgress.set(progress);
+            });
+        }, 100);
+    })
 })(jQuery);
