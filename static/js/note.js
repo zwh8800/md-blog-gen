@@ -25,7 +25,7 @@
             $qrcode.toggleClass('hidden');
         });
     });
-    $(function () {
+    $(window).load(function () {
         setTimeout(function () {
             NProgress.configure({
                 showSpinner: false,
