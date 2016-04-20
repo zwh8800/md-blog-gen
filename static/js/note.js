@@ -39,6 +39,6 @@
                 var progress = $window.scrollTop() / ($document.height() - $window.height());
                 NProgress.set(progress);
             });
-        }, 100);
+        }, 1000);
     })
 })(jQuery);
