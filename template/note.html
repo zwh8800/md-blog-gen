@@ -7,14 +7,10 @@
 <meta name="description" content="{{ .note.Preview }}">
 {{ end }}
 {{ define "moreStyles" }}
-<style>
-    {{ DumpCSS "./static/css/note.css" }}
-</style>
+<link href="/static/css/note.css" rel="stylesheet" media="screen">
 {{ end }}
 {{ define "moreScripts" }}
-<script>
-    {{ DumpJS "./static/js/note.js" }}
-</script>
+<script src="/static/js/note.js"></script>
 <script>
     var disqus_config = function () {
         this.page.url = '{{ .site.BaseUrl }}{{ .site.NoteUrl }}/{{ .note.Id }}';
