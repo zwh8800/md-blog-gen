@@ -7,7 +7,9 @@
 <meta name="description" content="{{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
-<link href="/static/css/index.css" rel="stylesheet" media="screen">
+<style>
+    {{ DumpJS "./static/css/index.css" }}
+</style>
 {{ end }}
 {{ define "moreScripts" }}
 {{ end }}
