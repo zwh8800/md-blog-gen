@@ -8,7 +8,9 @@
 <meta name="sogou_site_verification" content="uNRJld8hel"/>
 {{ end }}
 {{ define "moreStyles" }}
-<link href="/static/css/index.css" rel="stylesheet" media="screen">
+<style>
+    {{ DumpJS "./static/css/index.css" }}
+</style>
 {{ end }}
 {{ define "moreScripts" }}
 {{ end }}
