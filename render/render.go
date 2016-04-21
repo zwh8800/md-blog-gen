@@ -30,10 +30,6 @@ func NewRender(template string, data interface{}) *Render {
 func (r *Render) Render(w http.ResponseWriter) error {
 	util.WriteContentType(w, []string{"text/html; charset=utf-8"})
 	t := template.New("")
-	t.Funcs(template.FuncMap{
-		"DumpCSS": util.DumpCss,
-		"DumpJS":  util.DumpJs,
-	})
 	if _, err := t.ParseGlob(path.Join(templateDir, commonDir, "*")); err != nil {
 		return err
 	}
