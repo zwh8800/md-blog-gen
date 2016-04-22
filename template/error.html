@@ -8,10 +8,27 @@
 {{ define "moreStyles" }}
 {{ end }}
 {{ define "moreScripts" }}
+<script>
+    (function ($) {
+        $(function () {
+            var $countdown = $('#countdown');
+            var time = 3;
+            function down() {
+                $countdown.text(time);
+                if (--time < 0) {
+                    return
+                }
+
+                setTimeout(down, 1000);
+            }
+            down();
+        })
+    })(jQuery)
+</script>
 {{ end }}
 {{ define "content" }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <h1>{{ .err }}</h1>
-    <p>3秒后跳回<a href="{{ .site.BaseUrl }}">主页</a></p>
+    <p><span id="countdown">3</span>秒后跳回<a href="{{ .site.BaseUrl }}">主页</a></p>
 </div>
 {{ end }}

@@ -1,6 +1,7 @@
 package route
 
 import (
+	"errors"
 	"path"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,10 @@ import (
 )
 
 func Route(r *gin.Engine) {
+	r.NoRoute(func(c *gin.Context) {
+		index.ErrorHandler(c, 404, errors.New("404 Not Found"))
+	})
+
 	indexGroup := r.Group("/")
 	{
 		indexGroup.GET("/", index.Index)
