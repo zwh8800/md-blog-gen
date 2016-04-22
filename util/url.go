@@ -28,6 +28,21 @@ func GetNoteUrl(id int64) string {
 	return baseUrl.ResolveReference(u).String()
 }
 
+func GetNoteUrlByNotename(notename string) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := path.Join(GetNoteBase(), notename)
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}
+
 func GetTagBase() string {
 	return "/" + conf.Conf.Site.TagUrl
 }
