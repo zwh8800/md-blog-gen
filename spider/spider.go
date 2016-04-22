@@ -5,10 +5,13 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"path"
 	"strconv"
+	"strings"
 	"time"
+	"unicode"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/golang/glog"
@@ -135,6 +138,31 @@ func handleTime(content *goquery.Selection, timestamp time.Time) {
 	content.Find("h1").Next().AfterHtml(output.String())
 }
 
+func transNotename(notename string) string {
+	notename = strings.TrimSpace(notename)
+	notename = strings.ToLower(notename)
+	notename = strings.Map(func(r rune) rune {
+		if unicode.IsSpace(r) {
+			return '-'
+		} else {
+			return r
+		}
+	}, notename)
+
+	return url.QueryEscape(notename)
+}
+
+func handleNotename(content *goquery.Selection, note *model.Note) {
+	a := content.Find("p a[href='/notename/']")
+	attr, ok := a.Attr("title")
+	if ok {
+		note.Notename.Valid = true
+		note.Notename.String = transNotename(attr)
+	} else {
+		note.Notename.Valid = false
+	}
+}
+
 func findNoteContent(note *model.Note) {
 	doc, err := goquery.NewDocument(note.Url)
 	if err != nil {
@@ -157,6 +185,7 @@ func findNoteContent(note *model.Note) {
 	})
 	handleTag(content)
 	handleTime(content, note.Timestamp.Local())
+	handleNotename(content, note)
 
 	html, err := content.Html()
 	if err != nil {

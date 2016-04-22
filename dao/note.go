@@ -7,6 +7,17 @@ import (
 )
 
 func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
+	if _, err := tx.Select("unique_id").From(model.NoteTableName).
+		Where("not unique_id = ? and notename = ?",
+		note.UniqueId, note.Notename.String).ReturnInt64(); err != nil {
+		if err != dbr.ErrNotFound {
+			return err
+		}
+	} else {
+		note.Notename.String = ""
+		note.Notename.Valid = false
+	}
+
 	oldNote := &model.Note{}
 	found := true
 	if err := tx.Select("*").From(model.NoteTableName).Where("unique_id = ?", note.UniqueId).
@@ -19,7 +30,7 @@ func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
 	}
 	if found {
 		note.Id = oldNote.Id
-		if _, err := tx.Update(model.NoteTableName).
+		if _, err := tx.Update(model.NoteTableName).Set("notename", note.Notename).
 			Set("title", note.Title).Set("content", note.Content).
 			Set("timestamp", note.Timestamp).Set("removed", note.Removed).
 			Where("unique_id = ?", note.UniqueId).Exec(); err != nil {
@@ -44,6 +55,16 @@ func NoteById(sess *dbr.Session, id int64) (*model.Note, error) {
 	note := &model.Note{}
 	if err := sess.Select("*").From(model.NoteTableName).
 		Where("id = ? and removed is false", id).LoadStruct(note); err != nil {
+		return nil, err
+	}
+
+	return note, nil
+}
+
+func NoteByNotename(sess *dbr.Session, notename string) (*model.Note, error) {
+	note := &model.Note{}
+	if err := sess.Select("*").From(model.NoteTableName).
+		Where("notename = ? and removed is false", notename).LoadStruct(note); err != nil {
 		return nil, err
 	}
 
@@ -90,7 +111,7 @@ func NoteIdsByPage(sess *dbr.Session, page, limit int64) ([]int64, error) {
 
 func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
 	noteList := make([]*model.Note, 0)
-	if _, err := sess.Select("Note.id", "Note.unique_id", "Note.title",
+	if _, err := sess.Select("Note.id", "Note.unique_id", "Note.notename", "Note.title",
 		"Note.url", "Note.content", "Note.timestamp", "Note.removed").From(model.NoteTableName).
 		Join(model.NoteTagTableName, "Note.id = NoteTag.note_id").Where("tag_id = ? and removed is false", tagId).
 		LoadStructs(&noteList); err != nil {

@@ -39,7 +39,7 @@
         <div class="md-section-divider">
         </div>
         <h2>
-            <a class="no-color" href="/{{ $site.NoteUrl }}/{{$value.Id}}">
+            <a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
                 {{$value.Title}}
             </a>
         </h2>
