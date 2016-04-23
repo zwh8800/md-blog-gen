@@ -28,6 +28,12 @@ func SiteMap(c *gin.Context) {
 		return
 	}
 	for _, note := range noteList {
+		if note.Notename.Valid {
+			s.Add(&sitemap.Item{
+				Link:    util.GetNoteUrlByNotename(note.Notename.String),
+				Updated: note.Timestamp,
+			})
+		}
 		s.Add(&sitemap.Item{
 			Link:    util.GetNoteUrl(note.Id),
 			Updated: note.Timestamp,

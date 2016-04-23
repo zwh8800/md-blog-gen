@@ -30,6 +30,7 @@ type config struct {
 		TagUrl      string
 		PageUrl     string
 		RssUrl      string
+		ArchiveUrl  string
 		StaticUrl   string
 		AuthorName  string
 		AuthorEmail string

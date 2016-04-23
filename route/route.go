@@ -23,8 +23,10 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(util.GetTagBase(), index.AllTag)
 		indexGroup.GET(path.Join(util.GetTagBase(), ":tag"), index.Tag)
 		indexGroup.GET(path.Join(util.GetNoteBase(), ":id"), index.Note)
+		indexGroup.GET(util.GetArchiveBase(), index.Archive)
+		indexGroup.GET(path.Join(util.GetArchiveBase(), ":month"), index.ArchiveMonth)
 	}
-	rssGroup := r.Group("/rss")
+	rssGroup := r.Group(util.GetRssBase())
 	{
 		rssGroup.GET("", rss.Rss)
 	}

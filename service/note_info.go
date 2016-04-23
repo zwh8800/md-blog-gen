@@ -9,3 +9,8 @@ func NoteById(id int64) (*model.Note, error) {
 	sess := dbConn.NewSession(nil)
 	return dao.NoteById(sess, id)
 }
+
+func NoteByNotename(notename string) (*model.Note, error) {
+	sess := dbConn.NewSession(nil)
+	return dao.NoteByNotename(sess, notename)
+}

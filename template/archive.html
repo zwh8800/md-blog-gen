@@ -1,0 +1,44 @@
+{{ template "layout" . }}
+
+{{ define "title" }}
+文章归档 | {{ .site.Name }}
+{{ end }}
+{{ define "moreHeaders" }}
+<meta name="description" content="{{ .site.Description }}">
+{{ end }}
+{{ define "moreStyles" }}
+<link href="/static/css/index.css" rel="stylesheet" media="screen">
+{{ end }}
+{{ define "moreScripts" }}
+{{ end }}
+{{ define "content" }}
+{{ $site := .site }}
+<div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
+	<div class="md-section-divider"></div>
+	<div class="md-section-divider"></div>
+	<a href="{{ $site.BaseUrl }}" class="no-color"><h1>{{ $site.Name }}</h1></a>
+	<hr>
+	<div class="md-section-divider"></div>
+	{{ $noteListMap := .noteListMap }}
+	{{ range $key, $value := .monthList }}
+	<h2>
+		{{ $value.Year }} 年 {{ $value.Month }} 月
+		<a href="/{{ $site.ArchiveUrl }}/{{ $value.Year }}-{{ $value.Month }}"><i class="icon-double-angle-right"></i></a>
+	</h2>
+	<ul>
+		{{ $noteList := index $noteListMap $value }}
+		{{ range $key, $value := $noteList }}
+		<li>
+			<a href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
+				{{$value.Title}}
+			</a>
+			<small>({{ $value.FormattedDate }})</small>
+		</li>
+		{{ end }}
+	</ul>
+	{{ end }}
+
+	<div class="md-section-divider"></div><hr>
+	<a href="/"><i class="icon-chevron-left"></i> 返回</a>
+</div>
+{{ end }}

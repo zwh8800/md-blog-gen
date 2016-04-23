@@ -2,15 +2,15 @@ package index
 
 import (
 	"errors"
+	"html/template"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 
-	"html/template"
-
 	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/util"
@@ -19,14 +19,20 @@ import (
 var qrcodeCache = make(map[int64]string)
 
 func Note(c *gin.Context) {
-	idStr := c.Param("id")
-	id, err := strconv.ParseInt(idStr, 10, 64)
+	useId := true
+
+	notename := c.Param("id")
+	id, err := strconv.ParseInt(notename, 10, 64)
 	if err != nil {
-		glog.Error(err)
-		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
-		return
+		useId = false
 	}
-	note, err := service.NoteById(id)
+	var note *model.Note
+	if useId {
+		note, err = service.NoteById(id)
+	} else {
+		note, err = service.NoteByNotename(notename)
+	}
+
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
