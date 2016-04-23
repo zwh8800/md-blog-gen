@@ -119,3 +119,35 @@ func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
 	}
 	return noteList, nil
 }
+
+func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
+	monthList := make([]*model.YearMonth, 0)
+
+	if _, err := sess.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
+		From(model.NoteTableName).Where("removed is false").GroupBy("MONTH(timestamp)").
+		OrderBy("timestamp desc").LoadStructs(&monthList); err != nil {
+		return nil, nil, err
+	}
+
+	noteListMap := make(map[*model.YearMonth][]*model.Note, len(monthList))
+	for _, month := range monthList {
+		noteList, err := NotesMonth(sess, month)
+		if err != nil {
+			return nil, nil, err
+
+		}
+		noteListMap[month] = noteList
+	}
+
+	return monthList, noteListMap, nil
+}
+
+func NotesMonth(sess *dbr.Session, month *model.YearMonth) ([]*model.Note, error) {
+	noteList := make([]*model.Note, 0)
+	if _, err := sess.Select("*").From(model.NoteTableName).
+		Where("removed is false and year(timestamp) = ? and month(timestamp) = ?", month.Year, month.Month).
+		OrderBy("timestamp desc").LoadStructs(&noteList); err != nil {
+		return nil, err
+	}
+	return noteList, nil
+}

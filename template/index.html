@@ -55,7 +55,9 @@
         </p>
         <h6>
             <i class="icon-time"></i>
-            {{ $value.FormattedTimestamp }}
+            <a class="no-color" href="/archive/{{ $value.YearMonth }}" title="文章归档">
+                {{ $value.FormattedTimestamp }}
+            </a>
         </h6>
         {{ end }}
     </div>
@@ -72,6 +74,7 @@
     <p>
         <small>{{ $site.ICP }}</small><br>
         <a href="/sitemap.xml" target="_blank" title="sitemap.xml"><small><i class="icon-sitemap"></i></small></a>
+        <a href="/archive" title="文章归档"><small><i class="icon-archive"></i></small></a>
     </p>
 </div>
 {{ end }}

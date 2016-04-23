@@ -55,3 +55,11 @@ func (obj *Note) Preview() string {
 func (obj *Note) FormattedTimestamp() string {
 	return obj.Timestamp.Local().Format("2006-01-02 15:04 PM")
 }
+
+func (obj *Note) FormattedDate() string {
+	return obj.Timestamp.Local().Format("Jan 02, 2006")
+}
+
+func (obj *Note) YearMonth() string {
+	return obj.Timestamp.Local().Format("2006-1")
+}

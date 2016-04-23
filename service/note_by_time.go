@@ -65,3 +65,13 @@ func NoteIdsOrderByTime(page, limit int64) ([]int64, int64, error) {
 
 	return noteIdList, maxPage, nil
 }
+
+func NoteGroupByMonth() ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
+	sess := dbConn.NewSession(nil)
+	return dao.NoteGroupByMonth(sess)
+}
+
+func NotesByMonth(month *model.YearMonth) ([]*model.Note, error) {
+	sess := dbConn.NewSession(nil)
+	return dao.NotesMonth(sess, month)
+}

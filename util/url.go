@@ -95,3 +95,11 @@ func GetPageUrl(id int64) string {
 	}
 	return baseUrl.ResolveReference(u).String()
 }
+
+func GetRssBase() string {
+	return "/" + conf.Conf.Site.RssUrl
+}
+
+func GetArchiveBase() string {
+	return "/" + conf.Conf.Site.ArchiveUrl
+}
