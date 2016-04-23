@@ -124,7 +124,8 @@ func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMon
 	monthList := make([]*model.YearMonth, 0)
 
 	if _, err := sess.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
-		From(model.NoteTableName).Where("removed is false").GroupBy("MONTH(timestamp)").
+		From(model.NoteTableName).Where("removed is false").
+		GroupBy("YEAR(timestamp)", "MONTH(timestamp)").
 		OrderBy("timestamp desc").LoadStructs(&monthList); err != nil {
 		return nil, nil, err
 	}
