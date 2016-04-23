@@ -38,7 +38,7 @@ func SiteMap(c *gin.Context) {
 	for _, month := range monthList {
 		s.Add(&sitemap.Item{
 			Link:    util.GetArchiveMonthUrl(month),
-			Updated: time.Now()),
+			Updated: time.Now(),
 		})
 	}
 
