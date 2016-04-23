@@ -111,7 +111,7 @@ func GetArchiveUrl() string {
 		glog.Error(err)
 		return ""
 	}
-	noteChild := GetPageBase()
+	noteChild := GetArchiveBase()
 	u, err := url.Parse(noteChild)
 	if err != nil {
 		glog.Error(err)
@@ -126,7 +126,7 @@ func GetArchiveMonthUrl(month *model.YearMonth) string {
 		glog.Error(err)
 		return ""
 	}
-	noteChild := path.Join(GetPageBase(),
+	noteChild := path.Join(GetArchiveBase(),
 		strconv.FormatInt(month.Year, 10)+"-"+strconv.FormatInt(month.Month, 10))
 	u, err := url.Parse(noteChild)
 	if err != nil {
