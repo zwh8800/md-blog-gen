@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/index"
 	"github.com/zwh8800/md-blog-gen/service"
@@ -22,8 +23,28 @@ func SiteMap(c *gin.Context) {
 		Updated: time.Now(),
 	})
 
+	s.Add(&sitemap.Item{
+		Link:    util.GetArchiveUrl(),
+		Updated: time.Now(),
+	})
+
+	monthList, _, err := service.NoteGroupByMonth()
+	if err != nil {
+		glog.Error(err)
+		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+
+	for _, month := range monthList {
+		s.Add(&sitemap.Item{
+			Link:    util.GetArchiveMonthUrl(month),
+			Updated: tim.Now()),
+		})
+	}
+
 	noteList, _, err := service.NotesWithoutTagOrderByTime(0, math.MaxInt64)
 	if err != nil {
+		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}
@@ -42,6 +63,7 @@ func SiteMap(c *gin.Context) {
 
 	tagList, err := service.Tags()
 	if err != nil {
+		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}
@@ -58,6 +80,7 @@ func SiteMap(c *gin.Context) {
 
 	_, maxPage, err := service.NotesWithoutTagOrderByTime(0, conf.Conf.Site.NotePerPage)
 	if err != nil {
+		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}

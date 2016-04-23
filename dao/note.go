@@ -123,6 +123,7 @@ func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
 func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
 	monthList := make([]*model.YearMonth, 0)
 
+	sess.Exec("set sql_mode = '';")
 	if _, err := sess.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
 		From(model.NoteTableName).Where("removed is false").
 		GroupBy("YEAR(timestamp)", "MONTH(timestamp)").

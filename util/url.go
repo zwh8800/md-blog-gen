@@ -7,6 +7,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/model"
 )
 
 func GetNoteBase() string {
@@ -102,4 +103,35 @@ func GetRssBase() string {
 
 func GetArchiveBase() string {
 	return "/" + conf.Conf.Site.ArchiveUrl
+}
+
+func GetArchiveUrl() string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := GetPageBase()
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}
+
+func GetArchiveMonthUrl(month *model.YearMonth) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := path.Join(GetPageBase(),
+		strconv.FormatInt(month.Year, 10)+"-"+strconv.FormatInt(month.Month, 10))
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
 }
