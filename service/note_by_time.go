@@ -20,6 +20,7 @@ func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag,
 	if err != nil {
 		return nil, nil, 0, err
 	}
+	// TODO: 把这个查十几次数据库的方法改掉!
 	tagListMap := make(map[int64][]*model.Tag)
 	for _, note := range noteList {
 		tags, err := dao.TagsByNoteId(sess, note.Id)
