@@ -17,3 +17,7 @@
 .qrcode-button:hover {
 	text-decoration: none;
 }
+
+.heart-color {
+	color: rgb(255,90,144);
+}
