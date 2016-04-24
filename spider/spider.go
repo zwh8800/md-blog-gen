@@ -156,8 +156,11 @@ func handleNotename(content *goquery.Selection, note *model.Note) {
 	a := content.Find("p a[href='/notename/']")
 	attr, ok := a.Attr("title")
 	if ok {
+		notename := transNotename(attr)
 		note.Notename.Valid = true
-		note.Notename.String = transNotename(attr)
+		note.Notename.String = notename
+
+		a.SetAttr("href", util.GetNoteUrlByNotename(notename))
 	} else {
 		note.Notename.Valid = false
 	}
