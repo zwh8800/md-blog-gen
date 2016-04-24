@@ -48,8 +48,16 @@ func Note(c *gin.Context) {
 		qrcodeCache[id] = qrcodeDataUrl
 	}
 
+	relatedNotes, err := service.RelatedNote(note.Id)
+	if err != nil {
+		glog.Error(err)
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+
 	c.Render(http.StatusOK, render.NewRender("note.html", gin.H{
 		"note":          note,
+		"relatedNotes":  relatedNotes,
 		"site":          conf.Conf.Site,
 		"qrcodeDataUrl": template.URL(qrcodeDataUrl),
 	}))

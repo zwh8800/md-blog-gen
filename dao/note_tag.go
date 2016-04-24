@@ -25,3 +25,11 @@ func DeleteNoteTagsNotExist(tx *dbr.Tx, note *model.Note, tagList []*model.Tag) 
 
 	return err
 }
+
+func TagIdsByNoteId(sess *dbr.Session, noteId int64) ([]int64, error) {
+	return sess.Select("tag_id").From(model.NoteTagTableName).Where("note_id = ?", noteId).ReturnInt64s()
+}
+
+func NoteIdsByTagIds(sess *dbr.Session, tagIds []int64) ([]int64, error) {
+	return sess.Select("note_id").From(model.NoteTagTableName).Where("tag_id in ?", tagIds).ReturnInt64s()
+}

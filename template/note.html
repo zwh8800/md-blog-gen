@@ -19,6 +19,7 @@
 </script>
 {{ end }}
 {{ define "content" }}
+{{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     {{ .note.UnescapedContent }}
     <div class="md-section-divider"></div><hr>
@@ -26,13 +27,30 @@
         <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
         <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
     </p>
-    <p>
-        <small>
-            本文使用
-            <a href="{{ .site.LicenseUrl }}" target="_blank">{{ .site.LicenseName }} <i class="icon-external-link"></i></a>
-            协议
-        </small>
-    </p>
+    <blockquote class="white-blockquote">
+        <p>
+            <small>
+                本文使用
+                <a href="{{ $site.LicenseUrl }}" target="_blank">{{ $site.LicenseName }} <i class="icon-external-link"></i></a>
+                协议
+            </small>
+        </p>
+    </blockquote>
+
+    {{ if .relatedNotes }}
+    <div class="md-section-divider"></div><hr>
+    <h2>相关文章</h2>
+    <ul>
+        {{ range $key, $value := .relatedNotes }}
+        <li>
+            <a href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
+                {{$value.Title}}
+            </a>
+            <small>({{ $value.FormattedDate }})</small>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
 
     <div class="md-section-divider"></div><hr>
     <div id="comment">
