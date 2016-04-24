@@ -120,6 +120,19 @@ func NotesByTagId(sess *dbr.Session, tagId int64) ([]*model.Note, error) {
 	return noteList, nil
 }
 
+func NotesByIds(sess *dbr.Session, noteIds []int64, limit int64) ([]*model.Note, error) {
+	noteList := make([]*model.Note, 0)
+	if len(noteIds) == 0 {
+		return noteList, nil
+	}
+	if _, err := sess.Select("*").From(model.NoteTableName).
+		Where("id in ?", noteIds).OrderBy("timestamp desc").
+		Limit(uint64(limit)).LoadStructs(&noteList); err != nil {
+		return nil, err
+	}
+	return noteList, nil
+}
+
 func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
 	monthList := make([]*model.YearMonth, 0)
 
