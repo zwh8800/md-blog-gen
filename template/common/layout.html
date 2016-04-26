@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html class="theme theme-white">
 <head>
-    <script type="text/javascript">
-        var _speedMark = new Date();
-    </script>
     <meta charset="utf-8">
     <meta http-equiv="content-language" content="{{ .site.Language }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -32,6 +29,16 @@
     <meta name="theme-color" content="#ffffff">
     {{ template "moreHeaders" . }}
     {{ template "moreStyles" . }}
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?6c7f531ec83c196be6f3c28ed0a74629";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body class="theme theme-white">
 {{ template "content" . }}
@@ -47,7 +54,6 @@
     });
 </script>
 {{ template "moreScripts" . }}
-<script type="text/javascript" src="https://tajs.qq.com/stats?sId=55811153" charset="UTF-8"></script>
 </body>
 </html>
 {{ end }}
