@@ -21,3 +21,38 @@
 .heart-color {
 	color: rgb(255,90,144);
 }
+
+.home {
+	position: fixed;
+	bottom: 113px;
+	right: 50%;
+	z-index: 19;
+	margin-right: 500px;
+}
+
+.home a {
+	display: block;
+	width: 38px;
+	height: 38px;
+	background-color: #ddd;
+	border-radius: 3px;
+	border: 0;
+	cursor: pointer;
+	position: relative;
+
+	text-align: center;
+}
+
+.home a i {
+	display: block;
+	padding-top: 5px;
+}
+
+.home a p {
+	margin: 0;
+	font-size: 12px;
+}
+
+a.no-color {
+	color: inherit;
+}
