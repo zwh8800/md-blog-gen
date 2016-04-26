@@ -36,5 +36,6 @@ func Index(c *gin.Context) {
 		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
 		"social":      conf.Conf.Social,
+		"prod":        conf.Conf.Env.Prod,
 	}))
 }
