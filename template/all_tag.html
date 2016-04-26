@@ -5,7 +5,6 @@
 <meta name="description" content="{{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
-<link href="/static/css/index.css" rel="stylesheet" media="screen">
 {{ end }}
 {{ define "moreScripts" }}
 {{ end }}
@@ -24,8 +23,6 @@
                 {{ range $key, $value := $noteList }}
                     <li>
                         <hr>
-                        <div class="md-section-divider">
-                        </div>
                         <h2>
                             <a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
                                 {{$value.Title}}
