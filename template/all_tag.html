@@ -5,18 +5,14 @@
 <meta name="description" content="{{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
-<link href="/static/css/index.css" rel="stylesheet" media="screen">
 {{ end }}
 {{ define "moreScripts" }}
 {{ end }}
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
-    <div class="md-section-divider"></div>
-    <div class="md-section-divider"></div>
     <h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
     <hr>
-    <div class="md-section-divider"></div>
     {{ $saveNoteListMap := .noteListMap }}
     {{ $saveTagListMap := .tagListMap }}
     {{ range $key, $value := .tagList}}
@@ -27,8 +23,6 @@
                 {{ range $key, $value := $noteList }}
                     <li>
                         <hr>
-                        <div class="md-section-divider">
-                        </div>
                         <h2>
                             <a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
                                 {{$value.Title}}
@@ -54,7 +48,7 @@
         {{ end }}
     {{ end }}
 
-    <div class="md-section-divider"></div><hr>
+    <hr>
     <a href="/"><i class="icon-home"></i> 返回</a>
 </div>
 {{ end }}

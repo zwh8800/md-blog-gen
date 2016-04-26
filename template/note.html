@@ -21,44 +21,54 @@
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
-    {{ .note.UnescapedContent }}
-    <div class="md-section-divider"></div><hr>
-    <p>
-        <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
-        <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
-    </p>
-    <blockquote class="white-blockquote">
+    <div class="note-content">
+        {{ .note.UnescapedContent }}
+    </div>
+    <div class="qr-license">
+        <hr>
         <p>
-            <small>
-                本文使用
-                <a href="{{ $site.LicenseUrl }}" target="_blank">{{ $site.LicenseName }} <i class="icon-external-link"></i></a>
-                协议
-                <i class="icon-heart heart-color"></i>
-            </small>
+            <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
+            <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
         </p>
-    </blockquote>
+        <blockquote class="white-blockquote">
+            <p>
+                <small>
+                    本文使用
+                    <a href="{{ $site.LicenseUrl }}" target="_blank">{{ $site.LicenseName }} <i class="icon-external-link"></i></a>
+                    协议
+                    <i class="icon-heart heart-color"></i>
+                </small>
+            </p>
+        </blockquote>
+    </div>
 
     {{ if .relatedNotes }}
-    <div class="md-section-divider"></div><hr>
-    <h2>相关文章</h2>
-    <ul>
-        {{ range $key, $value := .relatedNotes }}
-        <li>
-            <a href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
-                {{$value.Title}}
-            </a>
-            <small>({{ $value.FormattedDate }})</small>
-        </li>
-        {{ end }}
-    </ul>
-    {{ end }}
-
-    <div class="md-section-divider"></div><hr>
-    <div id="comment">
-        <div id="disqus_thread"><i class="icon-comments"></i> 评论加载中...</div>
+    <div class="related-note">
+        <hr>
+        <h2>相关文章</h2>
+        <ul>
+            {{ range $key, $value := .relatedNotes }}
+            <li>
+                <a href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
+                    {{$value.Title}}
+                </a>
+                <small>({{ $value.FormattedDate }})</small>
+            </li>
+            {{ end }}
+        </ul>
     </div>
-    <div class="md-section-divider"></div><hr>
-    <a href="/"><i class="icon-home"></i> 返回</a>
+    {{ end }}
+    <div class="comments">
+        <hr>
+        <div id="comment">
+            <div id="disqus_thread"><i class="icon-comments"></i> 评论加载中...</div>
+        </div>
+    </div>
+
+    <div class="control">
+        <hr>
+        <a href="/"><i class="icon-home"></i> 返回</a>
+    </div>
 </div>
 
 <div class="home">

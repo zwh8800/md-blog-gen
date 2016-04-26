@@ -1,0 +1,7 @@
+a.no-color {
+	color: inherit;
+}
+
+::selection {
+	background-color: #B8E5E6;
+}

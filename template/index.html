@@ -15,8 +15,6 @@
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
-    <div class="md-section-divider"></div>
-    <div class="md-section-divider"></div>
     <h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
     <a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
     {{ if .social.Github }}
@@ -36,8 +34,6 @@
         {{ $saveTagListMap := .tagListMap }}
         {{ range $key, $value := .noteList }}
         <hr>
-        <div class="md-section-divider">
-        </div>
         <h2>
             <a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
                 {{$value.Title}}
@@ -70,7 +66,7 @@
         <a href="/{{ $site.PageUrl }}/{{ .nextPage }}" class="next-page">下一页 <i class="icon-chevron-right"></i></a>
         {{end}}
     </div>
-    <div class="md-section-divider"></div><hr>
+    <hr>
     <p>
         <small>{{ $site.ICP }}</small><br>
         <a href="/sitemap.xml" target="_blank" title="sitemap.xml"><small><i class="icon-sitemap"></i></small></a>
