@@ -27,6 +27,7 @@ func AllTag(c *gin.Context) {
 		"noteListMap": noteListMap,
 		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
+		"prod":        conf.Conf.Env.Prod,
 	}))
 }
 
@@ -56,5 +57,6 @@ func Tag(c *gin.Context) {
 		"noteList":   noteList,
 		"tagListMap": tagListMap,
 		"site":       conf.Conf.Site,
+		"prod":       conf.Conf.Env.Prod,
 	}))
 }

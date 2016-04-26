@@ -60,5 +60,6 @@ func Note(c *gin.Context) {
 		"relatedNotes":  relatedNotes,
 		"site":          conf.Conf.Site,
 		"qrcodeDataUrl": template.URL(qrcodeDataUrl),
+		"prod":          conf.Conf.Env.Prod,
 	}))
 }

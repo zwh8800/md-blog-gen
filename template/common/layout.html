@@ -29,7 +29,8 @@
     <meta name="theme-color" content="#ffffff">
     {{ template "moreHeaders" . }}
     {{ template "moreStyles" . }}
-    
+
+    {{ if .prod }}
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -39,6 +40,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+    {{ end }}
 </head>
 <body class="theme theme-white">
 {{ template "content" . }}
