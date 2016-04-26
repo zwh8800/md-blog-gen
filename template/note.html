@@ -25,7 +25,7 @@
         {{ .note.UnescapedContent }}
     </div>
     <div class="qr-license">
-        <div class="md-section-divider"></div><hr>
+        <hr>
         <p>
             <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
             <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
@@ -44,7 +44,7 @@
 
     {{ if .relatedNotes }}
     <div class="related-note">
-        <div class="md-section-divider"></div><hr>
+        <hr>
         <h2>相关文章</h2>
         <ul>
             {{ range $key, $value := .relatedNotes }}
@@ -59,14 +59,14 @@
     </div>
     {{ end }}
     <div class="comments">
-        <div class="md-section-divider"></div><hr>
+        <hr>
         <div id="comment">
             <div id="disqus_thread"><i class="icon-comments"></i> 评论加载中...</div>
         </div>
     </div>
 
     <div class="control">
-        <div class="md-section-divider"></div><hr>
+        <hr>
         <a href="/"><i class="icon-home"></i> 返回</a>
     </div>
 </div>

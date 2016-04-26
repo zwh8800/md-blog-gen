@@ -14,11 +14,8 @@
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
-	<div class="md-section-divider"></div>
-	<div class="md-section-divider"></div>
 	<h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
 	<hr>
-	<div class="md-section-divider"></div>
 	<h2>
 		{{ .month.Year }} 年 {{ .month.Month }} 月
 		<a href="/{{ $site.ArchiveUrl }}/{{ .month.Year }}-{{ .month.Month }}"><i class="icon-double-angle-right"></i></a>
@@ -34,7 +31,7 @@
 		{{ end }}
 	</ul>
 
-	<div class="md-section-divider"></div><hr>
+	<hr>
 	<a href="/"><i class="icon-home"></i> 返回</a>
 </div>
 {{ end }}

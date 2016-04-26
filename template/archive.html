@@ -14,11 +14,8 @@
 {{ define "content" }}
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
-	<div class="md-section-divider"></div>
-	<div class="md-section-divider"></div>
 	<h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
 	<hr>
-	<div class="md-section-divider"></div>
 	{{ $noteListMap := .noteListMap }}
 	{{ range $key, $value := .monthList }}
 	<h2>
@@ -38,7 +35,7 @@
 	</ul>
 	{{ end }}
 
-	<div class="md-section-divider"></div><hr>
+	<hr>
 	<a href="/"><i class="icon-home"></i> 返回</a>
 </div>
 {{ end }}
