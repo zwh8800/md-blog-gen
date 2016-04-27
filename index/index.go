@@ -11,6 +11,7 @@ import (
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func Index(c *gin.Context) {
@@ -37,5 +38,6 @@ func Index(c *gin.Context) {
 		"site":        conf.Conf.Site,
 		"social":      conf.Conf.Social,
 		"prod":        conf.Conf.Env.Prod,
+		"haha":        util.HahaGenarate(),
 	}))
 }
