@@ -16,6 +16,7 @@
 {{ $site := .site }}
 <div id="wmd-preview" class="wmd-preview wmd-preview-full-reader">
     <h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
+    <h6>{{ .haha }}</h6>
     <a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
     {{ if .social.Github }}
     <a href="{{ .social.Github }}" target="_blank" title="github"><i class="icon-github"></i></a>

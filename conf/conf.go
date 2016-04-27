@@ -46,6 +46,9 @@ type config struct {
 		Twitter  string
 		Linkedin string
 	}
+	Haha struct {
+		Data []string
+	}
 }
 
 var Conf config
