@@ -5,3 +5,7 @@ a.no-color {
 ::selection {
 	background-color: #B8E5E6;
 }
+
+::-moz-selection {
+	background-color: #B8E5E6;
+}
