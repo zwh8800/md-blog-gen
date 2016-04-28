@@ -4,7 +4,7 @@ USE `mdblog`;
 --
 -- Host: 127.0.0.1    Database: mdblog
 -- ------------------------------------------------------
--- Server version	5.7.11
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,17 +25,21 @@ DROP TABLE IF EXISTS `Note`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Note` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `unique_id` int(10) unsigned NOT NULL,
-  `title` varchar(240) NOT NULL,
-  `url` varchar(240) NOT NULL,
-  `content` mediumtext NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `removed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `unique_id` int(10) NOT NULL,
+  `notename` varchar(80) DEFAULT NULL,
+  `title` varchar(240) DEFAULT NULL,
+  `url` varchar(240) DEFAULT NULL,
+  `content` mediumtext,
+  `timestamp` datetime DEFAULT NULL,
+  `removed` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_id_UNIQUE` (`unique_id`),
+  UNIQUE KEY `notename_UNIQUE` (`notename`),
   KEY `timestamp` (`timestamp`),
   KEY `unique_id` (`unique_id`),
-  KEY `removed` (`removed`)
+  KEY `removed` (`removed`),
+  KEY `notename` (`notename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -77,4 +81,4 @@ CREATE TABLE `Tag` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-05 23:01:29
+-- Dump completed on 2016-04-28  0:29:58
