@@ -4,7 +4,7 @@
 文章归档 {{ .month.Year }}-{{ .month.Month }} | {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
-<meta name="description" content="{{ .site.Description }}">
+<meta name="description" content="{{ .month.Year }} 年{{ .month.Month }} 月的所有文章 | {{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
 {{ end }}
