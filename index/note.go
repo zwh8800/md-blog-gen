@@ -31,6 +31,8 @@ func Note(c *gin.Context) {
 		note, err = service.NoteById(id)
 	} else {
 		note, err = service.NoteByNotename(notename)
+		// used by qrcode below
+		id = note.Id
 	}
 
 	if err != nil {
