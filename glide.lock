@@ -1,17 +1,17 @@
-hash: 0411e9cd5840368e07ce6a90be2c8a78fe6aeb88d391d7aa8b84a4bfb2791862
-updated: 2016-04-12T23:07:23.617904014+08:00
+hash: 029ba5d525b34a91340ac2d454876526ff3f1ba6fbe40fa889c945972125257c
+updated: 2016-04-30T11:57:46.888353623+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
 - name: github.com/boombuler/barcode
-  version: 63f4aa2c46ebfac93952223a52df876f30b064c0
+  version: d1c739eed5fe6b2198220f20403e60584ecffadb
   subpackages:
   - qr
   - utils
 - name: github.com/chonglou/sitemap
   version: d07d4378937c751a8c1c505f7c782412a550afcc
 - name: github.com/gin-gonic/gin
-  version: 72ffff6e442e76b3109322d71a2b64a1ba0fcf74
+  version: 542be2fe77724f800fcab7eb6c01a4e597fb8506
   subpackages:
   - binding
   - render
@@ -31,16 +31,18 @@ imports:
   version: 441264de03a8117ed530ae8e049d8f601a33a099
 - name: github.com/manucorporat/sse
   version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+- name: github.com/mozillazg/go-pinyin
+  version: c695601bcb2add4b5ac7752fc26ad248fec91f50
 - name: github.com/PuerkitoBio/goquery
   version: 2e29ea41f0d13f4a303c75553f4eeadddc7a4c56
 - name: github.com/robfig/cron
   version: 0f39cf7ebc65a602f45692f9894bd6a193faf8fa
-- name: golang.org/x/net
-  version: f315505cf3349909cdf013ea56690da34e96a451
-  subpackages:
-  - context
-  - html
-  - html/atom
+- name: golang.org/x/net/context
+  version: ""
+- name: golang.org/x/net/html
+  version: ""
+- name: golang.org/x/net/html/atom
+  version: ""
 - name: gopkg.in/gcfg.v1
   version: 083575c3955c85df16fe9590cceab64d03f5eb6e
   subpackages:
@@ -49,4 +51,6 @@ imports:
   - types
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
 devImports: []

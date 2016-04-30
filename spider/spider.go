@@ -2,8 +2,10 @@ package spider
 
 import (
 	"bytes"
+	"encoding/json"
 	"html/template"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -15,6 +17,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/golang/glog"
+	"github.com/mozillazg/go-pinyin"
 
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/model"
@@ -152,6 +155,61 @@ func transNotename(notename string) string {
 	return url.QueryEscape(notename)
 }
 
+type youdaoResponse struct {
+	Translation []string `json:"translation"`
+	Query       string   `json:"query"`
+	ErrorCode   int      `json:"errorCode"`
+}
+
+func translateTitleToNotename(title string) string {
+	if conf.Conf.Youdao.ApiUrl == "" {
+		return ""
+	}
+
+	u, err := url.Parse(conf.Conf.Youdao.ApiUrl)
+	if err != nil {
+		glog.Errorln(err)
+		return ""
+	}
+	q := u.Query()
+	q.Set("q", title)
+	u.RawQuery = q.Encode()
+
+	resp, err := http.Get(u.String())
+	if err != nil {
+		glog.Errorln(err)
+		return ""
+	}
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		glog.Errorln(err)
+		return ""
+	}
+	var youdaoData youdaoResponse
+
+	if err := json.Unmarshal(data, &youdaoData); err != nil {
+		glog.Errorln(err)
+		return ""
+	}
+	if len(youdaoData.Translation) == 0 {
+		glog.Errorln("youdaoData.Translation length is 0")
+		return ""
+	}
+
+	return transNotename(youdaoData.Translation[0])
+}
+
+func pinyinNotename(title string) string {
+	py := pinyin.Pinyin(title, pinyin.NewArgs())
+	sb := &bytes.Buffer{}
+	for _, p := range py {
+		sb.WriteString(p[0])
+		sb.WriteRune(' ')
+	}
+	return transNotename(sb.String())
+}
+
 func handleNotename(content *goquery.Selection, note *model.Note) {
 	a := content.Find("p a[href='/notename/']")
 	attr, ok := a.Attr("title")
@@ -161,6 +219,12 @@ func handleNotename(content *goquery.Selection, note *model.Note) {
 		note.Notename.String = notename
 
 		a.SetAttr("href", util.GetNoteUrlByNotename(notename))
+	} else if notename := translateTitleToNotename(note.Title); notename != "" {
+		note.Notename.Valid = true
+		note.Notename.String = notename
+	} else if notename := pinyinNotename(note.Title); notename != "" {
+		note.Notename.Valid = true
+		note.Notename.String = notename
 	} else {
 		note.Notename.Valid = false
 	}

@@ -46,6 +46,9 @@ type config struct {
 		Twitter  string
 		Linkedin string
 	}
+	Youdao struct {
+		ApiUrl string
+	}
 	Haha struct {
 		Data []string
 	}

@@ -12,3 +12,4 @@ import:
 - package: github.com/gorilla/feeds
 - package: github.com/robfig/cron
 - package: gopkg.in/gcfg.v1
+- package: github.com/mozillazg/go-pinyin
