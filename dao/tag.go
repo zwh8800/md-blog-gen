@@ -43,6 +43,31 @@ func TagsByNoteId(sess *dbr.Session, noteId int64) ([]*model.Tag, error) {
 	return tagList, nil
 }
 
+func TagsByNoteIds(sess *dbr.Session, noteIds []int64) (map[int64][]*model.Tag, error) {
+	noteIdTagList := make([]*model.NoteIdTag, 0)
+
+	if _, err := sess.Select("NoteTag.note_id note_id", "Tag.id tag_id", "Tag.Name tag_name").
+		From(model.TagTableName).Join(model.NoteTagTableName, "Tag.id = NoteTag.tag_id").
+		Where("note_id in ?", noteIds).LoadStructs(&noteIdTagList); err != nil {
+		return nil, err
+	}
+
+	tagListMap := make(map[int64][]*model.Tag)
+	for _, noteIdTag := range noteIdTagList {
+		tagList, ok := tagListMap[noteIdTag.NoteId]
+		if !ok {
+			tagList = make([]*model.Tag, 0)
+		}
+		tagList = append(tagList, &model.Tag{
+			Id:   noteIdTag.TagId,
+			Name: noteIdTag.TagName,
+		})
+		tagListMap[noteIdTag.NoteId] = tagList
+	}
+
+	return tagListMap, nil
+}
+
 func SelectTagOrInsertIfNotExists(tx *dbr.Tx, tag *model.Tag) (*model.Tag, error) {
 	found := true
 	if err := tx.Select("*").From(model.TagTableName).
