@@ -201,8 +201,21 @@ func translateTitleToNotename(title string) string {
 		glog.Errorln("youdaoData.Translation length is 0")
 		return ""
 	}
+	if !isAscii(youdaoData.Translation[0]) {
+		glog.Errorln("youdaoData.Translation is not pure ascii")
+		return ""
+	}
 
 	return transNotename(youdaoData.Translation[0])
+}
+
+func isAscii(s string) bool {
+	for _, r := range s {
+		if !unicode.Is(unicode.ASCII_Hex_Digit, r) {
+			return false
+		}
+	}
+	return true
 }
 
 func pinyinNotename(title string) string {
