@@ -136,6 +136,7 @@ func NotesByIds(sess *dbr.Session, noteIds []int64, limit int64) ([]*model.Note,
 func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
 	monthList := make([]*model.YearMonth, 0)
 
+	// TODO: 把E0429 21:53:46.451961       1 sitemap.go:33] Error 1055: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'mdblog.Note.timestamp' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by 这个错误改掉
 	sess.Exec("set sql_mode = '';")
 	if _, err := sess.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
 		From(model.NoteTableName).Where("removed is false").
