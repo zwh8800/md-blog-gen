@@ -103,6 +103,14 @@ func downloadImg(src string) (string, error) {
 	defer resp.Body.Close()
 
 	outFilename := path.Join(conf.Conf.Site.StaticUrl, "img", util.MD5(src))
+	if ext := path.Ext(src); ext == ".jpg" ||
+		ext == ".png" ||
+		ext == ".gif" ||
+		ext == ".jpeg" ||
+		ext == ".tif" ||
+		ext == ".tiff" {
+		outFilename = outFilename + ext
+	}
 
 	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
