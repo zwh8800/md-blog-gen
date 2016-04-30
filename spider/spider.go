@@ -155,6 +155,7 @@ func transNotename(notename string) string {
 	return url.QueryEscape(notename)
 }
 
+// 有道API: http://fanyi.youdao.com/openapi?path=data-mode
 type youdaoResponse struct {
 	Translation []string `json:"translation"`
 	Query       string   `json:"query"`
