@@ -15,8 +15,8 @@ import (
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
-func Rss(c *gin.Context) {
-	feed := feeds.Feed{
+func generateFeed() *feeds.Feed {
+	feed := &feeds.Feed{
 		Title:       conf.Conf.Site.Name,
 		Link:        &feeds.Link{Href: conf.Conf.Site.BaseUrl},
 		Description: conf.Conf.Site.Name,
@@ -28,8 +28,7 @@ func Rss(c *gin.Context) {
 	noteList, _, _, err := service.NotesOrderByTime(1, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
-		index.ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
-		return
+		return nil
 	}
 	for _, note := range noteList {
 		feed.Items = append(feed.Items, &feeds.Item{
@@ -40,9 +39,33 @@ func Rss(c *gin.Context) {
 			Created:     note.Timestamp,
 		})
 	}
+	return feed
+}
+
+func Rss(c *gin.Context) {
+	feed := generateFeed()
+	if feed == nil {
+		index.ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		return
+	}
 
 	util.WriteContentType(c.Writer, []string{"application/rss+xml; charset=utf-8"})
 	if err := feed.WriteRss(c.Writer); err != nil {
+		glog.Error(err)
+		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+}
+
+func Atom(c *gin.Context) {
+	feed := generateFeed()
+	if feed == nil {
+		index.ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		return
+	}
+
+	util.WriteContentType(c.Writer, []string{"application/xml; charset=utf-8"})
+	if err := feed.WriteAtom(c.Writer); err != nil {
 		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
