@@ -192,6 +192,10 @@ func translateTitleToNotename(title string) string {
 		glog.Errorln(err)
 		return ""
 	}
+	if youdaoData.ErrorCode != 0 {
+		glog.Errorln("youdaoData.ErrorCode is ", youdaoData.ErrorCode)
+		return ""
+	}
 	if len(youdaoData.Translation) == 0 {
 		glog.Errorln("youdaoData.Translation length is 0")
 		return ""
