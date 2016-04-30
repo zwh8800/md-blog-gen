@@ -26,14 +26,13 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(util.GetArchiveBase(), index.Archive)
 		indexGroup.GET(path.Join(util.GetArchiveBase(), ":month"), index.ArchiveMonth)
 	}
-	rssGroup := r.Group(util.GetRssBase())
-	{
-		rssGroup.GET("", rss.Rss)
-	}
-	sitemapGroup := r.Group("/sitemap.xml")
-	{
-		sitemapGroup.GET("", sitemap.SiteMap)
-	}
+
+	r.GET(util.GetRssBase(), rss.Rss)
+	r.GET("/.rss", rss.Rss)
+	r.GET("/feed", rss.Rss)
+	r.GET("/atom", rss.Atom)
+
+	r.GET("/sitemap.xml", sitemap.SiteMap)
 
 	r.Static("/static", "./static")
 }
