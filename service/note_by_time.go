@@ -1,8 +1,6 @@
 package service
 
 import (
-	"github.com/golang/glog"
-
 	"github.com/zwh8800/md-blog-gen/dao"
 	"github.com/zwh8800/md-blog-gen/model"
 )
@@ -20,15 +18,14 @@ func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag,
 	if err != nil {
 		return nil, nil, 0, err
 	}
-	// TODO: 把这个查十几次数据库的方法改掉!
-	tagListMap := make(map[int64][]*model.Tag)
+
+	noteIdList := make([]int64, 0)
 	for _, note := range noteList {
-		tags, err := dao.TagsByNoteId(sess, note.Id)
-		if err != nil {
-			glog.Warning(err)
-			tags = make([]*model.Tag, 0)
-		}
-		tagListMap[note.Id] = tags
+		noteIdList = append(noteIdList, note.Id)
+	}
+	tagListMap, err := dao.TagsByNoteIds(sess, noteIdList)
+	if err != nil {
+		return nil, nil, 0, err
 	}
 	return noteList, tagListMap, maxPage, nil
 }
