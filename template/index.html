@@ -4,7 +4,7 @@
 {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
-<meta name="description" content="{{ .site.Description }}">
+<meta name="description" content="{{ .site.Description }}{{ if .noteList }} | 最新文章: {{ $latest := index .noteList 0 }}{{ $latest.Title }}{{ end }}">
 <meta name="sogou_site_verification" content="uNRJld8hel"/>
 {{ end }}
 {{ define "moreStyles" }}
