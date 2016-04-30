@@ -1,8 +1,6 @@
 package service
 
 import (
-	"github.com/golang/glog"
-
 	"github.com/zwh8800/md-blog-gen/dao"
 	"github.com/zwh8800/md-blog-gen/model"
 )
@@ -17,14 +15,14 @@ func NotesByTagId(id int64) (*model.Tag, []*model.Note, map[int64][]*model.Tag, 
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	tagListMap := make(map[int64][]*model.Tag)
+
+	noteIdList := make([]int64, 0)
 	for _, note := range noteList {
-		tags, err := dao.TagsByNoteId(sess, note.Id)
-		if err != nil {
-			glog.Warning(err)
-			tags = make([]*model.Tag, 0)
-		}
-		tagListMap[note.Id] = tags
+		noteIdList = append(noteIdList, note.Id)
+	}
+	tagListMap, err := dao.TagsByNoteIds(sess, noteIdList)
+	if err != nil {
+		return nil, nil, nil, err
 	}
 	return tag, noteList, tagListMap, nil
 }
@@ -39,14 +37,14 @@ func NotesByTagName(name string) (*model.Tag, []*model.Note, map[int64][]*model.
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	tagListMap := make(map[int64][]*model.Tag)
+
+	noteIdList := make([]int64, 0)
 	for _, note := range noteList {
-		tags, err := dao.TagsByNoteId(sess, note.Id)
-		if err != nil {
-			glog.Warning(err)
-			tags = make([]*model.Tag, 0)
-		}
-		tagListMap[note.Id] = tags
+		noteIdList = append(noteIdList, note.Id)
+	}
+	tagListMap, err := dao.TagsByNoteIds(sess, noteIdList)
+	if err != nil {
+		return nil, nil, nil, err
 	}
 	return tag, noteList, tagListMap, nil
 }
@@ -57,8 +55,9 @@ func AllNotesTags() ([]*model.Tag, map[int64][]*model.Note, map[int64][]*model.T
 	if err != nil {
 		return nil, nil, nil, err
 	}
+
+	noteIdList := make([]int64, 0)
 	noteListMap := make(map[int64][]*model.Note)
-	tagListMap := make(map[int64][]*model.Tag)
 	for i, tag := range tagList {
 		noteList, err := dao.NotesByTagId(sess, tag.Id)
 		if err != nil {
@@ -70,17 +69,12 @@ func AllNotesTags() ([]*model.Tag, map[int64][]*model.Note, map[int64][]*model.T
 		}
 		noteListMap[tag.Id] = noteList
 		for _, note := range noteList {
-			if _, exists := tagListMap[note.Id]; exists {
-				continue
-			}
-
-			tags, err := dao.TagsByNoteId(sess, note.Id)
-			if err != nil {
-				glog.Warning(err)
-				tags = make([]*model.Tag, 0)
-			}
-			tagListMap[note.Id] = tags
+			noteIdList = append(noteIdList, note.Id)
 		}
+	}
+	tagListMap, err := dao.TagsByNoteIds(sess, noteIdList)
+	if err != nil {
+		return nil, nil, nil, err
 	}
 
 	return tagList, noteListMap, tagListMap, nil
