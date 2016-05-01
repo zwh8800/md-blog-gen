@@ -25,6 +25,10 @@ import (
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
+func init() {
+	translateCache = make(map[string]string)
+}
+
 func findBlogTagUl(doc *goquery.Document) *goquery.Selection {
 	var result *goquery.Selection
 	doc.Find("#file-list").Children().Each(func(i int, s *goquery.Selection) {
@@ -161,13 +165,32 @@ func transNotename(notename string) string {
 }
 
 // 有道API: http://fanyi.youdao.com/openapi?path=data-mode
+var translateCache map[string]string
+var translateCacheTime = 0
+
+const translateCacheClearTime = 100
+
 type youdaoResponse struct {
 	Translation []string `json:"translation"`
 	Query       string   `json:"query"`
 	ErrorCode   int      `json:"errorCode"`
 }
 
+func tryClearCache() {
+	translateCacheTime++
+	if translateCacheTime > translateCacheClearTime {
+		translateCacheTime = 0
+		translateCache = make(map[string]string)
+	}
+}
+
 func translateTitleToNotename(title string) string {
+	tryClearCache()
+
+	if notename, ok := translateCache[title]; ok {
+		return notename
+	}
+
 	if conf.Conf.Youdao.ApiUrl == "" {
 		return ""
 	}
@@ -212,7 +235,9 @@ func translateTitleToNotename(title string) string {
 		return ""
 	}
 
-	return transNotename(youdaoData.Translation[0])
+	notename := transNotename(youdaoData.Translation[0])
+	translateCache[title] = notename
+	return notename
 }
 
 func isAscii(s string) bool {
