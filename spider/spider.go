@@ -152,15 +152,11 @@ func handleTime(content *goquery.Selection, timestamp time.Time) {
 func transNotename(notename string) string {
 	notename = strings.TrimSpace(notename)
 	notename = strings.ToLower(notename)
-	notename = strings.Map(func(r rune) rune {
-		if unicode.IsSpace(r) {
-			return '-'
-		} else {
-			return r
-		}
-	}, notename)
+	notename = strings.Join(strings.FieldsFunc(notename, func(r rune) bool {
+		return !unicode.Is(unicode.Latin, r)
+	}), "-")
 
-	return url.QueryEscape(notename)
+	return notename
 }
 
 // 有道API: http://fanyi.youdao.com/openapi?path=data-mode
@@ -210,7 +206,8 @@ func translateTitleToNotename(title string) string {
 		return ""
 	}
 	if !isAscii(youdaoData.Translation[0]) {
-		glog.Errorln("youdaoData.Translation is not pure ascii")
+		glog.Errorln("youdaoData.Translation is not pure ascii:",
+			youdaoData.Translation[0])
 		return ""
 	}
 
@@ -219,7 +216,7 @@ func translateTitleToNotename(title string) string {
 
 func isAscii(s string) bool {
 	for _, r := range s {
-		if !unicode.Is(unicode.ASCII_Hex_Digit, r) {
+		if r > unicode.MaxASCII {
 			return false
 		}
 	}
