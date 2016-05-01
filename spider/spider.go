@@ -153,10 +153,11 @@ func transNotename(notename string) string {
 	notename = strings.TrimSpace(notename)
 	notename = strings.ToLower(notename)
 	notename = strings.Join(strings.FieldsFunc(notename, func(r rune) bool {
-		return !unicode.Is(unicode.Latin, r)
+		return !(unicode.IsLetter(r) ||
+			unicode.IsNumber(r))
 	}), "-")
 
-	return notename
+	return strings.ToLower(notename)
 }
 
 // 有道API: http://fanyi.youdao.com/openapi?path=data-mode
