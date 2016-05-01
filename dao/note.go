@@ -38,7 +38,7 @@ func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
 		}
 	} else {
 		result, err := tx.InsertInto(model.NoteTableName).Columns("unique_id",
-			"title", "url", "content", "timestamp").Record(note).Exec()
+			"notename", "title", "url", "content", "timestamp").Record(note).Exec()
 		if err != nil {
 			return err
 		}

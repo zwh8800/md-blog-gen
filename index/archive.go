@@ -26,6 +26,7 @@ func Archive(c *gin.Context) {
 		"monthList":   monthList,
 		"noteListMap": noteListMap,
 		"site":        conf.Conf.Site,
+		"prod":        conf.Conf.Env.Prod,
 	}))
 }
 
