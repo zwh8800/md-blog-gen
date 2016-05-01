@@ -31,15 +31,14 @@ func Note(c *gin.Context) {
 		note, err = service.NoteById(id)
 	} else {
 		note, err = service.NoteByNotename(notename)
-		// used by qrcode below
-		id = note.Id
 	}
-
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
+	// used by qrcode below
+	id = note.Id
 
 	qrcodeDataUrl, ok := qrcodeCache[id]
 	if !ok {
