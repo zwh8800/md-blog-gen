@@ -53,6 +53,5 @@ func ArchiveMonth(c *gin.Context) {
 		"month":    month,
 		"noteList": noteList,
 		"site":     conf.Conf.Site,
-		"prod":     conf.Conf.Env.Prod,
 	}))
 }
