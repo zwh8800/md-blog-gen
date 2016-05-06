@@ -14,3 +14,8 @@ func Tags() ([]*model.Tag, error) {
 
 	return tagList, nil
 }
+
+func TagsByNoteId(noteId int64) ([]*model.Tag, error) {
+	sess := dbConn.NewSession(nil)
+	return dao.TagsByNoteId(sess, noteId)
+}

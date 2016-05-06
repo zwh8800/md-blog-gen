@@ -4,6 +4,7 @@
 {{ .note.Title }} | {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
+<meta name="keywords" content="{{ range $key, $value := .tags }}{{$value.Name}},{{ end }}">
 <meta name="description" content="{{ .note.Preview }}">
 {{ end }}
 {{ define "moreStyles" }}
