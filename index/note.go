@@ -56,8 +56,16 @@ func Note(c *gin.Context) {
 		return
 	}
 
+	tags, err := service.TagsByNoteId(id)
+	if err != nil {
+		glog.Error(err)
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+
 	c.Render(http.StatusOK, render.NewRender("note.html", gin.H{
 		"note":          note,
+		"tags":          tags,
 		"relatedNotes":  relatedNotes,
 		"site":          conf.Conf.Site,
 		"qrcodeDataUrl": template.URL(qrcodeDataUrl),
