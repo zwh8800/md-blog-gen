@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -14,32 +13,14 @@ import (
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/crontab"
 	"github.com/zwh8800/md-blog-gen/route"
-	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/spider"
 )
 
 func main() {
 	defer glog.Flush()
-	configure()
 	startServer()
 	handleSignal()
 	glog.Infoln("gracefully shutdown")
-}
-
-func configure() {
-	configFilename := flag.String("config", "md-blog-gen.gcfg", "specify a config file")
-	flag.Parse()
-	glog.Infoln("configuring...")
-
-	if err := conf.ReadConf(*configFilename); err != nil {
-		glog.Fatalf("error occored: %s", err)
-		panic(err)
-	}
-
-	if err := service.InitDb(); err != nil {
-		glog.Fatalf("error occored: %s", err)
-		panic(err)
-	}
 }
 
 func startServer() {
