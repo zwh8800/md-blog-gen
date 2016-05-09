@@ -1,8 +1,10 @@
 package conf
 
 import (
+	"flag"
 	"path/filepath"
 
+	"github.com/golang/glog"
 	"gopkg.in/gcfg.v1"
 )
 
@@ -66,4 +68,15 @@ func ReadConf(filename string) error {
 		}
 	}
 	return gcfg.ReadFileInto(&Conf, absFile)
+}
+
+func init() {
+	configFilename := flag.String("config", "md-blog-gen.gcfg", "specify a config file")
+	flag.Parse()
+	glog.Infoln("configuring...")
+
+	if err := ReadConf(*configFilename); err != nil {
+		glog.Fatalf("error occored: %s", err)
+		panic(err)
+	}
 }
