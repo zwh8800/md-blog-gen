@@ -12,6 +12,7 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func Archive(c *gin.Context) {
@@ -26,7 +27,9 @@ func Archive(c *gin.Context) {
 		"monthList":   monthList,
 		"noteListMap": noteListMap,
 		"site":        conf.Conf.Site,
+		"social":      conf.Conf.Social,
 		"prod":        conf.Conf.Env.Prod,
+		"haha":        util.HahaGenarate(),
 	}))
 }
 
@@ -54,6 +57,8 @@ func ArchiveMonth(c *gin.Context) {
 		"month":    month,
 		"noteList": noteList,
 		"site":     conf.Conf.Site,
+		"social":   conf.Conf.Social,
 		"prod":     conf.Conf.Env.Prod,
+		"haha":     util.HahaGenarate(),
 	}))
 }

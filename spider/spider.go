@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"runtime/debug"
 	"strconv"
 	"strings"
 	"time"
@@ -313,6 +314,12 @@ func findNoteContent(note *model.Note) {
 
 func Go() {
 	glog.Info("spider started")
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorln("panic in spider recovered:", err, string(debug.Stack()))
+		}
+	}()
+
 	doc, err := goquery.NewDocument(conf.Conf.Spider.StartUrl)
 	if err != nil {
 		glog.Errorln(err)

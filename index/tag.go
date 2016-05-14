@@ -12,6 +12,7 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/render"
 	"github.com/zwh8800/md-blog-gen/service"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func AllTag(c *gin.Context) {
@@ -27,7 +28,9 @@ func AllTag(c *gin.Context) {
 		"noteListMap": noteListMap,
 		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
+		"social":      conf.Conf.Social,
 		"prod":        conf.Conf.Env.Prod,
+		"haha":        util.HahaGenarate(),
 	}))
 }
 
@@ -57,6 +60,8 @@ func Tag(c *gin.Context) {
 		"noteList":   noteList,
 		"tagListMap": tagListMap,
 		"site":       conf.Conf.Site,
+		"social":     conf.Conf.Social,
 		"prod":       conf.Conf.Env.Prod,
+		"haha":       util.HahaGenarate(),
 	}))
 }
