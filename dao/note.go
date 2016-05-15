@@ -6,14 +6,25 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
-func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
+func CheckIfNotenameDuplicated(tx *dbr.Tx, note *model.Note) (bool, error) {
 	if _, err := tx.Select("unique_id").From(model.NoteTableName).
 		Where("not unique_id = ? and notename = ?",
 		note.UniqueId, note.Notename.String).ReturnInt64(); err != nil {
 		if err != dbr.ErrNotFound {
-			return err
+			return false, err
 		}
+		return false, nil
 	} else {
+		return true, nil
+	}
+}
+
+func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
+	dup, err := CheckIfNotenameDuplicated(tx, note)
+	if err != nil {
+		return err
+	}
+	if dup {
 		note.Notename.String = ""
 		note.Notename.Valid = false
 	}
@@ -133,27 +144,16 @@ func NotesByIds(sess *dbr.Session, noteIds []int64, limit int64) ([]*model.Note,
 	return noteList, nil
 }
 
-func NoteGroupByMonth(sess *dbr.Session) ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
+func YearMonthList(sess *dbr.Session, isAsc bool) ([]*model.YearMonth, error) {
 	monthList := make([]*model.YearMonth, 0)
 
 	if _, err := sess.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
 		From(model.NoteTableName).Where("removed is false").
 		GroupBy("YEAR(timestamp)", "MONTH(timestamp)").
-		OrderBy("YEAR(timestamp), MONTH(timestamp) desc").LoadStructs(&monthList); err != nil {
-		return nil, nil, err
+		OrderDir("YEAR(timestamp), MONTH(timestamp)", isAsc).LoadStructs(&monthList); err != nil {
+		return nil, err
 	}
-
-	noteListMap := make(map[*model.YearMonth][]*model.Note, len(monthList))
-	for _, month := range monthList {
-		noteList, err := NotesMonth(sess, month)
-		if err != nil {
-			return nil, nil, err
-
-		}
-		noteListMap[month] = noteList
-	}
-
-	return monthList, noteListMap, nil
+	return monthList, nil
 }
 
 func NotesMonth(sess *dbr.Session, month *model.YearMonth) ([]*model.Note, error) {

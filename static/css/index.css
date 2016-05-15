@@ -1,13 +1,3 @@
-.page {
-	overflow: hidden;
-}
-.page .prev-page {
-	float: left;
-}
-.page .next-page {
-	float: right;
-}
-
 .note-list {
 	min-height: 65vh;
 }
