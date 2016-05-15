@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gocraft/dbr"
 	"github.com/golang/glog"
 
 	"github.com/zwh8800/md-blog-gen/conf"
@@ -34,7 +35,11 @@ func Note(c *gin.Context) {
 	}
 	if err != nil {
 		glog.Error(err)
-		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		if err == dbr.ErrNotFound {
+			ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		} else {
+			ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		}
 		return
 	}
 	// used by qrcode below
