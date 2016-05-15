@@ -6,14 +6,25 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
-func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
+func CheckIfNotenameDuplicated(tx *dbr.Tx, note *model.Note) (bool, error) {
 	if _, err := tx.Select("unique_id").From(model.NoteTableName).
 		Where("not unique_id = ? and notename = ?",
 		note.UniqueId, note.Notename.String).ReturnInt64(); err != nil {
 		if err != dbr.ErrNotFound {
-			return err
+			return false, err
 		}
+		return false, nil
 	} else {
+		return true, nil
+	}
+}
+
+func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
+	dup, err := CheckIfNotenameDuplicated(tx, note)
+	if err != nil {
+		return err
+	}
+	if dup {
 		note.Notename.String = ""
 		note.Notename.Valid = false
 	}
