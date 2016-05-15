@@ -53,6 +53,15 @@
 			</ul>
 		</div>
 	</div>
+	<div class="page">
+		<hr>
+		{{if .prevMonth}}
+		<a href="/{{ $site.ArchiveUrl }}/{{ .prevMonth.Year }}-{{ .prevMonth.Month }}" class="prev-page"><i class="icon-chevron-left"></i> {{ .prevMonth.Year }} 年 {{ .prevMonth.Month }} 月</a>
+		{{end}}
+		{{if .nextMonth}}
+		<a href="/{{ $site.ArchiveUrl }}/{{ .nextMonth.Year }}-{{ .nextMonth.Month }}" class="next-page">{{ .nextMonth.Year }} 年 {{ .nextMonth.Month }} 月<i class="icon-chevron-right"></i></a>
+		{{end}}
+	</div>
 
 	<div class="footer">
 		<hr>

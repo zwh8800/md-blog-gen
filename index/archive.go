@@ -53,12 +53,21 @@ func ArchiveMonth(c *gin.Context) {
 		return
 	}
 
+	prev, next, err := service.PrevNextMonth(month)
+	if err != nil {
+		glog.Error(err)
+		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		return
+	}
+
 	c.Render(http.StatusOK, render.NewRender("archive_month.html", gin.H{
-		"month":    month,
-		"noteList": noteList,
-		"site":     conf.Conf.Site,
-		"social":   conf.Conf.Social,
-		"prod":     conf.Conf.Env.Prod,
-		"haha":     util.HahaGenarate(),
+		"prevMonth": prev,
+		"nextMonth": next,
+		"month":     month,
+		"noteList":  noteList,
+		"site":      conf.Conf.Site,
+		"social":    conf.Conf.Social,
+		"prod":      conf.Conf.Env.Prod,
+		"haha":      util.HahaGenarate(),
 	}))
 }

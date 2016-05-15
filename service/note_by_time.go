@@ -66,7 +66,51 @@ func NoteIdsOrderByTime(page, limit int64) ([]int64, int64, error) {
 
 func NoteGroupByMonth() ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
 	sess := dbConn.NewSession(nil)
-	return dao.NoteGroupByMonth(sess)
+	monthList, err := dao.YearMonthList(sess, false)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	noteListMap := make(map[*model.YearMonth][]*model.Note, len(monthList))
+	for _, month := range monthList {
+		noteList, err := dao.NotesMonth(sess, month)
+		if err != nil {
+			return nil, nil, err
+		}
+		noteListMap[month] = noteList
+	}
+
+	return monthList, noteListMap, nil
+}
+
+func findMonth(monthList []*model.YearMonth, item *model.YearMonth) int {
+	for i := 0; i < len(monthList); i++ {
+		if monthList[i].Year == item.Year &&
+			monthList[i].Month == item.Month {
+			return i
+		}
+	}
+	return -1
+}
+
+func PrevNextMonth(month *model.YearMonth) (*model.YearMonth, *model.YearMonth, error) {
+	sess := dbConn.NewSession(nil)
+	monthList, err := dao.YearMonthList(sess, true)
+	if err != nil {
+		return nil, nil, err
+	}
+	i := findMonth(monthList, month)
+	if i == -1 {
+		return nil, nil, nil
+	} else if i <= 0 && i >= len(monthList)-1 {
+		return nil, nil, nil
+	} else if i <= 0 {
+		return nil, monthList[i+1], nil
+	} else if i >= len(monthList)-1 {
+		return monthList[i-1], nil, nil
+	} else {
+		return monthList[i-1], monthList[i+1], nil
+	}
 }
 
 func NotesByMonth(month *model.YearMonth) ([]*model.Note, error) {
