@@ -10,8 +10,9 @@ import (
 
 type config struct {
 	DbConf struct {
-		Driver string
-		Dsn    string
+		Driver        string
+		Dsn           string
+		MaxConnection int
 	}
 	Env struct {
 		Prod       bool
