@@ -49,6 +49,10 @@ func ArchiveMonth(c *gin.Context) {
 	noteList, err := service.NotesByMonth(month)
 	if err != nil {
 		glog.Error(err)
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+	if len(noteList) == 0 {
 		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
 		return
 	}
@@ -56,7 +60,7 @@ func ArchiveMonth(c *gin.Context) {
 	prev, next, err := service.PrevNextMonth(month)
 	if err != nil {
 		glog.Error(err)
-		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
 	}
 

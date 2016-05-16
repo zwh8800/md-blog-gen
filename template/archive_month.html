@@ -53,6 +53,7 @@
 			</ul>
 		</div>
 	</div>
+	{{if or .prevMonth .nextMonth}}
 	<div class="page">
 		<hr>
 		{{if .prevMonth}}
@@ -62,6 +63,7 @@
 		<a href="/{{ $site.ArchiveUrl }}/{{ .nextMonth.Year }}-{{ .nextMonth.Month }}" class="next-page">{{ .nextMonth.Year }} 年 {{ .nextMonth.Month }} 月<i class="icon-chevron-right"></i></a>
 		{{end}}
 	</div>
+	{{end}}
 
 	<div class="footer">
 		<hr>

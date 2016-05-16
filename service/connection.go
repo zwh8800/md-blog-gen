@@ -11,7 +11,12 @@ var dbConn *dbr.Connection
 
 func InitDb() (err error) {
 	dbConn, err = dbr.Open(conf.Conf.DbConf.Driver, conf.Conf.DbConf.Dsn, nil)
-	return err
+	if err != nil {
+		return err
+	}
+	dbConn.SetMaxOpenConns(conf.Conf.DbConf.MaxConnection)
+
+	return nil
 }
 
 func init() {
