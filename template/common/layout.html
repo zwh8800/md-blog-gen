@@ -69,7 +69,6 @@
                     return;
                 }
                 time += interval;
-                console.log(time, f(time));
                 NProgress.set(f(time) / 100);
                 interval = randInterval();
                 setTimeout(progress, interval);
