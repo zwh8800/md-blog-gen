@@ -44,6 +44,7 @@ func Note(c *gin.Context) {
 	}
 	if useId && note.Notename.Valid {
 		c.Redirect(http.StatusMovedPermanently, util.GetNoteUrlByNotename(note.Notename.String))
+		return
 	}
 	// used by qrcode below
 	id = note.Id
