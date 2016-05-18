@@ -69,7 +69,11 @@
                     return;
                 }
                 time += interval;
-                NProgress.set(f(time) / 100);
+                var p = f(time) / 100;
+                if (p > 90) {
+                    NProgress.configure({ trickle: false });
+                }
+                NProgress.set(p);
                 interval = randInterval();
                 setTimeout(progress, interval);
             }
