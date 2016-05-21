@@ -17,6 +17,10 @@ import (
 func Index(c *gin.Context) {
 	pageStr := c.Param("page")
 	page, err := strconv.ParseInt(pageStr, 10, 64)
+	if page == 1 {
+		c.Redirect(http.StatusMovedPermanently, conf.Conf.Site.BaseUrl)
+		return
+	}
 	if err != nil {
 		page = 1
 	}
