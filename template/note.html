@@ -25,12 +25,25 @@
     <div class="note-content">
         {{ .note.UnescapedContent }}
     </div>
-    <div class="qr-license">
+    <div class="meta">
         <hr>
         <p>
             <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
             <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
         </p>
+        <p>
+            <small>发表于 {{ .note.FormattedTimestamp }}，最后更新于 {{ .note.FormattedLastModified }}。</small>
+        </p>
+        {{ if gt .outdated 100 }}
+        <blockquote class="white-blockquote">
+            <p>
+                <small class="text-warning">
+                    <i class="icon-warning-sign"></i>
+                    这是一个最后更新于 {{ .outdated }} 天前的主题，其中的信息可能已经有所发展或是发生改变。
+                </small>
+            </p>
+        </blockquote>
+        {{ end }}
         <blockquote class="white-blockquote">
             <p>
                 <small>

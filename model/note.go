@@ -67,6 +67,10 @@ func (obj *Note) FormattedDate() string {
 	return obj.Timestamp.Local().Format("Jan 02, 2006")
 }
 
+func (obj *Note) FormattedLastModified() string {
+	return obj.LastModified.Local().Format("2006-01-02 15:04:05 PM")
+}
+
 func (obj *Note) YearMonth() string {
 	return obj.Timestamp.Local().Format("2006-1")
 }

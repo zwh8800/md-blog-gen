@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gocraft/dbr"
@@ -79,5 +80,6 @@ func Note(c *gin.Context) {
 		"site":          conf.Conf.Site,
 		"qrcodeDataUrl": template.URL(qrcodeDataUrl),
 		"prod":          conf.Conf.Env.Prod,
+		"outdated":      int(time.Now().Sub(note.LastModified).Hours() / 24),
 	}))
 }
