@@ -3,6 +3,7 @@ package model
 import (
 	"bytes"
 	"html/template"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -62,4 +63,15 @@ func (obj *Note) FormattedDate() string {
 
 func (obj *Note) YearMonth() string {
 	return obj.Timestamp.Local().Format("2006-1")
+}
+
+func (obj *Note) PreviewWithKeyword(keyword string) template.HTML {
+	preview := obj.Preview()
+	return template.HTML(strings.Replace(preview,
+		keyword, `<span class="red">`+keyword+`</span>`, -1))
+}
+
+func (obj *Note) TitleWithKeyword(keyword string) template.HTML {
+	return template.HTML(strings.Replace(obj.Title,
+		keyword, `<span class="red">`+keyword+`</span>`, -1))
 }

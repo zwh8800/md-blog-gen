@@ -34,6 +34,7 @@ type config struct {
 		PageUrl     string
 		RssUrl      string
 		ArchiveUrl  string
+		SearchUrl   string
 		StaticUrl   string
 		AuthorName  string
 		AuthorEmail string

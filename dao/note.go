@@ -95,7 +95,8 @@ func RemoveUnpublishedNote(tx *dbr.Tx, noteList []*model.Note) error {
 }
 
 func CountNote(sess *dbr.Session) (int64, error) {
-	return sess.Select("count(*)").From(model.NoteTableName).ReturnInt64()
+	return sess.Select("count(*)").From(model.NoteTableName).
+		Where("removed is false").ReturnInt64()
 }
 
 func NotesByPage(sess *dbr.Session, page, limit int64) ([]*model.Note, error) {
@@ -161,6 +162,27 @@ func NotesMonth(sess *dbr.Session, month *model.YearMonth) ([]*model.Note, error
 	if _, err := sess.Select("*").From(model.NoteTableName).
 		Where("removed is false and year(timestamp) = ? and month(timestamp) = ?", month.Year, month.Month).
 		OrderBy("timestamp desc").LoadStructs(&noteList); err != nil {
+		return nil, err
+	}
+	return noteList, nil
+}
+
+func CountNoteByKeyword(sess *dbr.Session, keyword string) (int64, error) {
+	search := "%" + keyword + "%"
+	return sess.Select("count(*)").From(model.NoteTableName).
+		Where("removed is false and (title like ? or notename like ? or content like ?)", search, search, search).
+		ReturnInt64()
+}
+
+func NoteByKeyword(sess *dbr.Session, keyword string, page, limit int64) ([]*model.Note, error) {
+	offset := page * limit
+	search := "%" + keyword + "%"
+
+	noteList := make([]*model.Note, 0)
+	if _, err := sess.Select("*").From(model.NoteTableName).
+		Where("removed is false and (title like ? or notename like ? or content like ?)", search, search, search).
+		OrderBy("timestamp desc").Offset(uint64(offset)).Limit(uint64(limit)).
+		LoadStructs(&noteList); err != nil {
 		return nil, err
 	}
 	return noteList, nil

@@ -25,6 +25,9 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(path.Join(util.GetNoteBase(), ":id"), index.Note)
 		indexGroup.GET(util.GetArchiveBase(), index.Archive)
 		indexGroup.GET(path.Join(util.GetArchiveBase(), ":month"), index.ArchiveMonth)
+		indexGroup.GET(util.GetSearchBase(), index.SearchIndex)
+		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword"), index.Search)
+		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword", ":page"), index.Search)
 	}
 
 	r.GET(util.GetRssBase(), rss.Rss)

@@ -1,0 +1,101 @@
+{{ template "layout" . }}
+
+{{ define "title" }}
+{{ .keyword }}的搜索结果 | {{ .site.Name }}
+{{ end }}
+{{ define "moreHeaders" }}
+<meta name="description" content="关键字 {{ .keyword }} 的搜索结果 | {{ .site.Description }}">
+{{ end }}
+{{ define "moreStyles" }}
+{{ end }}
+{{ define "moreScripts" }}
+{{ end }}
+{{ define "content" }}
+{{ $site := .site }}
+{{ $keyword := .keyword }}
+
+<div class="container wmd-preview wmd-preview-full-reader">
+	<div class="header">
+		<h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
+		<div class="search-box">
+			<form action="/{{ $site.SearchUrl }}" method="get">
+				<div class="search-input">
+					<input type="search" name="keyword" placeholder="搜索" value="{{ $keyword }}">
+				</div>
+				<div class="search-icon">
+					<i class="icon-search"></i>
+				</div>
+			</form>
+		</div>
+		<h6>{{ .haha }}</h6>
+		<a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
+		{{ if .social.Github }}
+		<a href="{{ .social.Github }}" target="_blank" title="github"><i class="icon-github"></i></a>
+		{{ end}}
+		{{ if .social.Weibo }}
+		<a href="{{ .social.Weibo }}" target="_blank" title="微博"><i class="icon-weibo"></i></a>
+		{{ end}}
+		{{ if .social.Twitter }}
+		<a href="{{ .social.Twitter }}" target="_blank" title="twitter"><i class="icon-twitter"></i></a>
+		{{ end}}
+		{{ if .social.Linkedin }}
+		<a href="{{ .social.Linkedin }}" target="_blank" title="linkedin"><i class="icon-linkedin"></i></a>
+		{{ end}}
+	</div>
+	<div class="search-result">
+		<div class="keyword">
+			<hr>
+			<h2>"{{ $keyword }}" 的搜索结果</h2>
+		</div>
+		<div class="note-list">
+			{{ $saveTagListMap := .tagListMap }}
+			{{ range $key, $value := .noteList }}
+			<div class="note">
+				<hr>
+				<h2>
+					<a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
+						{{$value.TitleWithKeyword $keyword}}
+					</a>
+				</h2>
+				<p>
+					<i class="icon-tags"></i>
+					{{ $tagList := index $saveTagListMap $value.Id }}
+					{{ range $key, $value := $tagList }}
+					<a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Name -}}</code></a>
+					{{ end }}
+				</p>
+				<p>
+					{{$value.PreviewWithKeyword $keyword}}
+				</p>
+				<h6>
+					<i class="icon-time"></i>
+					<a class="no-color" href="/archive/{{ $value.YearMonth }}" title="文章归档">
+						{{ $value.FormattedTimestamp }}
+					</a>
+				</h6>
+			</div>
+			{{ else }}
+			<p>没有找到任何结果，请更换查询词试试</p>
+			<p>或者请尝试 Google 站内搜索:
+				<a href="//www.google.com/#q=site%3Alengzzz.com%20{{ $keyword }}" target="_blank">
+					site:lengzzz.com {{ $keyword }}
+				</a>
+			</p>
+			{{ end }}
+		</div>
+	</div>
+
+	<div class="page">
+		{{if .hasPrevPage}}
+		<a href="/{{ $site.SearchUrl }}/{{ .keyword }}/{{ .prevPage }}" class="prev-page"><i class="icon-chevron-left"></i> 上一页</a>
+		{{end}}
+		{{if .hasNextPage}}
+		<a href="/{{ $site.SearchUrl }}/{{ .keyword }}/{{ .nextPage }}" class="next-page">下一页 <i class="icon-chevron-right"></i></a>
+		{{end}}
+	</div>
+	<div class="footer">
+		<hr>
+		<a href="/"><i class="icon-home"></i> 返回</a>
+	</div>
+</div>
+{{ end }}

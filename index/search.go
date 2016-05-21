@@ -14,33 +14,40 @@ import (
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
-func Index(c *gin.Context) {
+func SearchIndex(c *gin.Context) {
+	keyword := c.Query("keyword")
+	if keyword != "" {
+		c.Redirect(http.StatusFound, util.GetSearchUrl(keyword))
+		return
+	}
+	c.Redirect(http.StatusFound, conf.Conf.Site.BaseUrl)
+}
+
+func Search(c *gin.Context) {
+	keyword := c.Param("keyword")
 	pageStr := c.Param("page")
 	page, err := strconv.ParseInt(pageStr, 10, 64)
 	if page == 1 {
-		c.Redirect(http.StatusMovedPermanently, conf.Conf.Site.BaseUrl)
+		c.Redirect(http.StatusMovedPermanently, util.GetSearchUrl(keyword))
 		return
 	}
 	if err != nil {
 		page = 1
 	}
-	noteList, tagListMap, maxPage, err := service.NotesOrderByTime(page, conf.Conf.Site.NotePerPage)
+	noteList, tagListMap, maxPage, err := service.NoteByKeyword(keyword, page, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
 		return
-	} else if len(noteList) == 0 {
-		glog.Error("len(noteList) == 0")
-		ErrorHandler(c, http.StatusNotFound, errors.New("Not Found"))
-		return
 	}
 
-	c.Render(http.StatusOK, render.NewRender("index.html", gin.H{
+	c.Render(http.StatusOK, render.NewRender("search.html", gin.H{
 		"hasPrevPage": page > 1,
 		"prevPage":    page - 1,
 		"hasNextPage": page < maxPage,
 		"nextPage":    page + 1,
 		"curPage":     page,
+		"keyword":     keyword,
 		"noteList":    noteList,
 		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,

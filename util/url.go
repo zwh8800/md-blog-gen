@@ -135,3 +135,37 @@ func GetArchiveMonthUrl(month *model.YearMonth) string {
 	}
 	return baseUrl.ResolveReference(u).String()
 }
+
+func GetSearchBase() string {
+	return "/" + conf.Conf.Site.SearchUrl
+}
+
+func GetSearchUrl(keyword string) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := path.Join(GetSearchBase(), keyword)
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}
+
+func GetSearchPageUrl(keyword string, page int64) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	noteChild := path.Join(GetSearchBase(), keyword, strconv.FormatInt(page, 10))
+	u, err := url.Parse(noteChild)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}

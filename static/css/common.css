@@ -19,3 +19,31 @@ a.no-color {
 .page .next-page {
 	float: right;
 }
+
+.search-box {
+	position: absolute;
+	right: 5px;
+	top: 55px;
+}
+.search-box .search-input input {
+	padding-left: 27px;
+	width: 60px;
+	-webkit-transition: width 600ms;
+	-moz-transition: width 600ms;
+	-ms-transition: width 600ms;
+	-o-transition: width 600ms;
+	transition: width 600ms;
+}
+.search-box .search-input input:focus {
+	width: 160px;
+}
+.search-box .search-icon {
+	position: relative;
+	top: -39px;
+	left: 9px;
+	max-width: 1em;
+}
+
+.red {
+	color: #F15F5F;
+}

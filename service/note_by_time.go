@@ -18,8 +18,11 @@ func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag,
 	if err != nil {
 		return nil, nil, 0, err
 	}
+	if len(noteList) == 0 {
+		return noteList, nil, maxPage, nil
+	}
 
-	noteIdList := make([]int64, 0)
+	noteIdList := make([]int64, 0, len(noteList))
 	for _, note := range noteList {
 		noteIdList = append(noteIdList, note.Id)
 	}
