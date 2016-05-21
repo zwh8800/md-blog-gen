@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -15,7 +16,7 @@ import (
 )
 
 func SearchIndex(c *gin.Context) {
-	keyword := c.Query("keyword")
+	keyword := strings.TrimSpace(c.Query("keyword"))
 	if keyword != "" {
 		c.Redirect(http.StatusFound, util.GetSearchUrl(keyword))
 		return
@@ -24,7 +25,7 @@ func SearchIndex(c *gin.Context) {
 }
 
 func Search(c *gin.Context) {
-	keyword := c.Param("keyword")
+	keyword := strings.TrimSpace(c.Param("keyword"))
 	pageStr := c.Param("page")
 	page, err := strconv.ParseInt(pageStr, 10, 64)
 	if page == 1 {
