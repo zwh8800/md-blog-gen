@@ -34,6 +34,15 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 }
 
 func saveNote(sess *dbr.Session, note *model.Note, tagList []*model.Tag) error {
+	modified, err := dao.IsNoteModified(sess, note)
+	if err != nil {
+		return err
+	}
+	if !modified {
+		return nil
+	}
+	glog.Infoln("note", note.Title, "modified")
+
 	tx, err := sess.Begin()
 	if err != nil {
 		return err

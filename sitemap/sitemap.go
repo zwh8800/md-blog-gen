@@ -18,14 +18,23 @@ import (
 
 func SiteMap(c *gin.Context) {
 	s := sitemap.New()
+
+	noteList, _, err := service.NotesWithoutTagOrderByTime(0, math.MaxInt64)
+	if err != nil {
+		glog.Error(err)
+		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+	latestNoteUpdated := noteList[0].LastModified
+
 	s.Add(&sitemap.Item{
 		Link:    conf.Conf.Site.BaseUrl,
-		Updated: time.Now(),
+		Updated: latestNoteUpdated,
 	})
 
 	s.Add(&sitemap.Item{
 		Link:    util.GetArchiveUrl(),
-		Updated: time.Now(),
+		Updated: latestNoteUpdated,
 	})
 
 	monthList, _, err := service.NoteGroupByMonth()
@@ -36,28 +45,27 @@ func SiteMap(c *gin.Context) {
 	}
 
 	for _, month := range monthList {
+		updated := time.Date(int(month.Year), time.Month(month.Month+1), -1, 0, 0, 0, 0, time.UTC)
+		if latestNoteUpdated.Before(updated) {
+			updated = latestNoteUpdated
+		}
+
 		s.Add(&sitemap.Item{
-			Link:    util.GetArchiveMonthUrl(month),
-			Updated: time.Now(),
+			Link:    util.GetArchiveMonthUrl(month.Year, month.Month),
+			Updated: updated,
 		})
 	}
 
-	noteList, _, err := service.NotesWithoutTagOrderByTime(0, math.MaxInt64)
-	if err != nil {
-		glog.Error(err)
-		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
-		return
-	}
 	for _, note := range noteList {
 		if note.Notename.Valid {
 			s.Add(&sitemap.Item{
 				Link:    util.GetNoteUrlByNotename(note.Notename.String),
-				Updated: note.Timestamp,
+				Updated: note.LastModified,
 			})
 		}
 		s.Add(&sitemap.Item{
 			Link:    util.GetNoteUrl(note.Id),
-			Updated: note.Timestamp,
+			Updated: note.LastModified,
 		})
 	}
 
@@ -70,11 +78,11 @@ func SiteMap(c *gin.Context) {
 	for _, tag := range tagList {
 		s.Add(&sitemap.Item{
 			Link:    util.GetTagUrl(tag.Id),
-			Updated: time.Now(),
+			Updated: latestNoteUpdated,
 		})
 		s.Add(&sitemap.Item{
 			Link:    util.GetTagNameUrl(tag.Name),
-			Updated: time.Now(),
+			Updated: latestNoteUpdated,
 		})
 	}
 
@@ -87,7 +95,7 @@ func SiteMap(c *gin.Context) {
 	for i := int64(1); i <= maxPage; i++ {
 		s.Add(&sitemap.Item{
 			Link:    util.GetPageUrl(i),
-			Updated: time.Now(),
+			Updated: latestNoteUpdated,
 		})
 	}
 

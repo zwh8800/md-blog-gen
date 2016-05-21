@@ -3,7 +3,7 @@ package rss
 import (
 	"errors"
 	"net/http"
-	"time"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -16,27 +16,31 @@ import (
 )
 
 func generateFeed() *feeds.Feed {
-	feed := &feeds.Feed{
-		Title:       conf.Conf.Site.Name,
-		Link:        &feeds.Link{Href: conf.Conf.Site.BaseUrl},
-		Description: conf.Conf.Site.Name,
-		Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
-		Created:     time.Now(),
-	}
-	feed.Items = make([]*feeds.Item, 0)
-
 	noteList, _, _, err := service.NotesOrderByTime(1, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		return nil
 	}
+	latestNoteUpdated := noteList[0].LastModified
+
+	feed := &feeds.Feed{
+		Title:       conf.Conf.Site.Name,
+		Link:        &feeds.Link{Href: conf.Conf.Site.BaseUrl},
+		Description: conf.Conf.Site.Name,
+		Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
+		Created:     latestNoteUpdated,
+	}
+	feed.Items = make([]*feeds.Item, 0)
+
 	for _, note := range noteList {
 		feed.Items = append(feed.Items, &feeds.Item{
+			Id:          strconv.FormatInt(note.Id, 10),
 			Title:       note.Title,
 			Link:        &feeds.Link{Href: util.GetNoteUrl(note.Id)},
 			Description: note.Content,
 			Author:      &feeds.Author{Name: conf.Conf.Site.AuthorName, Email: conf.Conf.Site.AuthorEmail},
 			Created:     note.Timestamp,
+			Updated:     note.LastModified,
 		})
 	}
 	return feed
