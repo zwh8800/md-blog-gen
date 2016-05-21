@@ -10,6 +10,6 @@ import:
 - package: github.com/gocraft/dbr
 - package: github.com/golang/glog
 - package: github.com/gorilla/feeds
+- package: github.com/mozillazg/go-pinyin
 - package: github.com/robfig/cron
 - package: gopkg.in/gcfg.v1
-- package: github.com/mozillazg/go-pinyin

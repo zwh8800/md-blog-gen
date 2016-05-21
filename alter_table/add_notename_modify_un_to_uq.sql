@@ -9,3 +9,6 @@ ALTER TABLE `mdblog`.`Note`
 
 ALTER TABLE `mdblog`.`Note`
   ADD INDEX `notename` (`notename` ASC);
+
+ALTER TABLE `mdblog`.`Note`
+  CHANGE COLUMN `removed` `removed` TINYINT(1) NOT NULL DEFAULT '0' ;

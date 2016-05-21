@@ -7,7 +7,6 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/conf"
-	"github.com/zwh8800/md-blog-gen/model"
 )
 
 func GetNoteBase() string {
@@ -120,14 +119,14 @@ func GetArchiveUrl() string {
 	return baseUrl.ResolveReference(u).String()
 }
 
-func GetArchiveMonthUrl(month *model.YearMonth) string {
+func GetArchiveMonthUrl(year, month int64) string {
 	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
 	if err != nil {
 		glog.Error(err)
 		return ""
 	}
 	noteChild := path.Join(GetArchiveBase(),
-		strconv.FormatInt(month.Year, 10)+"-"+strconv.FormatInt(month.Month, 10))
+		strconv.FormatInt(year, 10)+"-"+strconv.FormatInt(month, 10))
 	u, err := url.Parse(noteChild)
 	if err != nil {
 		glog.Error(err)

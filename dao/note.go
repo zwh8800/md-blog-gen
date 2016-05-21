@@ -6,6 +6,15 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
+func IsNoteModified(sess *dbr.Session, note *model.Note) (bool, error) {
+	hash, err := sess.Select("hash").From(model.NoteTableName).
+		Where("unique_id = ?", note.UniqueId).ReturnString()
+	if err != nil {
+		return false, err
+	}
+	return hash != note.Hash, nil
+}
+
 func CheckIfNotenameDuplicated(tx *dbr.Tx, note *model.Note) (bool, error) {
 	if _, err := tx.Select("unique_id").From(model.NoteTableName).
 		Where("not unique_id = ? and notename = ?",
@@ -43,13 +52,14 @@ func InsertOrUpdateNote(tx *dbr.Tx, note *model.Note) error {
 		note.Id = oldNote.Id
 		if _, err := tx.Update(model.NoteTableName).Set("notename", note.Notename).
 			Set("title", note.Title).Set("content", note.Content).
-			Set("timestamp", note.Timestamp).Set("removed", note.Removed).
+			Set("timestamp", note.Timestamp).Set("last_modified", note.LastModified).
+			Set("hash", note.Hash).Set("removed", note.Removed).
 			Where("unique_id = ?", note.UniqueId).Exec(); err != nil {
 			return err
 		}
 	} else {
 		result, err := tx.InsertInto(model.NoteTableName).Columns("unique_id",
-			"notename", "title", "url", "content", "timestamp").Record(note).Exec()
+			"notename", "title", "url", "content", "timestamp", "last_modified", "hash").Record(note).Exec()
 		if err != nil {
 			return err
 		}
