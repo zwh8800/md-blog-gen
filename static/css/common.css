@@ -25,6 +25,14 @@ a.no-color {
 	right: 5px;
 	top: 55px;
 }
+@media (max-width: 400px) {
+	.search-box {
+		position: absolute;
+		right: 5px;
+		top: 105px;
+	}
+}
+
 .search-box .search-input input {
 	padding-left: 27px;
 	width: 60px;
