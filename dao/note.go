@@ -10,6 +10,9 @@ func IsNoteModified(sess *dbr.Session, note *model.Note) (bool, error) {
 	hash, err := sess.Select("hash").From(model.NoteTableName).
 		Where("unique_id = ?", note.UniqueId).ReturnString()
 	if err != nil {
+		if err == dbr.ErrNotFound {
+			return true, nil
+		}
 		return false, err
 	}
 	return hash != note.Hash, nil
