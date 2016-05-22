@@ -33,3 +33,8 @@ func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64]
 	}
 	return noteList, tagListMap, maxPage, nil
 }
+
+func InsertOrUpdateNoteIndex(note *model.Note, tagList []*model.Tag) error {
+
+	return nil
+}
