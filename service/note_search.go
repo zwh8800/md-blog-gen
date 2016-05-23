@@ -1,6 +1,8 @@
 package service
 
 import (
+	"strconv"
+
 	"github.com/zwh8800/md-blog-gen/dao"
 	"github.com/zwh8800/md-blog-gen/model"
 )
@@ -34,7 +36,38 @@ func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64]
 	return noteList, tagListMap, maxPage, nil
 }
 
+func IsNoteIndexExist(uniqueId int64) (bool, error) {
+	return esClient.Exists().
+		Index("mdblog").
+		Type("note").
+		Id(strconv.FormatInt(uniqueId, 10)).
+		Do()
+}
+
 func InsertOrUpdateNoteIndex(note *model.Note, tagList []*model.Tag) error {
+	tagNameList := make([]string, 0, len(tagList))
+	for _, tag := range tagList {
+		tagNameList = append(tagNameList, tag.Name)
+	}
+	noteDetail := model.NoteDetail{
+		Id:           note.Id,
+		Notename:     note.Notename,
+		Title:        note.Title,
+		Content:      note.ContentText(),
+		Timestamp:    note.Timestamp,
+		LastModified: note.LastModified,
+		TagList:      tagNameList,
+	}
+
+	_, err := esClient.Index().
+		Index("mdblog").
+		Type("note").
+		Id(strconv.FormatInt(note.UniqueId, 10)).
+		BodyJson(noteDetail).
+		Do()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -22,7 +22,7 @@ func InitDb() (err error) {
 }
 
 func InitElasticSearch() (err error) {
-	esClient, err = elastic.NewClient()
+	esClient, err = elastic.NewClient(elastic.SetURL(conf.Conf.ElasticSearchConf.Url))
 	if err != nil {
 		return err
 	}

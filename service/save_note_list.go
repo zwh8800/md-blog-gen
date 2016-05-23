@@ -10,17 +10,27 @@ import (
 func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) error {
 	sess := dbConn.NewSession(nil)
 	for _, note := range noteList {
-		modified, err := dao.IsNoteModified(sess, note)
+		tagList, _ := tagListMap[note.UniqueId]
+
+		indexExist, err := IsNoteIndexExist(note.UniqueId)
 		if err != nil {
 			glog.Error(err)
 			continue
 		}
-		if !modified {
-			continue
+		if indexExist {
+			modified, err := dao.IsNoteModified(sess, note)
+			if err != nil {
+				glog.Error(err)
+				continue
+			}
+			if !modified {
+				continue
+			}
+			glog.Infoln("note", note.Title, "modified, updating")
+		} else {
+			glog.Infoln("note", note.Title, "index not exist, indexing")
 		}
-		glog.Infoln("note", note.Title, "modified, updating")
 
-		tagList, _ := tagListMap[note.UniqueId]
 		if err := SaveNote(note, tagList); err != nil {
 			glog.Error(err)
 			continue
