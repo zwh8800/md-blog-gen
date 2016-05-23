@@ -6,10 +6,8 @@ import (
 
 	"gopkg.in/olivere/elastic.v3"
 
-	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/dao"
 	"github.com/zwh8800/md-blog-gen/model"
-	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64][]*model.Tag, int64, error) {
@@ -62,7 +60,6 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 	if err != nil {
 		return nil, 0, err
 	}
-	glog.Infoln(util.JsonStringify(result, true))
 
 	if result.Hits == nil {
 		return nil, 0, nil
