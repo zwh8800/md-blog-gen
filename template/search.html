@@ -47,25 +47,27 @@
 			<hr>
 			<h2>"{{ $keyword }}" 的搜索结果</h2>
 		</div>
-		<div class="note-list">
-			{{ $saveTagListMap := .tagListMap }}
+		<div class="search note-list">
 			{{ range $key, $value := .noteList }}
 			<div class="note">
 				<hr>
 				<h2>
 					<a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
-						{{$value.TitleWithKeyword $keyword}}
+						{{$value.HighlightTitle}}
 					</a>
 				</h2>
 				<p>
 					<i class="icon-tags"></i>
-					{{ $tagList := index $saveTagListMap $value.Id }}
+					{{ $tagList := $value.HighlightTagList }}
 					{{ range $key, $value := $tagList }}
-					<a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Name -}}</code></a>
+					<code>{{- $value -}}</code>
 					{{ end }}
 				</p>
 				<p>
-					{{$value.PreviewWithKeyword $keyword}}
+					{{ $content := $value.HighlightContent }}
+					{{ range $key, $value := $content }}
+						{{ $value }}...
+					{{ end }}
 				</p>
 				<h6>
 					<i class="icon-time"></i>

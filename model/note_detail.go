@@ -15,3 +15,11 @@ type NoteDetail struct {
 	LastModified time.Time      `json:"lastModified"`
 	TagList      []string       `json:"tagList"`
 }
+
+func (obj *NoteDetail) FormattedTimestamp() string {
+	return obj.Timestamp.Local().Format("2006-01-02 15:04 PM")
+}
+
+func (obj *NoteDetail) YearMonth() string {
+	return obj.Timestamp.Local().Format("2006-1")
+}

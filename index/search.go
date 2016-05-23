@@ -35,7 +35,7 @@ func Search(c *gin.Context) {
 	if err != nil {
 		page = 1
 	}
-	noteList, tagListMap, maxPage, err := service.NoteByKeyword(keyword, page, conf.Conf.Site.NotePerPage)
+	noteList, maxPage, err := service.SearchNoteByKeyword(keyword, page, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
@@ -50,7 +50,6 @@ func Search(c *gin.Context) {
 		"curPage":     page,
 		"keyword":     keyword,
 		"noteList":    noteList,
-		"tagListMap":  tagListMap,
 		"site":        conf.Conf.Site,
 		"social":      conf.Conf.Social,
 		"prod":        conf.Conf.Env.Prod,

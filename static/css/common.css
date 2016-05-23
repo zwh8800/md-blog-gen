@@ -52,6 +52,7 @@ a.no-color {
 	max-width: 1em;
 }
 
-.red {
+.search em {
 	color: #F15F5F;
+	font-style: normal;
 }

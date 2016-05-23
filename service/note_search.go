@@ -1,10 +1,15 @@
 package service
 
 import (
+	"encoding/json"
 	"strconv"
 
+	"gopkg.in/olivere/elastic.v3"
+
+	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/dao"
 	"github.com/zwh8800/md-blog-gen/model"
+	"github.com/zwh8800/md-blog-gen/util"
 )
 
 func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64][]*model.Tag, int64, error) {
@@ -34,6 +39,49 @@ func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64]
 		return nil, nil, 0, err
 	}
 	return noteList, tagListMap, maxPage, nil
+}
+
+func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, error) {
+	page-- //数据库层的页数从0开始数
+	offset := page * limit
+
+	query := elastic.NewMultiMatchQuery(keyword,
+		"notename", "title", "content", "tagList")
+	highlight := elastic.NewHighlight().
+		Field("content").
+		Field("title").
+		Field("tagList")
+
+	result, err := esClient.Search().
+		Index("mdblog").
+		Type("note").
+		Query(query).
+		From(int(offset)).
+		Size(int(limit)).
+		Highlight(highlight).Do()
+	if err != nil {
+		return nil, 0, err
+	}
+	glog.Infoln(util.JsonStringify(result, true))
+
+	if result.Hits == nil {
+		return nil, 0, nil
+	}
+	maxPage := (result.TotalHits()-1)/limit + 1
+
+	noteList := make([]*model.SearchedNote, 0, len(result.Hits.Hits))
+	for _, hit := range result.Hits.Hits {
+		note := model.NewSearchedNote()
+		err := json.Unmarshal(*hit.Source, note)
+		if err != nil {
+			return nil, 0, err
+		}
+		note.FillHighlight(hit.Highlight)
+
+		noteList = append(noteList, note)
+	}
+
+	return noteList, maxPage, nil
 }
 
 func IsNoteIndexExist(uniqueId int64) (bool, error) {
