@@ -9,6 +9,17 @@
 {{ define "moreStyles" }}
 {{ end }}
 {{ define "moreScripts" }}
+<script>
+	(function ($) {
+		$(function () {
+			var keyword = $('#keyword');
+			keyword.focus();
+			keyword.click(function () {
+				$(this).select();
+			});
+		});
+	})(jQuery);
+</script>
 {{ end }}
 {{ define "content" }}
 {{ $site := .site }}
@@ -20,7 +31,7 @@
 		<div class="search-box">
 			<form action="/{{ $site.SearchUrl }}" method="get">
 				<div class="search-input">
-					<input type="search" name="keyword" placeholder="搜索" value="{{ $keyword }}">
+					<input id="keyword" type="search" name="keyword" placeholder="搜索" value="{{ $keyword }}">
 				</div>
 				<div class="search-icon">
 					<i class="icon-search"></i>
