@@ -1,7 +1,6 @@
 package service
 
 import (
-	"github.com/gocraft/dbr"
 	"github.com/golang/glog"
 
 	"github.com/zwh8800/md-blog-gen/dao"
@@ -13,7 +12,30 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 	for _, note := range noteList {
 		tagList, _ := tagListMap[note.UniqueId]
 
-		if err := saveNote(sess, note, tagList); err != nil {
+		indexExist, err := IsNoteDocumentExist(note.UniqueId)
+		if err != nil {
+			glog.Error(err)
+			continue
+		}
+		if indexExist {
+			modified, err := dao.IsNoteModified(sess, note)
+			if err != nil {
+				glog.Error(err)
+				continue
+			}
+			if !modified {
+				continue
+			}
+			glog.Infoln("note", note.Title, "modified, updating")
+		} else {
+			glog.Infoln("note", note.Title, "index not exist, indexing")
+		}
+
+		if err := SaveNote(note, tagList); err != nil {
+			glog.Error(err)
+			continue
+		}
+		if err := InsertOrUpdateNoteDocument(note, tagList); err != nil {
 			glog.Error(err)
 			continue
 		}
@@ -33,16 +55,8 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 	return tx.Commit()
 }
 
-func saveNote(sess *dbr.Session, note *model.Note, tagList []*model.Tag) error {
-	modified, err := dao.IsNoteModified(sess, note)
-	if err != nil {
-		return err
-	}
-	if !modified {
-		return nil
-	}
-	glog.Infoln("note", note.Title, "modified")
-
+func SaveNote(note *model.Note, tagList []*model.Tag) error {
+	sess := dbConn.NewSession(nil)
 	tx, err := sess.Begin()
 	if err != nil {
 		return err

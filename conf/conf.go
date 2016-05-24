@@ -14,6 +14,9 @@ type config struct {
 		Dsn           string
 		MaxConnection int
 	}
+	ElasticSearchConf struct {
+		Url string
+	}
 	Env struct {
 		Prod       bool
 		ServerPort string
