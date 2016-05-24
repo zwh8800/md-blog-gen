@@ -13,3 +13,4 @@ import:
 - package: github.com/mozillazg/go-pinyin
 - package: github.com/robfig/cron
 - package: gopkg.in/gcfg.v1
+- package: gopkg.in/olivere/elastic.v3

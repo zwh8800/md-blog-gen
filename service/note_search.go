@@ -1,35 +1,168 @@
 package service
 
 import (
-	"github.com/zwh8800/md-blog-gen/dao"
+	"encoding/json"
+	"strconv"
+
+	"gopkg.in/olivere/elastic.v3"
+
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
-func NoteByKeyword(keyword string, page, limit int64) ([]*model.Note, map[int64][]*model.Tag, int64, error) {
-	sess := dbConn.NewSession(nil)
+const (
+	MdBlogIndexName = "mdblog"
+	NoteTypeName    = "note"
+)
 
-	noteCount, err := dao.CountNoteByKeyword(sess, keyword)
-	if err != nil {
-		return nil, nil, 0, err
-	}
-	maxPage := (noteCount-1)/limit + 1
-
+func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, error) {
 	page-- //数据库层的页数从0开始数
-	noteList, err := dao.NoteByKeyword(sess, keyword, page, limit)
+	offset := page * limit
+
+	query := elastic.NewMultiMatchQuery(keyword).
+		FieldWithBoost("notename", 1).
+		FieldWithBoost("tagList", 2).
+		FieldWithBoost("content", 4).
+		FieldWithBoost("title", 4)
+	highlight := elastic.NewHighlight().
+		Field("content").
+		Field("title").
+		Field("tagList")
+
+	result, err := esClient.Search().
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
+		Query(query).
+		Highlight(highlight).
+		From(int(offset)).
+		Size(int(limit)).
+		Do()
 	if err != nil {
-		return nil, nil, 0, err
-	}
-	if len(noteList) == 0 {
-		return noteList, nil, maxPage, nil
+		return nil, 0, err
 	}
 
-	noteIdList := make([]int64, 0, len(noteList))
-	for _, note := range noteList {
-		noteIdList = append(noteIdList, note.Id)
+	if result.Hits == nil {
+		return nil, 0, nil
 	}
-	tagListMap, err := dao.TagsByNoteIds(sess, noteIdList)
+	maxPage := (result.TotalHits()-1)/limit + 1
+
+	noteList := make([]*model.SearchedNote, 0, len(result.Hits.Hits))
+	for _, hit := range result.Hits.Hits {
+		note := model.NewSearchedNote()
+		err := json.Unmarshal(*hit.Source, note)
+		if err != nil {
+			return nil, 0, err
+		}
+		note.FillHighlight(hit.Highlight)
+
+		noteList = append(noteList, note)
+	}
+
+	return noteList, maxPage, nil
+}
+
+func CreateIndexAndMappingIfNotExist() error {
+	exist, err := IsMdBlogIndexExist()
 	if err != nil {
-		return nil, nil, 0, err
+		return err
 	}
-	return noteList, tagListMap, maxPage, nil
+	if !exist {
+		if err := CreateIndex(); err != nil {
+			return err
+		}
+	}
+	if err := CreateNoteMapping(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func IsMdBlogIndexExist() (bool, error) {
+	return esClient.IndexExists(MdBlogIndexName).Do()
+}
+
+func CreateIndex() error {
+	_, err := esClient.CreateIndex(MdBlogIndexName).Do()
+	return err
+}
+
+func CreateNoteMapping() error {
+	_, err := esClient.PutMapping().
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
+		BodyString(`{
+			"note": {
+				"properties": {
+					"id": {
+						"type": "long"
+					},
+					"title": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"content": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"notename": {
+						"type": "string"
+					},
+					"tagList": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"timestamp": {
+						"type": "date",
+						"index": "not_analyzed"
+					},
+					"lastModified": {
+						"type": "date",
+						"index": "not_analyzed"
+					}
+				}
+			}
+		}`).
+		Do()
+	return err
+}
+
+func IsNoteDocumentExist(uniqueId int64) (bool, error) {
+	return esClient.Exists().
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
+		Id(strconv.FormatInt(uniqueId, 10)).
+		Do()
+}
+
+func InsertOrUpdateNoteDocument(note *model.Note, tagList []*model.Tag) error {
+	tagNameList := make([]string, 0, len(tagList))
+	for _, tag := range tagList {
+		tagNameList = append(tagNameList, tag.Name)
+	}
+	noteDetail := model.NoteDetail{
+		Id:           note.Id,
+		Notename:     note.Notename,
+		Title:        note.Title,
+		Content:      note.ContentText(),
+		Timestamp:    note.Timestamp,
+		LastModified: note.LastModified,
+		TagList:      tagNameList,
+	}
+
+	_, err := esClient.Index().
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
+		Id(strconv.FormatInt(note.UniqueId, 10)).
+		BodyJson(noteDetail).
+		Do()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -59,6 +59,18 @@ func (obj *Note) Preview() string {
 	return goquery.NewDocumentFromNode(doc.Find("p").Get(1)).Text()
 }
 
+func (obj *Note) ContentText() string {
+	src := obj.Content
+	buffer := bytes.NewBufferString(src)
+
+	doc, err := goquery.NewDocumentFromReader(buffer)
+	if err != nil {
+		return ""
+	}
+
+	return doc.Text()
+}
+
 func (obj *Note) FormattedTimestamp() string {
 	return obj.Timestamp.Local().Format("2006-01-02 15:04 PM")
 }

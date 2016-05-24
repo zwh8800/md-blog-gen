@@ -9,6 +9,14 @@
 {{ define "moreStyles" }}
 {{ end }}
 {{ define "moreScripts" }}
+<script>
+	(function ($) {
+		$(function () {
+			var keyword = $('#keyword');
+			keyword.focus();
+		});
+	})(jQuery);
+</script>
 {{ end }}
 {{ define "content" }}
 {{ $site := .site }}
@@ -20,7 +28,7 @@
 		<div class="search-box">
 			<form action="/{{ $site.SearchUrl }}" method="get">
 				<div class="search-input">
-					<input type="search" name="keyword" placeholder="搜索" value="{{ $keyword }}">
+					<input id="keyword" type="search" name="keyword" placeholder="搜索" value="{{ $keyword }}">
 				</div>
 				<div class="search-icon">
 					<i class="icon-search"></i>
@@ -47,25 +55,29 @@
 			<hr>
 			<h2>"{{ $keyword }}" 的搜索结果</h2>
 		</div>
-		<div class="note-list">
-			{{ $saveTagListMap := .tagListMap }}
+		<div class="search note-list">
 			{{ range $key, $value := .noteList }}
 			<div class="note">
 				<hr>
 				<h2>
 					<a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
-						{{$value.TitleWithKeyword $keyword}}
+						{{$value.HighlightTitle}}
 					</a>
 				</h2>
 				<p>
 					<i class="icon-tags"></i>
-					{{ $tagList := index $saveTagListMap $value.Id }}
+					{{ $tagList := $value.HighlightTagList }}
 					{{ range $key, $value := $tagList }}
-					<a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Name -}}</code></a>
+					<a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Html -}}</code></a>
 					{{ end }}
 				</p>
 				<p>
-					{{$value.PreviewWithKeyword $keyword}}
+					{{ $content := $value.HighlightContent }}
+					{{ range $key, $value := $content }}
+						{{ if lt $key 3 }}
+						{{ $value }} ...
+						{{ end }}
+					{{ end }}
 				</p>
 				<h6>
 					<i class="icon-time"></i>
