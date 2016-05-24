@@ -58,6 +58,10 @@ func Tag(c *gin.Context) {
 		}
 		return
 	}
+	if useId {
+		c.Redirect(http.StatusMovedPermanently, util.GetTagNameUrl(tag.Name))
+		return
+	}
 	c.Render(http.StatusOK, render.NewRender("tag.html", gin.H{
 		"tag":        tag,
 		"noteList":   noteList,
