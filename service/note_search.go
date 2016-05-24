@@ -55,7 +55,7 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 }
 
 func CreateIndexAndMappingIfNotExist() error {
-	exist, err := IsMdblogIndexExist()
+	exist, err := IsMdBlogIndexExist()
 	if err != nil {
 		return err
 	}
@@ -64,13 +64,13 @@ func CreateIndexAndMappingIfNotExist() error {
 			return err
 		}
 	}
-	if err := CreateMapping(); err != nil {
+	if err := CreateNoteMapping(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func IsMdblogIndexExist() (bool, error) {
+func IsMdBlogIndexExist() (bool, error) {
 	return esClient.IndexExists("mdblog").Do()
 }
 
@@ -79,7 +79,7 @@ func CreateIndex() error {
 	return err
 }
 
-func CreateMapping() error {
+func CreateNoteMapping() error {
 	_, err := esClient.PutMapping().
 		Index("mdblog").
 		Type("note").
