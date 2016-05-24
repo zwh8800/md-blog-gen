@@ -17,4 +17,6 @@ VOLUME /app/log
 VOLUME /app/config
 VOLUME /app/static/img
 
+EXPOSE 3336
+
 CMD ["md-blog-gen", "-log_dir", "/app/log", "-alsologtostderr", "-config", "/app/config/md-blog-gen.gcfg"]
