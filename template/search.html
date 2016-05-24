@@ -68,13 +68,15 @@
 					<i class="icon-tags"></i>
 					{{ $tagList := $value.HighlightTagList }}
 					{{ range $key, $value := $tagList }}
-					<code>{{- $value -}}</code>
+					<a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Html -}}</code></a>
 					{{ end }}
 				</p>
 				<p>
 					{{ $content := $value.HighlightContent }}
 					{{ range $key, $value := $content }}
-						{{ $value }}...
+						{{ if lt $key 3 }}
+						{{ $value }} ...
+						{{ end }}
 					{{ end }}
 				</p>
 				<h6>

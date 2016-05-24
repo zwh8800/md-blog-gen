@@ -1,6 +1,9 @@
 package model
 
-import "html/template"
+import (
+	"html/template"
+	"strings"
+)
 
 type searchNoteHighlight struct {
 	Title   []template.HTML
@@ -31,16 +34,42 @@ func (note *SearchedNote) HighlightTitle() template.HTML {
 	}
 }
 
-func (note *SearchedNote) HighlightTagList() []template.HTML {
-	if len(note.Highlight.TagList) != 0 {
-		return note.Highlight.TagList
-	} else {
-		tagList := make([]template.HTML, 0, len(note.TagList))
-		for _, tag := range note.TagList {
-			tagList = append(tagList, template.HTML(tag))
+type tagForRender struct {
+	Html template.HTML
+	Name string
+}
+
+func highlightTagToTag(highlight template.HTML) string {
+	h := string(highlight)
+	h = strings.Replace(h, "<em>", "", -1)
+	h = strings.Replace(h, "</em>", "", -1)
+	return h
+}
+
+func (note *SearchedNote) HighlightTagList() []*tagForRender {
+	filter := make(map[string]bool)
+	tagList := make([]*tagForRender, 0, len(note.Highlight.TagList))
+	for _, tag := range note.Highlight.TagList {
+		name := highlightTagToTag(tag)
+		if _, ok := filter[name]; !ok {
+			filter[name] = true
+			tagList = append(tagList, &tagForRender{
+				tag,
+				name,
+			})
 		}
-		return tagList
 	}
+	for _, tag := range note.TagList {
+		if _, ok := filter[tag]; !ok {
+			filter[tag] = true
+			tagList = append(tagList, &tagForRender{
+				template.HTML(tag),
+				tag,
+			})
+		}
+	}
+
+	return tagList
 }
 
 func (note *SearchedNote) HighlightContent() []template.HTML {
@@ -62,11 +91,11 @@ func (note *SearchedNote) FillHighlight(highlight map[string][]string) {
 			}
 		case "content":
 			for _, h := range value {
-				note.Highlight.Content = append(note.Highlight.Title, template.HTML(h))
+				note.Highlight.Content = append(note.Highlight.Content, template.HTML(h))
 			}
 		case "tagList":
 			for _, h := range value {
-				note.Highlight.TagList = append(note.Highlight.Title, template.HTML(h))
+				note.Highlight.TagList = append(note.Highlight.TagList, template.HTML(h))
 			}
 		}
 	}

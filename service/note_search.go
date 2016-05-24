@@ -9,6 +9,11 @@ import (
 	"github.com/zwh8800/md-blog-gen/model"
 )
 
+const (
+	MdBlogIndexName = "mdblog"
+	NoteTypeName    = "note"
+)
+
 func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, error) {
 	page-- //数据库层的页数从0开始数
 	offset := page * limit
@@ -24,12 +29,13 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 		Field("tagList")
 
 	result, err := esClient.Search().
-		Index("mdblog").
-		Type("note").
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
 		Query(query).
+		Highlight(highlight).
 		From(int(offset)).
 		Size(int(limit)).
-		Highlight(highlight).Do()
+		Do()
 	if err != nil {
 		return nil, 0, err
 	}
@@ -71,18 +77,18 @@ func CreateIndexAndMappingIfNotExist() error {
 }
 
 func IsMdBlogIndexExist() (bool, error) {
-	return esClient.IndexExists("mdblog").Do()
+	return esClient.IndexExists(MdBlogIndexName).Do()
 }
 
 func CreateIndex() error {
-	_, err := esClient.CreateIndex("mdblog").Do()
+	_, err := esClient.CreateIndex(MdBlogIndexName).Do()
 	return err
 }
 
 func CreateNoteMapping() error {
 	_, err := esClient.PutMapping().
-		Index("mdblog").
-		Type("note").
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
 		BodyString(`{
 			"note": {
 				"properties": {
@@ -127,8 +133,8 @@ func CreateNoteMapping() error {
 
 func IsNoteDocumentExist(uniqueId int64) (bool, error) {
 	return esClient.Exists().
-		Index("mdblog").
-		Type("note").
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
 		Id(strconv.FormatInt(uniqueId, 10)).
 		Do()
 }
@@ -149,8 +155,8 @@ func InsertOrUpdateNoteDocument(note *model.Note, tagList []*model.Tag) error {
 	}
 
 	_, err := esClient.Index().
-		Index("mdblog").
-		Type("note").
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
 		Id(strconv.FormatInt(note.UniqueId, 10)).
 		BodyJson(noteDetail).
 		Do()

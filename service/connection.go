@@ -30,7 +30,7 @@ func InitElasticSearch() (err error) {
 }
 
 func init() {
-	glog.Infoln("initilizing database...")
+	glog.Infoln("initilizing connections...")
 
 	if err := InitDb(); err != nil {
 		glog.Fatalf("error occored: %s", err)
