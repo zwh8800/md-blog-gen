@@ -81,7 +81,78 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 	return noteList, maxPage, nil
 }
 
-func IsNoteIndexExist(uniqueId int64) (bool, error) {
+func CreateIndexAndMappingIfNotExist() error {
+	exist, err := IsMdblogIndexExist()
+	if err != nil {
+		return err
+	}
+	if !exist {
+		if err := CreateIndex(); err != nil {
+			return err
+		}
+	}
+	if err := CreateMapping(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func IsMdblogIndexExist() (bool, error) {
+	return esClient.IndexExists("mdblog").Do()
+}
+
+func CreateIndex() error {
+	_, err := esClient.CreateIndex("mdblog").Do()
+	return err
+}
+
+func CreateMapping() error {
+	_, err := esClient.PutMapping().
+		Index("mdblog").
+		Type("note").
+		BodyString(`{
+			"note": {
+				"properties": {
+					"id": {
+						"type": "long"
+					},
+					"title": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"content": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"notename": {
+						"type": "string"
+					},
+					"tagList": {
+						"type": "string",
+						"term_vector": "with_positions_offsets",
+						"analyzer": "ik_syno",
+						"search_analyzer": "ik_syno"
+					},
+					"timestamp": {
+						"type": "date",
+						"index": "not_analyzed"
+					},
+					"lastModified": {
+						"type": "date",
+						"index": "not_analyzed"
+					}
+				}
+			}
+		}`).
+		Do()
+	return err
+}
+
+func IsNoteDocumentExist(uniqueId int64) (bool, error) {
 	return esClient.Exists().
 		Index("mdblog").
 		Type("note").
@@ -89,7 +160,7 @@ func IsNoteIndexExist(uniqueId int64) (bool, error) {
 		Do()
 }
 
-func InsertOrUpdateNoteIndex(note *model.Note, tagList []*model.Tag) error {
+func InsertOrUpdateNoteDocument(note *model.Note, tagList []*model.Tag) error {
 	tagNameList := make([]string, 0, len(tagList))
 	for _, tag := range tagList {
 		tagNameList = append(tagNameList, tag.Name)

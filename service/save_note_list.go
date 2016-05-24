@@ -12,7 +12,7 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 	for _, note := range noteList {
 		tagList, _ := tagListMap[note.UniqueId]
 
-		indexExist, err := IsNoteIndexExist(note.UniqueId)
+		indexExist, err := IsNoteDocumentExist(note.UniqueId)
 		if err != nil {
 			glog.Error(err)
 			continue
@@ -35,7 +35,7 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 			glog.Error(err)
 			continue
 		}
-		if err := InsertOrUpdateNoteIndex(note, tagList); err != nil {
+		if err := InsertOrUpdateNoteDocument(note, tagList); err != nil {
 			glog.Error(err)
 			continue
 		}

@@ -13,6 +13,7 @@ import (
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/crontab"
 	"github.com/zwh8800/md-blog-gen/route"
+	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/spider"
 )
 
@@ -39,6 +40,10 @@ func startServer() {
 			panic(err)
 		}
 	}()
+	if err := service.CreateIndexAndMappingIfNotExist(); err != nil {
+		glog.Fatalf("error occored: %s", err)
+		panic(err)
+	}
 	crontab.Go()
 	spider.Go()
 	glog.Infoln("server started")
