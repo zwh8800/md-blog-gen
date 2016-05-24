@@ -17,4 +17,4 @@ VOLUME /app/log
 VOLUME /app/config
 VOLUME /app/static/img
 
-CMD ["md-blog-gen", "-log_dir", "/app/log", "-alsologtostderr", "-config", "/app/config/golang-mirror.gcfg"]
+CMD ["md-blog-gen", "-log_dir", "/app/log", "-alsologtostderr", "-config", "/app/config/md-blog-gen.gcfg"]
