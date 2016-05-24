@@ -17,7 +17,7 @@ import (
 )
 
 func AllTag(c *gin.Context) {
-	tagList, noteListMap, tagListMap, err := service.AllNotesTags()
+	tagList, err := service.Tags()
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
@@ -25,13 +25,11 @@ func AllTag(c *gin.Context) {
 	}
 
 	c.Render(http.StatusOK, render.NewRender("all_tag.html", gin.H{
-		"tagList":     tagList,
-		"noteListMap": noteListMap,
-		"tagListMap":  tagListMap,
-		"site":        conf.Conf.Site,
-		"social":      conf.Conf.Social,
-		"prod":        conf.Conf.Env.Prod,
-		"haha":        util.HahaGenarate(),
+		"tagList": tagList,
+		"site":    conf.Conf.Site,
+		"social":  conf.Conf.Social,
+		"prod":    conf.Conf.Env.Prod,
+		"haha":    util.HahaGenarate(),
 	}))
 }
 

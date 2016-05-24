@@ -31,49 +31,16 @@
         {{ end}}
     </div>
     <div class="archives">
-        {{ $saveNoteListMap := .noteListMap }}
-        {{ $saveTagListMap := .tagListMap }}
-        {{ range $key, $value := .tagList}}
-            {{ $noteList := index $saveNoteListMap $value.Id }}
-            {{ if $noteList }}
-            <div class="archive">
-                <div class="tag-name">
-                    <hr>
-                    <h2>{{ $value.Name }}</h2>
-                </div>
-                <div class="note-list">
-                    <ul>
-                        {{ range $key, $value := $noteList }}
-                        <li>
-                            <div class="note">
-                                <hr>
-                                <h2>
-                                    <a class="no-color" href="/{{ $site.NoteUrl }}/{{if $value.Notename.Valid}}{{$value.Notename.String}}{{else}}{{$value.Id}}{{end}}">
-                                        {{$value.Title}}
-                                    </a>
-                                </h2>
-                                <p>
-                                    <i class="icon-tags"></i>
-                                    {{ $tagList := index $saveTagListMap $value.Id }}
-                                    {{ range $key, $value := $tagList }}
-                                    <a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Name -}}</code></a>
-                                    {{ end }}
-                                </p>
-                                <p>
-                                    {{$value.Preview}}
-                                </p>
-                                <h6>
-                                    <i class="icon-time"></i>
-                                    {{ $value.FormattedTimestamp }}
-                                </h6>
-                            </div>
-                        </li>
-                        {{ end }}
-                    </ul>
-                </div>
-            </div>
+        <hr>
+        <h2>
+            <i class="icon-tags"></i>
+            Tag 列表
+        </h2>
+        <p>
+            {{ range $key, $value := .tagList }}
+            <a href="/{{ $site.TagUrl }}/{{$value.Name}}"><code>{{- $value.Name -}}</code></a>
             {{ end }}
-        {{ end }}
+        </p>
     </div>
 
     <div class="footer">
