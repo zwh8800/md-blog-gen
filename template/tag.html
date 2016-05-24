@@ -33,7 +33,11 @@
     <div class="archive">
         <div class="tag-name">
             <hr>
-            <h2>{{ .tag.Name }} <small><a href="/{{ $site.TagUrl }}">所有分类 <i class="icon-chevron-right"></i> </a></small></h2>
+            <h2>
+                <i class="icon-tags"></i>
+                {{ .tag.Name }}
+                <small><a href="/{{ $site.TagUrl }}">所有分类 <i class="icon-chevron-right"></i> </a></small>
+            </h2>
         </div>
         <div class="note-list">
             {{ $saveTagListMap := .tagListMap }}
