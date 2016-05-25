@@ -54,6 +54,9 @@
 		<div class="keyword">
 			<hr>
 			<h2>"{{ $keyword }}" 的搜索结果</h2>
+			<p>
+				找到约 {{ .totalHits }} 条结果 （用时 {{ .tookInMillis }}）
+			</p>
 		</div>
 		<div class="search note-list">
 			{{ range $key, $value := .noteList }}

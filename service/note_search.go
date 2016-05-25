@@ -14,7 +14,7 @@ const (
 	NoteTypeName    = "note"
 )
 
-func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, error) {
+func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, int64, int64, error) {
 	page-- //数据库层的页数从0开始数
 	offset := page * limit
 
@@ -37,11 +37,11 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 		Size(int(limit)).
 		Do()
 	if err != nil {
-		return nil, 0, err
+		return nil, 0, 0, 0, err
 	}
 
 	if result.Hits == nil {
-		return nil, 0, nil
+		return nil, 0, result.TotalHits(), result.TookInMillis, nil
 	}
 	maxPage := (result.TotalHits()-1)/limit + 1
 
@@ -50,14 +50,14 @@ func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNo
 		note := model.NewSearchedNote()
 		err := json.Unmarshal(*hit.Source, note)
 		if err != nil {
-			return nil, 0, err
+			return nil, 0, 0, 0, err
 		}
 		note.FillHighlight(hit.Highlight)
 
 		noteList = append(noteList, note)
 	}
 
-	return noteList, maxPage, nil
+	return noteList, maxPage, result.TotalHits(), result.TookInMillis, nil
 }
 
 func CreateIndexAndMappingIfNotExist() error {
