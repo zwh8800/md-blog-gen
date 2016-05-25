@@ -15,6 +15,16 @@
 <div class="container wmd-preview wmd-preview-full-reader">
 	<div class="header">
 		<h1><a href="{{ $site.BaseUrl }}" class="no-color">{{ $site.Name }}</a></h1>
+		<div class="search-box">
+			<form action="/{{ $site.SearchUrl }}" method="get">
+				<div class="search-input">
+					<input type="search" name="keyword" placeholder="搜索">
+				</div>
+				<div class="search-icon">
+					<i class="icon-search"></i>
+				</div>
+			</form>
+		</div>
 		<h6>{{ .haha }}</h6>
 		<a href="/{{ $site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
 		{{ if .social.Github }}
