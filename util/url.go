@@ -9,38 +9,30 @@ import (
 	"github.com/zwh8800/md-blog-gen/conf"
 )
 
+func UrlJoin(subUrl string) string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	u, err := url.Parse(subUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.ResolveReference(u).String()
+}
+
 func GetNoteBase() string {
 	return "/" + conf.Conf.Site.NoteUrl
 }
 
 func GetNoteUrl(id int64) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetNoteBase(), strconv.FormatInt(id, 10))
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetNoteBase(), strconv.FormatInt(id, 10)))
 }
 
 func GetNoteUrlByNotename(notename string) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetNoteBase(), notename)
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetNoteBase(), notename))
 }
 
 func GetTagBase() string {
@@ -48,33 +40,11 @@ func GetTagBase() string {
 }
 
 func GetTagUrl(id int64) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetTagBase(), strconv.FormatInt(id, 10))
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetTagBase(), strconv.FormatInt(id, 10)))
 }
 
 func GetTagNameUrl(name string) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetTagBase(), name)
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetTagBase(), name))
 }
 
 func GetPageBase() string {
@@ -82,18 +52,7 @@ func GetPageBase() string {
 }
 
 func GetPageUrl(id int64) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetPageBase(), strconv.FormatInt(id, 10))
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetPageBase(), strconv.FormatInt(id, 10)))
 }
 
 func GetRssBase() string {
@@ -105,34 +64,12 @@ func GetArchiveBase() string {
 }
 
 func GetArchiveUrl() string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := GetArchiveBase()
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(GetArchiveBase())
 }
 
 func GetArchiveMonthUrl(year, month int64) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetArchiveBase(),
-		strconv.FormatInt(year, 10)+"-"+strconv.FormatInt(month, 10))
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetArchiveBase(),
+		strconv.FormatInt(year, 10)+"-"+strconv.FormatInt(month, 10)))
 }
 
 func GetSearchBase() string {
@@ -140,31 +77,9 @@ func GetSearchBase() string {
 }
 
 func GetSearchUrl(keyword string) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetSearchBase(), keyword)
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetSearchBase(), keyword))
 }
 
 func GetSearchPageUrl(keyword string, page int64) string {
-	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	noteChild := path.Join(GetSearchBase(), keyword, strconv.FormatInt(page, 10))
-	u, err := url.Parse(noteChild)
-	if err != nil {
-		glog.Error(err)
-		return ""
-	}
-	return baseUrl.ResolveReference(u).String()
+	return UrlJoin(path.Join(GetSearchBase(), keyword, strconv.FormatInt(page, 10)))
 }

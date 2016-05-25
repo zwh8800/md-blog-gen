@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zwh8800/md-blog-gen/index"
+	"github.com/zwh8800/md-blog-gen/opensearch"
 	"github.com/zwh8800/md-blog-gen/rss"
 	"github.com/zwh8800/md-blog-gen/sitemap"
 	"github.com/zwh8800/md-blog-gen/util"
@@ -29,6 +30,8 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword"), index.Search)
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword", ":page"), index.Search)
 	}
+
+	r.GET("/search.xml", opensearch.OpenSearch)
 
 	r.GET(util.GetRssBase(), rss.Rss)
 	r.GET("/.rss", rss.Rss)
