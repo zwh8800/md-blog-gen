@@ -35,7 +35,7 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 			glog.Error(err)
 			continue
 		}
-		if err := InsertOrUpdateNoteDocument(note, tagList); err != nil {
+		if err := IndexNoteDocument(note, tagList); err != nil {
 			glog.Error(err)
 			continue
 		}

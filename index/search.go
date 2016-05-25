@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -35,7 +36,7 @@ func Search(c *gin.Context) {
 	if err != nil {
 		page = 1
 	}
-	noteList, maxPage, err := service.SearchNoteByKeyword(keyword, page, conf.Conf.Site.NotePerPage)
+	noteList, maxPage, totalHits, tookInMillis, err := service.SearchNoteByKeyword(keyword, page, conf.Conf.Site.NotePerPage)
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
@@ -49,6 +50,8 @@ func Search(c *gin.Context) {
 		"nextPage":    page + 1,
 		"curPage":     page,
 		"keyword":     keyword,
+		"totalHits":   totalHits,
+		"searchTime":  time.Duration(tookInMillis) * time.Millisecond,
 		"noteList":    noteList,
 		"site":        conf.Conf.Site,
 		"social":      conf.Conf.Social,
