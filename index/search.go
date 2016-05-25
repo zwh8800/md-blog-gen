@@ -44,18 +44,18 @@ func Search(c *gin.Context) {
 	}
 
 	c.Render(http.StatusOK, render.NewRender("search.html", gin.H{
-		"hasPrevPage":  page > 1,
-		"prevPage":     page - 1,
-		"hasNextPage":  page < maxPage,
-		"nextPage":     page + 1,
-		"curPage":      page,
-		"keyword":      keyword,
-		"totalHits":    totalHits,
-		"tookInMillis": time.Duration(tookInMillis) * time.Millisecond,
-		"noteList":     noteList,
-		"site":         conf.Conf.Site,
-		"social":       conf.Conf.Social,
-		"prod":         conf.Conf.Env.Prod,
-		"haha":         util.HahaGenarate(),
+		"hasPrevPage": page > 1,
+		"prevPage":    page - 1,
+		"hasNextPage": page < maxPage,
+		"nextPage":    page + 1,
+		"curPage":     page,
+		"keyword":     keyword,
+		"totalHits":   totalHits,
+		"searchTime":  time.Duration(tookInMillis) * time.Millisecond,
+		"noteList":    noteList,
+		"site":        conf.Conf.Site,
+		"social":      conf.Conf.Social,
+		"prod":        conf.Conf.Env.Prod,
+		"haha":        util.HahaGenarate(),
 	}))
 }
