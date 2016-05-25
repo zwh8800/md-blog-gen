@@ -139,7 +139,7 @@ func IsNoteDocumentExist(uniqueId int64) (bool, error) {
 		Do()
 }
 
-func InsertOrUpdateNoteDocument(note *model.Note, tagList []*model.Tag) error {
+func IndexNoteDocument(note *model.Note, tagList []*model.Tag) error {
 	tagNameList := make([]string, 0, len(tagList))
 	for _, tag := range tagList {
 		tagNameList = append(tagNameList, tag.Name)
