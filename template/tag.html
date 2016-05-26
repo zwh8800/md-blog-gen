@@ -4,7 +4,7 @@
 {{ .tag.Name }} | {{ .site.Name }}
 {{ end }}
 {{ define "moreHeaders" }}
-<meta name="description" content="分类 {{ .tag.Name }} 的所有文章 | {{ .site.Description }}">
+<meta name="description" content="Tag {{ .tag.Name }} 下的所有文章 | {{ .site.Description }}">
 {{ end }}
 {{ define "moreStyles" }}
 {{ end }}
@@ -20,7 +20,7 @@
             <h2>
                 <i class="icon-tag"></i>
                 {{ .tag.Name }}
-                <small><a href="/{{ $site.TagUrl }}">所有分类 <i class="icon-chevron-right"></i> </a></small>
+                <small><a href="/{{ $site.TagUrl }}">查看 Tag 列表 <i class="icon-chevron-right"></i> </a></small>
             </h2>
         </div>
         <div class="note-list">
