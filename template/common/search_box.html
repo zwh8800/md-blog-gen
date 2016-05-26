@@ -1,0 +1,12 @@
+{{ define "searchBox" }}
+<div class="search-box">
+	<form action="/{{ .site.SearchUrl }}" method="get">
+		<div class="search-input">
+			<input type="search" name="keyword" placeholder="搜索">
+		</div>
+		<div class="search-icon">
+			<i class="icon-search"></i>
+		</div>
+	</form>
+</div>
+{{ end }}
