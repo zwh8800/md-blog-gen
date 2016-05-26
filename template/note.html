@@ -23,16 +23,7 @@
 {{ $site := .site }}
 <div class="container wmd-preview wmd-preview-full-reader">
     <div class="note-content">
-        <div class="search-box">
-            <form action="/{{ $site.SearchUrl }}" method="get">
-                <div class="search-input">
-                    <input type="search" name="keyword" placeholder="搜索">
-                </div>
-                <div class="search-icon">
-                    <i class="icon-search"></i>
-                </div>
-            </form>
-        </div>
+        {{ template "searchBox" . }}
         {{ .note.UnescapedContent }}
     </div>
     <div class="meta">
@@ -89,7 +80,7 @@
         </div>
     </div>
 
-    <div class="control">
+    <div class="footer">
         <hr>
         <a href="/"><i class="icon-home"></i> 返回</a>
     </div>
