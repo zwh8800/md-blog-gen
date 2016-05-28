@@ -17,7 +17,7 @@ import (
 )
 
 func AllTag(c *gin.Context) {
-	tagList, err := service.Tags()
+	tagList, err := service.TagsByCount()
 	if err != nil {
 		glog.Error(err)
 		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))

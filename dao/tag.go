@@ -33,6 +33,19 @@ func Tags(sess *dbr.Session) ([]*model.Tag, error) {
 	return tagList, nil
 }
 
+func TagsByCount(sess *dbr.Session) ([]*model.Tag, error) {
+	tagList := make([]*model.Tag, 0)
+	if _, err := sess.Select("Tag.id, Tag.name").
+		From(model.TagTableName).
+		Join(model.NoteTagTableName, "Tag.id = NoteTag.tag_id").
+		GroupBy("Tag.id").
+		OrderBy("count(*) desc").
+		LoadStructs(&tagList); err != nil {
+		return nil, err
+	}
+	return tagList, nil
+}
+
 func TagsByNoteId(sess *dbr.Session, noteId int64) ([]*model.Tag, error) {
 	tagList := make([]*model.Tag, 0)
 	if _, err := sess.Select("Tag.id", "Tag.name").From(model.TagTableName).

@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN apk update && apk add ca-certificates && apk add git && \
     apk add tzdata && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && go get github.com/Masterminds/glide
+    echo "Asia/Shanghai" > /etc/timezone && go get -v github.com/Masterminds/glide
 
 ADD ./template /app/template
 ADD ./static /app/static
