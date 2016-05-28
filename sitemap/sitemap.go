@@ -69,7 +69,7 @@ func SiteMap(c *gin.Context) {
 		})
 	}
 
-	tagList, err := service.Tags()
+	tagList, err := service.TagsByCount()
 	if err != nil {
 		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
