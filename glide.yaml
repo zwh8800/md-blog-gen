@@ -14,3 +14,4 @@ import:
 - package: github.com/robfig/cron
 - package: gopkg.in/gcfg.v1
 - package: gopkg.in/olivere/elastic.v3
+- package: gopkg.in/go-playground/pool.v1
