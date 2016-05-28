@@ -1,5 +1,5 @@
-hash: b63a09cfb947791808e4e64faac2ce9a16222eeb4bb61440d9d5d1b9043ce8d4
-updated: 2016-05-22T21:21:38.486692663+08:00
+hash: 58df2a24b7a7e3f20317c1ef7de837df7e1559e96bafef9f77d6644c78dd9ccb
+updated: 2016-05-28T17:43:50.284575557+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
@@ -49,10 +49,15 @@ imports:
   - scanner
   - token
   - types
+- name: gopkg.in/go-playground/pool.v1
+  version: 7f37f4c92e71475945ec7c4ed4b07a34bb7c1966
 - name: gopkg.in/go-playground/validator.v8
   version: c193cecd124b5cc722d7ee5538e945bdb3348435
 - name: gopkg.in/olivere/elastic.v3
   version: aa80db5ac257057adde4efdafb4aad58ef495acc
+  subpackages:
+  - backoff
+  - uritemplates
 - name: gopkg.in/yaml.v2
   version: a83829b6f1293c91addabc89d0571c246397bbf4
 devImports: []

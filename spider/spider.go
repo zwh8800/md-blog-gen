@@ -4,7 +4,9 @@ import (
 	"runtime/debug"
 
 	"github.com/golang/glog"
+	"gopkg.in/go-playground/pool.v1"
 
+	"github.com/zwh8800/md-blog-gen/model"
 	"github.com/zwh8800/md-blog-gen/service"
 )
 
@@ -23,8 +25,19 @@ func Go() {
 	}
 	noteList := findNoteList(startPage)
 	tagListMap := findTagListMap(startPage)
+
+	p := pool.NewPool(4, len(noteList))
 	for _, note := range noteList {
-		FindNoteContent(note)
+		p.Queue(func(job *pool.Job) {
+			note := job.Params()[0].(*model.Note)
+			FindNoteContent(note)
+		}, note)
+	}
+	for result := range p.Results() {
+		err, ok := result.(*pool.ErrRecovery)
+		if ok {
+			panic(err)
+		}
 	}
 
 	if err := service.SaveNoteList(noteList, tagListMap); err != nil {
