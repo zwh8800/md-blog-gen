@@ -13,27 +13,16 @@ import (
 )
 
 // 有道API: http://fanyi.youdao.com/openapi?path=data-mode
-var translateCache map[string]string
-var translateCacheTime = 0
-
-const translateCacheClearTime = 100
+var translateCache *AutoClearKVCache
 
 func init() {
-	translateCache = make(map[string]string)
+	translateCache = NewAutoClearKVCache(100)
 }
 
 type youdaoResponse struct {
 	Translation []string `json:"translation"`
 	Query       string   `json:"query"`
 	ErrorCode   int      `json:"errorCode"`
-}
-
-func tryClearCache() {
-	translateCacheTime++
-	if translateCacheTime > translateCacheClearTime {
-		translateCacheTime = 0
-		translateCache = make(map[string]string)
-	}
 }
 
 func isAscii(s string) bool {
@@ -46,9 +35,7 @@ func isAscii(s string) bool {
 }
 
 func YoudaoTranslate(title string) string {
-	tryClearCache()
-
-	if notename, ok := translateCache[title]; ok {
+	if notename, ok := translateCache.Get(title); ok {
 		return notename
 	}
 
@@ -96,6 +83,6 @@ func YoudaoTranslate(title string) string {
 		return ""
 	}
 
-	translateCache[title] = youdaoData.Translation[0]
+	translateCache.Put(title, youdaoData.Translation[0])
 	return youdaoData.Translation[0]
 }
