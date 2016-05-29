@@ -2,6 +2,7 @@ package model
 
 import (
 	"bytes"
+	"html"
 	"html/template"
 	"strings"
 	"time"
@@ -68,7 +69,7 @@ func (obj *Note) ContentText() string {
 		return ""
 	}
 
-	return doc.Text()
+	return html.EscapeString(doc.Text())
 }
 
 func (obj *Note) FormattedTimestamp() string {
