@@ -6,7 +6,7 @@ type AutoClearKVCache struct {
 	timesBeforeClear int
 	n                int
 	data             map[string]string
-	mut              *sync.RWMutex
+	mut              sync.RWMutex
 }
 
 func NewAutoClearKVCache(timesBeforeClear int) *AutoClearKVCache {
@@ -14,7 +14,6 @@ func NewAutoClearKVCache(timesBeforeClear int) *AutoClearKVCache {
 		timesBeforeClear: timesBeforeClear,
 		n:                0,
 		data:             make(map[string]string),
-		mut:              &sync.RWMutex{},
 	}
 }
 
