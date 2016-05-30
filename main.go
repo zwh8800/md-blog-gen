@@ -21,6 +21,7 @@ func main() {
 	defer glog.Flush()
 	startServer()
 	handleSignal()
+	stopServer()
 	glog.Infoln("gracefully shutdown")
 }
 
@@ -54,4 +55,8 @@ func handleSignal() {
 	signal.Notify(signalChan, os.Kill, os.Interrupt, syscall.SIGTERM)
 	<-signalChan
 	glog.Infoln("signal received")
+}
+
+func stopServer() {
+	spider.WaitFinish()
 }

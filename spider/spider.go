@@ -2,6 +2,7 @@ package spider
 
 import (
 	"runtime/debug"
+	"sync"
 
 	"github.com/golang/glog"
 	"gopkg.in/go-playground/pool.v1"
@@ -10,7 +11,11 @@ import (
 	"github.com/zwh8800/md-blog-gen/service"
 )
 
+var waitFinish sync.WaitGroup
+
 func Go() {
+	waitFinish.Add(1)
+	defer waitFinish.Done()
 	glog.Info("spider started")
 	defer func() {
 		if err := recover(); err != nil {
@@ -46,4 +51,8 @@ func Go() {
 	}
 
 	glog.Info("spider finished")
+}
+
+func WaitFinish() {
+	waitFinish.Wait()
 }
