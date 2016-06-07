@@ -21,6 +21,7 @@ func main() {
 	defer glog.Flush()
 	startServer()
 	handleSignal()
+	glog.Infoln("signal received")
 	stopServer()
 	glog.Infoln("gracefully shutdown")
 }
@@ -54,7 +55,6 @@ func handleSignal() {
 	signalChan := make(chan os.Signal)
 	signal.Notify(signalChan, os.Kill, os.Interrupt, syscall.SIGTERM)
 	<-signalChan
-	glog.Infoln("signal received")
 }
 
 func stopServer() {
