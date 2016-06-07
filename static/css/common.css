@@ -41,6 +41,7 @@ a.no-color {
 	-ms-transition: width 600ms;
 	-o-transition: width 600ms;
 	transition: width 600ms;
+	-webkit-appearance: none;
 }
 .search-box .search-input input:focus {
 	width: 160px;
