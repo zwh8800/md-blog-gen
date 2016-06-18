@@ -30,6 +30,7 @@ type config struct {
 	}
 	Site struct {
 		Name        string
+		FuckIcp     string
 		Description string
 		BaseUrl     string
 		NoteUrl     string
