@@ -33,7 +33,13 @@ a.no-color {
 	}
 }
 
+.search-box .search-form {
+	position: relative;
+	margin: 0;
+}
+
 .search-box .search-input input {
+	margin: 0;
 	padding-left: 27px;
 	width: 60px;
 	-webkit-transition: width 600ms;
@@ -47,8 +53,8 @@ a.no-color {
 	width: 160px;
 }
 .search-box .search-icon {
-	position: relative;
-	top: -39px;
+	position: absolute;
+	top: 0;
 	left: 9px;
 	max-width: 1em;
 }
