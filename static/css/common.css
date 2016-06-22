@@ -27,8 +27,6 @@ a.no-color {
 }
 @media (max-width: 400px) {
 	.search-box {
-		position: absolute;
-		right: 5px;
 		top: 105px;
 	}
 }
