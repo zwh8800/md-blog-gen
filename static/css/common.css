@@ -30,6 +30,11 @@ a.no-color {
 		top: 105px;
 	}
 }
+@media (max-width: 979px) and (min-width: 768px) {
+	.search-box {
+		right: 25px;
+	}
+}
 
 .search-box .search-form {
 	position: relative;
