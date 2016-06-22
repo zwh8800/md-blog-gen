@@ -23,7 +23,12 @@ a.no-color {
 .search-box {
 	position: absolute;
 	right: 5px;
-	top: 105px;
+	top: 55px;
+}
+@media (max-width: 600px) {
+	.search-box {
+		top: 105px;
+	}
 }
 
 .search-box .search-form {
