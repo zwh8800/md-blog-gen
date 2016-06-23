@@ -53,6 +53,7 @@ type config struct {
 		Weibo    string
 		Twitter  string
 		Linkedin string
+		About    string
 	}
 	Youdao struct {
 		ApiUrl string
