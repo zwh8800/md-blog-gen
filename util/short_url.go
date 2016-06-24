@@ -26,7 +26,6 @@ func ShortenUrl(url string) []string {
 		partUint &= 0x3fffffff
 
 		shortUrlBuffer := &bytes.Buffer{}
-		// 将30bit分成6份, 每份5bit
 		for j := 0; j < 6; j++ {
 			index := partUint % 62
 
