@@ -2,8 +2,8 @@ package util
 
 import "encoding/json"
 
-func JsonStringify(obj interface{}, intent bool) string {
-	if intent {
+func JsonStringify(obj interface{}, indent bool) string {
+	if indent {
 		data, err := json.MarshalIndent(obj, "", "  ")
 		if err != nil {
 			return ""
