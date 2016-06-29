@@ -20,21 +20,14 @@ func ShortenUrl(url string) []string {
 	shortUrlList := make([]string, 0, 4)
 
 	sumData := md5.Sum([]byte(url))
-	// 把md5sum分成4份, 每份4个字节
 	for i := 0; i < 4; i++ {
 		part := sumData[i*4 : i*4+4]
-		// 将4字节当作一个整数
 		partUint := binary.BigEndian.Uint32(part)
-		// 只取整数的后30个bit, 用&屏蔽掉高位
 		partUint &= 0x3fffffff
 
 		shortUrlBuffer := &bytes.Buffer{}
-		// 将30bit分成6份, 每份5bit
 		for j := 0; j < 6; j++ {
-			// 0x3d = 0b00111101, 多取一位, 扔自己一位
-			// 巧妙之处, 既解决了5bit不够索引62个字符的尴尬
-			// 又使index不会超出62, 厉害厉害
-			index := partUint & 0x3d
+			index := partUint % 62
 
 			shortUrlBuffer.WriteRune(charTable[index])
 			partUint = partUint >> 5
