@@ -1,4 +1,4 @@
-.qrcode {
+#qrcode .qrcode {
 	position: absolute;
 	border: 1px solid #000;
 	padding: 10px;
@@ -8,13 +8,13 @@
 	box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
 	z-index: 10000;
 }
-.qrcode.hidden {
+#qrcode .qrcode.hidden {
 	display: none;
 }
-.qrcode-button {
+#qrcode .qrcode-button {
 	font-size: 24px;
 }
-.qrcode-button:hover {
+#qrcode .qrcode-button:hover {
 	text-decoration: none;
 }
 
