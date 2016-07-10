@@ -9,6 +9,7 @@
 {{ end }}
 {{ define "moreStyles" }}
 <link href="/static/css/note.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/static/sharejs/css/share.min.css">
 {{ end }}
 {{ define "moreScripts" }}
 <script src="/static/js/note.js"></script>
@@ -18,6 +19,7 @@
         this.page.identifier = 'note-{{ .note.Id }}';
     };
 </script>
+<script src="/static/sharejs/js/jquery.share.min.js"></script>
 <script defer async src="https://www.zybuluo.com/static/MathJax/MathJax.js?config=TeX-AMS-MML_SVG"></script>
 {{ end }}
 {{ define "content" }}
@@ -29,10 +31,11 @@
     </div>
     <div class="meta">
         <hr>
-        <p>
+        <p id="qrcode">
             <a class="qrcode-button" href="javascript:void(0)" title="二维码"><i class="icon-qrcode"></i></a>
             <img class="qrcode hidden" src="{{ .qrcodeDataUrl }}" alt="二维码">
         </p>
+        <div class="social-share" data-disabled="diandian"></div>
         <p>
             <small>发表于 {{ .note.FormattedTimestamp }}，最后更新于 {{ .note.FormattedLastModified }}。</small>
         </p>
