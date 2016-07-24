@@ -1,6 +1,10 @@
 {{ define "header" }}
 <div class="header">
-	<h1><a href="{{ .site.BaseUrl }}" class="no-color">{{ .site.Name }}{{if .site.FuckIcp}}<small> | {{ .site.FuckIcp }}</small>{{end}}</a></h1>
+	<h1>
+		<a href="{{ .site.BaseUrl }}" class="no-color">
+			{{ .site.Name }}
+		</a>
+	</h1>
 	{{ template "searchBox" . }}
 	<h6>{{ .haha }}</h6>
 	<div class="social">
