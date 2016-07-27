@@ -65,6 +65,13 @@ a.no-color {
 	left: 9px;
 	max-width: 1em;
 }
+.search-box .search-loading {
+	position: absolute;
+	top: 0;
+	left: 9px;
+	max-width: 1em;
+	display: none;
+}
 
 .search em {
 	color: #F15F5F;
