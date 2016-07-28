@@ -38,7 +38,7 @@ func downloadImg(src string) (string, error) {
 
 	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
 	if err != nil {
-		if err == os.ErrExist {
+		if os.IsExist(err){
 			return outFilename, nil
 		}
 		return "", err
