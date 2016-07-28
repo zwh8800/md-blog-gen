@@ -36,8 +36,11 @@ func downloadImg(src string) (string, error) {
 		outFilename = outFilename + ext
 	}
 
-	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
 	if err != nil {
+		if err == os.ErrExist {
+			return outFilename, nil
+		}
 		return "", err
 	}
 	if _, err := io.Copy(outFile, resp.Body); err != nil {
