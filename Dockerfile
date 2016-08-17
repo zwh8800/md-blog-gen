@@ -1,4 +1,4 @@
-FROM golang:1.6.2-alpine
+FROM golang:1.7.0-alpine
 MAINTAINER zwh8800 <496781108@qq.com>
 
 WORKDIR /app
