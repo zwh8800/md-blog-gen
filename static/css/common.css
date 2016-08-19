@@ -1,5 +1,7 @@
-.wrap-outer {
-	margin-left: calc(100vw - 100%);
+@media screen and (min-width: 1150px) {
+	.wrap-outer {
+		margin-left: calc(100vw - 100%);
+	}
 }
 ::-webkit-scrollbar {
 	height:8px;
