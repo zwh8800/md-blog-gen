@@ -48,7 +48,9 @@
     {{ end }}
 </head>
 <body class="theme theme-white">
-{{ template "content" . }}
+<div class="wrap-outer">
+    {{ template "content" . }}
+</div>
 
 <script src="/static/js/jquery-2.2.2.min.js"></script>
 <script src="/static/js/nprogress.js"></script>
