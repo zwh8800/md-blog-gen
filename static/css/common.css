@@ -83,10 +83,10 @@ a.no-color {
 	overflow: hidden;
 }
 .page .prev-page {
-	float: left;
+	float: right;
 }
 .page .next-page {
-	float: right;
+	float: left;
 }
 
 .search-box {
