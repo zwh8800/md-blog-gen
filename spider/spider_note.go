@@ -91,10 +91,10 @@ func getArchiveDate(notename string) (*time.Time, bool) {
 	if strings.Index(notename, "archive-") != 0 {
 		return nil, false
 	}
-	timestamp, err := time.ParseInLocation(notename[8:], "20060102", time.Local)
+	timestamp, err := time.ParseInLocation("20060102", notename[8:], time.Local)
 	if err != nil {
 		glog.Error(err)
-		timestamp, _ = time.ParseInLocation("20160101", "20060102", time.Local) // default date
+		timestamp, _ = time.ParseInLocation("20060102", "20160101", time.Local) // default date
 	}
 	return &timestamp, true
 }
