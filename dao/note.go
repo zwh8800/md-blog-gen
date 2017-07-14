@@ -160,11 +160,17 @@ func NotesByIds(sr dbr.SessionRunner, noteIds []int64, limit int64) ([]*model.No
 
 func YearMonthList(sr dbr.SessionRunner, isAsc bool) ([]*model.YearMonth, error) {
 	monthList := make([]*model.YearMonth, 0)
+	var order string
+	if isAsc {
+		order = "YEAR(timestamp) ASC, MONTH(timestamp) ASC"
+	} else {
+		order = "YEAR(timestamp) DESC, MONTH(timestamp) DESC"
+	}
 
 	if _, err := sr.Select("YEAR(timestamp) year", "MONTH(timestamp) month").
 		From(model.NoteTableName).Where("removed is false").
 		GroupBy("YEAR(timestamp)", "MONTH(timestamp)").
-		OrderDir("YEAR(timestamp), MONTH(timestamp)", isAsc).LoadStructs(&monthList); err != nil {
+		OrderBy(order).LoadStructs(&monthList); err != nil {
 		return nil, err
 	}
 	return monthList, nil
