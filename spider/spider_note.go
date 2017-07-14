@@ -143,8 +143,8 @@ func FindNoteContent(note *model.Note) {
 		s.SetAttr("src", "/"+dest)
 	})
 	handleTag(content)
-	handleTime(content, note.Timestamp.Local())
 	handleNotename(content, note)
+	handleTime(content, note.Timestamp.Local())
 
 	html, err := content.Html()
 	if err != nil {
