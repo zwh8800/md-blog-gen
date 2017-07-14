@@ -38,7 +38,7 @@ func downloadImg(src string) (string, error) {
 
 	outFile, err := os.OpenFile(outFilename, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
 	if err != nil {
-		if os.IsExist(err){
+		if os.IsExist(err) {
 			return outFilename, nil
 		}
 		return "", err
@@ -87,6 +87,18 @@ func transformToNotename(notename string) string {
 	return strings.ToLower(notename)
 }
 
+func getArchiveDate(notename string) (*time.Time, bool) {
+	if strings.Index(notename, "archive-") != 0 {
+		return nil, false
+	}
+	timestamp, err := time.ParseInLocation(notename[8:], "20060102", time.Local)
+	if err != nil {
+		glog.Error(err)
+		timestamp, _ = time.ParseInLocation("20160101", "20060102", time.Local) // default date
+	}
+	return &timestamp, true
+}
+
 func handleNotename(content *goquery.Selection, note *model.Note) {
 	a := content.Find("p a[href='/notename/']")
 	attr, ok := a.Attr("title")
@@ -94,6 +106,9 @@ func handleNotename(content *goquery.Selection, note *model.Note) {
 		notename := transformToNotename(attr)
 		note.Notename.Valid = true
 		note.Notename.String = notename
+		if timestamp, ok := getArchiveDate(notename); ok {
+			note.Timestamp = *timestamp
+		}
 
 		a.SetAttr("href", util.GetNoteUrlByNotename(notename))
 	} else if notename := transformToNotename(util.YoudaoTranslate(note.Title)); notename != "" {
