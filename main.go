@@ -47,7 +47,8 @@ func startServer() {
 		panic(err)
 	}
 	crontab.Go()
-	spider.Go()
+	go spider.Go()
+	//service.RemoveAllCache()
 	glog.Infoln("server started")
 }
 

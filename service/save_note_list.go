@@ -39,6 +39,29 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 			glog.Error(err)
 			continue
 		}
+
+		if err := RemoveNoteCache(note.Notename.String); err != nil {
+			glog.Error(err)
+			continue
+		}
+		for _, tag := range tagList {
+			if err := RemoveTagCache(tag.Name); err != nil {
+				glog.Error(err)
+				continue
+			}
+		}
+		if err := RemoveArchiveCache(int64(note.Timestamp.Local().Year()), int64(note.Timestamp.Local().Month())); err != nil {
+			glog.Error(err)
+			continue
+		}
+		if err := RemoveIndexCache(); err != nil {
+			glog.Error(err)
+			continue
+		}
+		if err := RemoveSearchCache(); err != nil {
+			glog.Error(err)
+			continue
+		}
 	}
 
 	tx, err := sess.Begin()

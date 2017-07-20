@@ -38,3 +38,7 @@ func (r *Render) Render(w http.ResponseWriter) error {
 	}
 	return t.ExecuteTemplate(w, r.templateName, r.data)
 }
+
+func (r *Render) WriteContentType(w http.ResponseWriter) {
+	util.WriteContentType(w, []string{"text/html; charset=utf-8"})
+}
