@@ -151,7 +151,7 @@ func NotesByIds(sr dbr.SessionRunner, noteIds []int64, limit int64) ([]*model.No
 		return noteList, nil
 	}
 	if _, err := sr.Select("*").From(model.NoteTableName).
-		Where("id in ?", noteIds).OrderBy("timestamp desc").
+		Where("id in ?", noteIds).OrderBy("rand()"). // TODO: order by rand() MAY BE SLOW
 		Limit(uint64(limit)).LoadStructs(&noteList); err != nil {
 		return nil, err
 	}
