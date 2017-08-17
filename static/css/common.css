@@ -90,19 +90,9 @@ a.no-color {
 }
 
 .search-box {
-	position: absolute;
-	right: 5px;
-	top: 55px;
-}
-@media (max-width: 600px) {
-	.search-box {
-		top: 105px;
-	}
-}
-@media (max-width: 979px) and (min-width: 768px) {
-	.search-box {
-		right: 25px;
-	}
+	float: right;
+	font-size: 16px;
+	margin-top: 6px;
 }
 
 .search-box .search-form {
@@ -138,6 +128,7 @@ a.no-color {
 	display: none;
 }
 
+.ui-menu-item em,
 .search em {
 	color: #F15F5F;
 	font-style: normal;

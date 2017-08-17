@@ -59,3 +59,41 @@ func Search(c *gin.Context) {
 		"haha":        util.HahaGenarate(),
 	}))
 }
+
+type autoCompleteJson struct {
+	Id    string `json:"id"`
+	Value string `json:"value"`
+}
+
+func SearchTitle(c *gin.Context) {
+	keyword := strings.TrimSpace(c.Param("keyword"))
+	pageStr := c.Param("page")
+	page, err := strconv.ParseInt(pageStr, 10, 64)
+	if page == 1 {
+		c.Redirect(http.StatusMovedPermanently, util.GetSearchUrl(keyword))
+		return
+	}
+	if err != nil {
+		page = 1
+	}
+	noteList, err := service.SearchNoteByTitleKeyword(keyword)
+	if err != nil {
+		glog.Error(err)
+		ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
+		return
+	}
+	json := make([]*autoCompleteJson, 0, len(noteList))
+	for _, note := range noteList {
+		var id string
+		if note.Notename.Valid {
+			id = note.Notename.String
+		} else {
+			id = strconv.FormatInt(note.Id, 10)
+		}
+		json = append(json, &autoCompleteJson{
+			Id:    id,
+			Value: string(note.HighlightTitle()),
+		})
+	}
+	c.JSON(http.StatusOK, json)
+}

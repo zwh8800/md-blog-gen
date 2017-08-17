@@ -14,6 +14,36 @@ const (
 	NoteTypeName    = "note"
 )
 
+func SearchNoteByTitleKeyword(keyword string) ([]*model.SearchedNote, error) {
+	const limit = 5
+	query := elastic.NewMultiMatchQuery(keyword).
+		FieldWithBoost("title", 4)
+	highlight := elastic.NewHighlight().
+		Field("title")
+	result, err := esClient.Search().
+		Index(MdBlogIndexName).
+		Type(NoteTypeName).
+		Query(query).
+		Highlight(highlight).
+		Size(limit).
+		Do()
+	if err != nil {
+		return nil, err
+	}
+	noteList := make([]*model.SearchedNote, 0, len(result.Hits.Hits))
+	for _, hit := range result.Hits.Hits {
+		note := model.NewSearchedNote()
+		err := json.Unmarshal(*hit.Source, note)
+		if err != nil {
+			return nil, err
+		}
+		note.FillHighlight(hit.Highlight)
+
+		noteList = append(noteList, note)
+	}
+	return noteList, nil
+}
+
 func SearchNoteByKeyword(keyword string, page, limit int64) ([]*model.SearchedNote, int64, int64, int64, error) {
 	page-- //数据库层的页数从0开始数
 	offset := page * limit

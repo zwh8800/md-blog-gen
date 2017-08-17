@@ -1,11 +1,11 @@
 {{ define "header" }}
 <div class="header">
+	{{ template "searchBox" . }}
 	<h1>
 		<a href="{{ .site.BaseUrl }}" class="no-color">
 			{{ .site.Name }}
 		</a>
 	</h1>
-	{{ template "searchBox" . }}
 	<h6>{{ .haha }}</h6>
 	<div class="social">
 		<a href="/{{ .site.RssUrl }}" target="_blank" title="RSS"><i class="icon-rss"></i></a>
