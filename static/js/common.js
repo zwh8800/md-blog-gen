@@ -22,12 +22,12 @@
 			},
 			select: function(event, ui) {
 				event.preventDefault();
-                $("#keyword").val(ui.item.value.replace('<em>', '').replace('</em>', ''));
+                $("#keyword").val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
                 window.location.href = "/note/" + ui.item.id;
 			},
             focus: function(event, ui) {
                 event.preventDefault();
-                $("#keyword").val(ui.item.value.replace('<em>', '').replace('</em>', ''));
+                $("#keyword").val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
             },
             open: function(event, ui) {
                 $(this).autocomplete("widget").css({
