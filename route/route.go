@@ -29,6 +29,7 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(util.GetSearchBase(), index.SearchIndex)
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword"), index.Search)
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword", ":page"), index.Search)
+		indexGroup.GET(path.Join("api", util.GetSearchBase(), ":keyword"), index.SearchTitle)
 	}
 
 	r.GET("/search.xml", opensearch.OpenSearch)
