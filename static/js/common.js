@@ -17,17 +17,25 @@
 		$("#keyword").autocomplete({
 			source: function(request, response) {
 				$.get("/api/search/" + encodeURIComponent(request.term), function(data) {
+					data.push({
+						id: 0,
+						value: '查看更多...'
+					});
 					response(data);
 				});
 			},
 			select: function(event, ui) {
 				event.preventDefault();
-                $("#keyword").val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
+                var $keyword = $("#keyword");
+                if (ui.item.id === 0) {
+                    window.location.href = "/search/" + encodeURIComponent($keyword.val());
+                    return;
+                }
+                $keyword.val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
                 window.location.href = "/note/" + ui.item.id;
 			},
             focus: function(event, ui) {
                 event.preventDefault();
-                $("#keyword").val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
             },
             open: function(event, ui) {
                 $(this).autocomplete("widget").css({
