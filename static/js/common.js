@@ -54,12 +54,17 @@
                 .appendTo(ul);
         };
         if ($(window).width() <= 700) {
-            $("html, body").animate({
-                scrollTop: $('.search-box').outerHeight() + "px"
-            }, {
-                duration: 500,
-                easing: "swing"
-            });
+        	var duration = 1;
+        	if (sessionStorage.getItem('scrolled') !== 'true') {
+                duration = 500
+            }
+			$("html, body").animate({
+				scrollTop: $('.search-box').outerHeight() + "px"
+			}, {
+				duration: duration,
+				easing: "swing"
+			});
+            sessionStorage.setItem('scrolled', 'true');
         }
     });
 })(jQuery);
