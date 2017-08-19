@@ -129,6 +129,9 @@ a.no-color {
 }
 
 @media (max-width: 700px) {
+	h1 {
+		margin-top: 60px;
+	}
 	.wmd-preview-full-reader {
 		position: static;
 	}
