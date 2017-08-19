@@ -38,9 +38,11 @@
                 event.preventDefault();
             },
             open: function(event, ui) {
-                $(this).autocomplete("widget").css({
-                    "width": 195
-                });
+				if ($(window).width() > 700) {
+                    $(this).autocomplete("widget").css({
+                        "width": 195
+                    });
+                }
             }
 
 		}).data('ui-autocomplete')._renderItem = function( ul, item ) {
