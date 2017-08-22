@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/conf"
 	"gopkg.in/olivere/elastic.v3"
-	redis "gopkg.in/redis.v5"
+	"gopkg.in/redis.v5"
 )
 
 var dbConn *dbr.Connection

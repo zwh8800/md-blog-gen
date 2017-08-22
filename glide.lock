@@ -1,5 +1,5 @@
-hash: c99af8350d142bc10eca0a3de5b429150e6fd31b3a0caa2e99e37cb1f1ae43bc
-updated: 2017-07-20T22:26:02.398647691+08:00
+hash: 9910ce8e648b4ceaeee24d93fb869755b031bf078308b8b4f23eeb13d806672d
+updated: 2017-08-22T18:57:23.970172423+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -18,6 +18,11 @@ imports:
   - binding
   - json
   - render
+- name: github.com/go-redis/redis
+  version: 0daeac9c3e31a1b121318398249699f48bb8d2a4
+  subpackages:
+  - internal
+  - internal/proto
 - name: github.com/go-sql-driver/mysql
   version: 3955978caca48c1658a4bb7a9c6a0f084e326af3
 - name: github.com/gocraft/dbr
@@ -72,6 +77,14 @@ imports:
   subpackages:
   - backoff
   - uritemplates
+- name: gopkg.in/redis.v5
+  version: 19c1c2272e00c1aaa903cf574c746cd449f9cd3c
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
 - name: gopkg.in/warnings.v0
   version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
 - name: gopkg.in/yaml.v2
