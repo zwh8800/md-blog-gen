@@ -4,7 +4,10 @@ import (
 	"html/template"
 	"net/http"
 	"path"
+	"strconv"
 
+	"github.com/gin-gonic/gin"
+	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
@@ -20,6 +23,13 @@ type Render struct {
 }
 
 func NewRender(template string, data interface{}) *Render {
+	if conf.Conf.Env.Prod {
+		if h, ok := data.(gin.H); ok {
+			h["staticVer"] = "/v" + strconv.Itoa(conf.Conf.Env.StaticVersion)
+			data = h
+		}
+	}
+
 	return &Render{
 		template,
 		path.Join(templateDir, template),
