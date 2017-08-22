@@ -31,3 +31,4 @@ _testmain.go
 md-blog-gen*
 log
 static/img
+deploy-static.sh
