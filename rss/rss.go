@@ -53,7 +53,7 @@ func Rss(c *gin.Context) {
 		return
 	}
 
-	util.WriteContentType(c.Writer, []string{"application/rss+xml; charset=utf-8"})
+	util.WriteContentType(c.Writer, "application/rss+xml; charset=utf-8")
 	if err := feed.WriteRss(c.Writer); err != nil {
 		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))
@@ -68,7 +68,7 @@ func Atom(c *gin.Context) {
 		return
 	}
 
-	util.WriteContentType(c.Writer, []string{"application/xml; charset=utf-8"})
+	util.WriteContentType(c.Writer, "application/xml; charset=utf-8")
 	if err := feed.WriteAtom(c.Writer); err != nil {
 		glog.Error(err)
 		index.ErrorHandler(c, http.StatusServiceUnavailable, errors.New("Service Unavailable"))

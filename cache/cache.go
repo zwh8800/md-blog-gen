@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"io"
 	"io/ioutil"
-
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -44,8 +44,10 @@ func Middleware() gin.HandlerFunc {
 				c.Writer = newWriter
 				defer func() {
 					if c.Writer.Status() == http.StatusOK {
+						contentType := c.Writer.Header().Get("Content-Type")
+
 						data, _ := ioutil.ReadAll(reader)
-						service.AddCache(path, string(data))
+						service.AddCache(path, contentType+":"+string(data))
 					}
 				}()
 			} else {
@@ -53,8 +55,10 @@ func Middleware() gin.HandlerFunc {
 			}
 			c.Next()
 		} else {
-			util.WriteContentType(c.Writer, []string{"text/html; charset=utf-8"})
-			c.Writer.Write([]byte(data))
+			splitter := strings.Index(data, ":")
+			contentType := data[:splitter]
+			util.WriteContentType(c.Writer, contentType)
+			c.Writer.Write([]byte(data[splitter+1:]))
 			c.Abort()
 		}
 	}

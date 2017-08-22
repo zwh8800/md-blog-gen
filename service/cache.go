@@ -1,6 +1,7 @@
 package service
 
 import (
+	"path"
 	"strings"
 
 	"github.com/zwh8800/md-blog-gen/util"
@@ -15,26 +16,27 @@ const (
 	CacheKey      = "cache:"
 )
 
-func AddCache(path, data string) error {
-	key := CacheKey + path
+func AddCache(p, data string) error {
+	key := CacheKey + p
 	switch {
-	case strings.Index(path, util.GetPageBase()) == 0:
+	case strings.Index(p, util.GetPageBase()) == 0:
 		if err := redisClient.SAdd(IndexSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(path, util.GetTagBase()) == 0:
+	case strings.Index(p, util.GetTagBase()) == 0:
 		if err := redisClient.SAdd(TagSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(path, util.GetNoteBase()) == 0:
+	case strings.Index(p, util.GetNoteBase()) == 0:
 		if err := redisClient.SAdd(NoteSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(path, util.GetArchiveBase()) == 0:
+	case strings.Index(p, util.GetArchiveBase()) == 0:
 		if err := redisClient.SAdd(ArchiveSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(path, util.GetSearchBase()) == 0:
+	case strings.Index(p, util.GetSearchBase()) == 0:
+	case strings.Index(p, path.Join("/api", util.GetSearchBase())) == 0:
 		if err := redisClient.SAdd(SearchSetKey, key).Err(); err != nil {
 			return err
 		}
