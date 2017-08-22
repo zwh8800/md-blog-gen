@@ -1,63 +1,79 @@
-hash: 58df2a24b7a7e3f20317c1ef7de837df7e1559e96bafef9f77d6644c78dd9ccb
-updated: 2016-05-28T17:43:50.284575557+08:00
+hash: c99af8350d142bc10eca0a3de5b429150e6fd31b3a0caa2e99e37cb1f1ae43bc
+updated: 2017-07-20T22:26:02.398647691+08:00
 imports:
 - name: github.com/andybalholm/cascadia
-  version: 3ad29d1ad1c4f2023e355603324348cf1f4b2d48
+  version: 349dd0209470eabd9514242c688c403c0926d266
 - name: github.com/boombuler/barcode
-  version: d1c739eed5fe6b2198220f20403e60584ecffadb
+  version: 56ef0af91246fb5279df4f87bc3daf1bf7cb9e89
   subpackages:
   - qr
   - utils
 - name: github.com/chonglou/sitemap
   version: d07d4378937c751a8c1c505f7c782412a550afcc
+- name: github.com/gin-contrib/sse
+  version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
 - name: github.com/gin-gonic/gin
-  version: 542be2fe77724f800fcab7eb6c01a4e597fb8506
+  version: 7b508186dd71146cbdb3d14f2c2e1aaaa51f7e45
   subpackages:
   - binding
+  - json
   - render
 - name: github.com/go-sql-driver/mysql
-  version: 7ebe0a500653eeb1859664bed5e48dec1e164e73
+  version: 3955978caca48c1658a4bb7a9c6a0f084e326af3
 - name: github.com/gocraft/dbr
-  version: 78b5b74da0b8bcbe167cc4c55d3383b6893848c3
+  version: c4f8f99b25c74a821ffa41ca2e339cc24a6b4a67
   subpackages:
   - dialect
 - name: github.com/golang/glog
   version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
 - name: github.com/golang/protobuf
-  version: 2402d76f3d41f928c7902a765dfc872356dd3aad
+  version: 0a4f71a498b7c4812f64969510bcb4eca251e33a
   subpackages:
   - proto
 - name: github.com/gorilla/feeds
-  version: 441264de03a8117ed530ae8e049d8f601a33a099
-- name: github.com/manucorporat/sse
-  version: ee05b128a739a0fb76c7ebd3ae4810c1de808d6d
+  version: fa8f5548eedbe306d748925237a48d70ae4150de
+- name: github.com/json-iterator/go
+  version: c15b4d116cb805508fd5862d8761a88076b3cc8e
+- name: github.com/mattn/go-isatty
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mozillazg/go-pinyin
-  version: 10d15e241b3d912a812c0ff3e92f02c350da14c3
+  version: ff1ea6f92b184d58c766c60f96a7a9b5f30fb092
 - name: github.com/PuerkitoBio/goquery
-  version: 2e29ea41f0d13f4a303c75553f4eeadddc7a4c56
+  version: 8806ada2a4ab225c06e9106f9631be80932db7ce
 - name: github.com/robfig/cron
-  version: 8dc4916d418b9d0b2e23c9c1e68351dc9a1d6573
+  version: b024fc5ea0e34bc3f83d9941c8d60b0622bfaca4
+- name: github.com/ugorji/go
+  version: 5efa3251c7f7d05e5d9704a69a984ec9f1386a40
+  subpackages:
+  - codec
 - name: golang.org/x/net
-  version: f315505cf3349909cdf013ea56690da34e96a451
+  version: 02ac38e2528ff4adea90f184d71a3faa04b4b1b0
   subpackages:
   - context
+  - context/ctxhttp
   - html
   - html/atom
+- name: golang.org/x/sys
+  version: 7a4fde3fda8ef580a89dbae8138c26041be14299
+  subpackages:
+  - unix
 - name: gopkg.in/gcfg.v1
-  version: 083575c3955c85df16fe9590cceab64d03f5eb6e
+  version: 27e4946190b4a327b539185f2b5b1f7c84730728
   subpackages:
   - scanner
   - token
   - types
 - name: gopkg.in/go-playground/pool.v1
-  version: 7f37f4c92e71475945ec7c4ed4b07a34bb7c1966
+  version: 011b92d08d42689e42a9b6b93e2d946304438d98
 - name: gopkg.in/go-playground/validator.v8
-  version: c193cecd124b5cc722d7ee5538e945bdb3348435
+  version: 5f57d2222ad794d0dffb07e664ea05e2ee07d60c
 - name: gopkg.in/olivere/elastic.v3
-  version: aa80db5ac257057adde4efdafb4aad58ef495acc
+  version: 5a75b7d18bca7420e68338600e8c9f611435f911
   subpackages:
   - backoff
   - uritemplates
+- name: gopkg.in/warnings.v0
+  version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
 - name: gopkg.in/yaml.v2
-  version: a83829b6f1293c91addabc89d0571c246397bbf4
-devImports: []
+  version: 3b4ad1db5b2a649883ff3782f5f9f6fb52be71af
+testImports: []

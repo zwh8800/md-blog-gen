@@ -17,6 +17,11 @@ type config struct {
 	ElasticSearchConf struct {
 		Url string
 	}
+	Redis struct {
+		Addr     string
+		Password string
+		DB       int
+	}
 	Env struct {
 		Prod       bool
 		ServerPort string

@@ -5,6 +5,7 @@ import (
 	"path"
 
 	"github.com/gin-gonic/gin"
+	"github.com/zwh8800/md-blog-gen/cache"
 	"github.com/zwh8800/md-blog-gen/index"
 	"github.com/zwh8800/md-blog-gen/opensearch"
 	"github.com/zwh8800/md-blog-gen/rss"
@@ -17,7 +18,7 @@ func Route(r *gin.Engine) {
 		index.ErrorHandler(c, 404, errors.New("404 Not Found"))
 	})
 
-	indexGroup := r.Group("/")
+	indexGroup := r.Group("/", cache.Middleware())
 	{
 		indexGroup.GET("/", index.Index)
 		indexGroup.GET(path.Join(util.GetPageBase(), ":page"), index.Index)
