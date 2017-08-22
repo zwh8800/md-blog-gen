@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/util"
-	"gopkg.in/redis.v5"
 )
 
 type readableResponseWriter struct {
