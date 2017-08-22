@@ -41,7 +41,7 @@
             open: function (event, ui) {
                 if ($(window).width() > MOBILE_WIDTH) {
                     $(this).autocomplete("widget").css({
-                        "width": 195
+                        "width": 193
                     });
                 }
             }

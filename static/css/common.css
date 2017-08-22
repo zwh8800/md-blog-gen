@@ -184,3 +184,8 @@ a.no-color {
 	color: #F15F5F;
 	font-style: normal;
 }
+
+.ui-menu.ui-widget.ui-widget-content.ui-autocomplete {
+	border: 1px solid transparent;
+	box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+}
