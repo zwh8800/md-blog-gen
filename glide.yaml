@@ -15,3 +15,5 @@ import:
 - package: gopkg.in/gcfg.v1
 - package: gopkg.in/olivere/elastic.v3
 - package: gopkg.in/go-playground/pool.v1
+- package: gopkg.in/redis.v5
+  version: ~6.5.7

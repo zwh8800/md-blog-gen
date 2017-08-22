@@ -11,7 +11,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/util"
-	redis "gopkg.in/redis.v5"
+	"gopkg.in/redis.v5"
 )
 
 type readableResponseWriter struct {
