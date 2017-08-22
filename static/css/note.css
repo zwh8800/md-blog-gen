@@ -30,6 +30,20 @@
 	margin-right: 500px;
 }
 
+@media (max-width: 1084px) {
+	.home {
+		right: inherit;
+		left: 0;
+		margin-left: 10px;
+	}
+}
+
+@media (max-width: 980px) {
+	.home {
+		display: none;
+	}
+}
+
 .home a {
 	display: block;
 	width: 38px;
