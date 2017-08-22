@@ -1,3 +1,85 @@
+(function ($) {
+    $(function () {
+        var MOBILE_WIDTH = 980;
+        $('.search-form').submit(function () {
+            NProgress.start();
+            $('.search-icon').hide();
+            $('.search-loading').show();
+        });
+        $(window).on('beforeunload', function () {
+            NProgress.configure({
+                showSpinner: true,
+                trickle: true,
+                minimum: 0.08
+            });
+            NProgress.start();
+            NProgress.set(0);
+        });
+
+        function goToSearch(ui) {
+            var $keyword = $("#keyword");
+            if (ui.item.id === 0) {
+                window.location.href = "/search/" + encodeURIComponent($keyword.val());
+                return;
+            }
+            $keyword.val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
+            window.location.href = "/note/" + ui.item.id;
+        }
+        $("#keyword").autocomplete({
+            source: function (request, response) {
+                $.get("/api/search/" + encodeURIComponent(request.term), function (data) {
+                    data.push({
+                        id: 0,
+                        value: '查看更多...'
+                    });
+                    response(data);
+                });
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                goToSearch(ui);
+            },
+            focus: function (event, ui) {
+                event.preventDefault();
+                if (device.mobile() || device.tablet()) {
+                    goToSearch(ui);
+                }
+            },
+            open: function (event, ui) {
+                if ($(window).width() > MOBILE_WIDTH) {
+                    $(this).autocomplete("widget").css({
+                        "width": 193
+                    });
+                }
+            }
+
+        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+            return $('<li class="ui-menu-item"></li>')
+                .data("ui-autocomplete-item", item)
+                .append(
+                    $('<div class="ui-menu-item-wrapper"></div>').append(item.label)
+                )
+                .appendTo(ul);
+        };
+        setTimeout(function () {
+            if ($(window).width() <= MOBILE_WIDTH) {
+                var duration = 1;
+                if (sessionStorage.getItem('scrolled') !== 'true') {
+                    duration = 650;
+                }
+                $("html, body").animate({
+                    scrollTop: $('.search-box').outerHeight() + "px"
+                }, {
+                    duration: duration,
+                    easing: "swing"
+                });
+                sessionStorage.setItem('scrolled', 'true');
+            }
+        }, 0);
+
+    });
+})(jQuery);
+
 // Device.js
 // (c) 2014 Matthew Hudson
 // Device.js is freely distributable under the MIT license.
@@ -298,85 +380,3 @@
     }
 
 }).call(this);
-
-(function ($) {
-    $(function () {
-        var MOBILE_WIDTH = 980;
-        $('.search-form').submit(function () {
-            NProgress.start();
-            $('.search-icon').hide();
-            $('.search-loading').show();
-        });
-        $(window).on('beforeunload', function () {
-            NProgress.configure({
-                showSpinner: true,
-                trickle: true,
-                minimum: 0.08
-            });
-            NProgress.start();
-            NProgress.set(0);
-        });
-
-        function goToSearch(ui) {
-            var $keyword = $("#keyword");
-            if (ui.item.id === 0) {
-                window.location.href = "/search/" + encodeURIComponent($keyword.val());
-                return;
-            }
-            $keyword.val(ui.item.value.replace(/<em>/g, '').replace(/<\/em>/g, ''));
-            window.location.href = "/note/" + ui.item.id;
-        }
-        $("#keyword").autocomplete({
-            source: function (request, response) {
-                $.get("/api/search/" + encodeURIComponent(request.term), function (data) {
-                    data.push({
-                        id: 0,
-                        value: '查看更多...'
-                    });
-                    response(data);
-                });
-            },
-            select: function (event, ui) {
-                event.preventDefault();
-                goToSearch(ui);
-            },
-            focus: function (event, ui) {
-                event.preventDefault();
-                if (device.mobile()) {
-                    goToSearch(ui);
-                }
-            },
-            open: function (event, ui) {
-                if ($(window).width() > MOBILE_WIDTH) {
-                    $(this).autocomplete("widget").css({
-                        "width": 193
-                    });
-                }
-            }
-
-        }).data('ui-autocomplete')._renderItem = function (ul, item) {
-            return $('<li class="ui-menu-item"></li>')
-                .data("ui-autocomplete-item", item)
-                .append(
-                    $('<div class="ui-menu-item-wrapper"></div>').append(item.label)
-                )
-                .appendTo(ul);
-        };
-        setTimeout(function () {
-            if ($(window).width() <= MOBILE_WIDTH) {
-                var duration = 1;
-                if (sessionStorage.getItem('scrolled') !== 'true') {
-                    duration = 650;
-                }
-                $("html, body").animate({
-                    scrollTop: $('.search-box').outerHeight() + "px"
-                }, {
-                    duration: duration,
-                    easing: "swing"
-                });
-                sessionStorage.setItem('scrolled', 'true');
-            }
-        }, 0);
-
-    });
-})(jQuery);
