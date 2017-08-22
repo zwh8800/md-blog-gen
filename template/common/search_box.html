@@ -1,5 +1,10 @@
 {{ define "searchBox" }}
 <div class="search-box">
+	<div class="search-home">
+		<a href="/">
+			<i class="icon-home"></i>
+		</a>
+	</div>
 	<form class="search-form" action="/{{ .site.SearchUrl }}" method="get">
 		<div class="search-input">
 			<input id="keyword" type="search" name="keyword" placeholder="搜索" value="{{ .keyword }}">
