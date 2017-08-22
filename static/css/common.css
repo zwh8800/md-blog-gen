@@ -167,6 +167,10 @@ a.no-color {
 		top: 9px;
 		left: 16px;
 	}
+	.search-box .search-loading {
+		top: 9px;
+		left: 16px;
+	}
 	.search-box .search-input input {
 		width: 100%;
 		height: 30px;
