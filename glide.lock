@@ -1,5 +1,5 @@
-hash: 9910ce8e648b4ceaeee24d93fb869755b031bf078308b8b4f23eeb13d806672d
-updated: 2017-08-22T18:57:23.970172423+08:00
+hash: 0e52588c0e339bd6bbd96bbc5f59c47729d43267af7648e3128af3ebd3a15a06
+updated: 2017-08-22T19:28:18.551214432+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -13,38 +13,40 @@ imports:
 - name: github.com/gin-contrib/sse
   version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
 - name: github.com/gin-gonic/gin
-  version: 7b508186dd71146cbdb3d14f2c2e1aaaa51f7e45
+  version: d459835d2b077e44f7c9b453505ee29881d5d12d
   subpackages:
   - binding
-  - json
   - render
 - name: github.com/go-redis/redis
-  version: 0daeac9c3e31a1b121318398249699f48bb8d2a4
+  version: 19c1c2272e00c1aaa903cf574c746cd449f9cd3c
   subpackages:
   - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
   - internal/proto
 - name: github.com/go-sql-driver/mysql
-  version: 3955978caca48c1658a4bb7a9c6a0f084e326af3
+  version: a0583e0143b1624142adab07e0e97fe106d99561
 - name: github.com/gocraft/dbr
-  version: c4f8f99b25c74a821ffa41ca2e339cc24a6b4a67
+  version: b2f0ffcef2a64c0729d5818e103bc019caed7b22
   subpackages:
   - dialect
 - name: github.com/golang/glog
   version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
 - name: github.com/golang/protobuf
-  version: 0a4f71a498b7c4812f64969510bcb4eca251e33a
+  version: ab9f9a6dab164b7d1246e0e688b0ab7b94d8553e
   subpackages:
   - proto
 - name: github.com/gorilla/feeds
   version: fa8f5548eedbe306d748925237a48d70ae4150de
-- name: github.com/json-iterator/go
-  version: c15b4d116cb805508fd5862d8761a88076b3cc8e
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mozillazg/go-pinyin
   version: ff1ea6f92b184d58c766c60f96a7a9b5f30fb092
+- name: github.com/pkg/errors
+  version: c605e284fe17294bda444b34710735b29d1a9d90
 - name: github.com/PuerkitoBio/goquery
-  version: 8806ada2a4ab225c06e9106f9631be80932db7ce
+  version: e1271ee34c6a305e38566ecd27ae374944907ee9
 - name: github.com/robfig/cron
   version: b024fc5ea0e34bc3f83d9941c8d60b0622bfaca4
 - name: github.com/ugorji/go
@@ -52,14 +54,12 @@ imports:
   subpackages:
   - codec
 - name: golang.org/x/net
-  version: 02ac38e2528ff4adea90f184d71a3faa04b4b1b0
+  version: 1c05540f6879653db88113bc4a2b70aec4bd491f
   subpackages:
-  - context
-  - context/ctxhttp
   - html
   - html/atom
 - name: golang.org/x/sys
-  version: 7a4fde3fda8ef580a89dbae8138c26041be14299
+  version: 07c182904dbd53199946ba614a412c61d3c548f5
   subpackages:
   - unix
 - name: gopkg.in/gcfg.v1
@@ -69,24 +69,18 @@ imports:
   - token
   - types
 - name: gopkg.in/go-playground/pool.v1
-  version: 011b92d08d42689e42a9b6b93e2d946304438d98
+  version: e73cd3a5ded835540c5cf4778488579c5b357d68
 - name: gopkg.in/go-playground/validator.v8
-  version: 5f57d2222ad794d0dffb07e664ea05e2ee07d60c
+  version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/olivere/elastic.v3
-  version: 5a75b7d18bca7420e68338600e8c9f611435f911
+  version: edbef41beaacc2ee95e61af8faff04e67c01e268
+- name: gopkg.in/olivere/elastic.v5
+  version: edbef41beaacc2ee95e61af8faff04e67c01e268
   subpackages:
-  - backoff
+  - config
   - uritemplates
-- name: gopkg.in/redis.v5
-  version: 19c1c2272e00c1aaa903cf574c746cd449f9cd3c
-  subpackages:
-  - internal
-  - internal/consistenthash
-  - internal/hashtag
-  - internal/pool
-  - internal/proto
 - name: gopkg.in/warnings.v0
   version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
 - name: gopkg.in/yaml.v2
-  version: 3b4ad1db5b2a649883ff3782f5f9f6fb52be71af
+  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
 testImports: []
