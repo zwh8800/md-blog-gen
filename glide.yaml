@@ -2,10 +2,8 @@ package: github.com/zwh8800/md-blog-gen
 import:
 - package: github.com/go-redis/redis
   version: ~6.5.7
-- package: gopkg.in/go-playground/pool.v1
-  version: ~3.1.1
 - package: gopkg.in/olivere/elastic.v3
-  version: ~5.0.45
+  version: ~3.0.69
 - package: gopkg.in/gcfg.v1
   version: ~1.2.0
 - package: github.com/robfig/cron
@@ -25,3 +23,5 @@ import:
   version: ~1.1.0
 - package: github.com/gin-gonic/gin
   version: ~1.2.0
+- package: gopkg.in/go-playground/pool.v1
+  version: ~1.2.2

@@ -1,5 +1,5 @@
-hash: 0e52588c0e339bd6bbd96bbc5f59c47729d43267af7648e3128af3ebd3a15a06
-updated: 2017-08-22T19:28:18.551214432+08:00
+hash: 54ed5e8db8bf561b63fd95cff8fb4bad0f976c1989a8ee069231424e06bbafa7
+updated: 2017-08-22T19:52:00.342242706+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -43,8 +43,6 @@ imports:
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mozillazg/go-pinyin
   version: ff1ea6f92b184d58c766c60f96a7a9b5f30fb092
-- name: github.com/pkg/errors
-  version: c605e284fe17294bda444b34710735b29d1a9d90
 - name: github.com/PuerkitoBio/goquery
   version: e1271ee34c6a305e38566ecd27ae374944907ee9
 - name: github.com/robfig/cron
@@ -56,6 +54,8 @@ imports:
 - name: golang.org/x/net
   version: 1c05540f6879653db88113bc4a2b70aec4bd491f
   subpackages:
+  - context
+  - context/ctxhttp
   - html
   - html/atom
 - name: golang.org/x/sys
@@ -69,15 +69,13 @@ imports:
   - token
   - types
 - name: gopkg.in/go-playground/pool.v1
-  version: e73cd3a5ded835540c5cf4778488579c5b357d68
+  version: 011b92d08d42689e42a9b6b93e2d946304438d98
 - name: gopkg.in/go-playground/validator.v8
   version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/olivere/elastic.v3
-  version: edbef41beaacc2ee95e61af8faff04e67c01e268
-- name: gopkg.in/olivere/elastic.v5
-  version: edbef41beaacc2ee95e61af8faff04e67c01e268
+  version: 5a75b7d18bca7420e68338600e8c9f611435f911
   subpackages:
-  - config
+  - backoff
   - uritemplates
 - name: gopkg.in/warnings.v0
   version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
