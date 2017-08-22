@@ -3,13 +3,14 @@ package service
 import (
 	"github.com/gocraft/dbr"
 	"github.com/golang/glog"
-	"gopkg.in/olivere/elastic.v3"
-
 	"github.com/zwh8800/md-blog-gen/conf"
+	"gopkg.in/olivere/elastic.v3"
+	redis "gopkg.in/redis.v5"
 )
 
 var dbConn *dbr.Connection
 var esClient *elastic.Client
+var redisClient *redis.Client
 
 func InitDb() (err error) {
 	dbConn, err = dbr.Open(conf.Conf.DbConf.Driver, conf.Conf.DbConf.Dsn, nil)
@@ -29,6 +30,18 @@ func InitElasticSearch() (err error) {
 	return nil
 }
 
+func InitRedis() (err error) {
+	redisClient = redis.NewClient(&redis.Options{
+		Addr:     conf.Conf.Redis.Addr,
+		Password: conf.Conf.Redis.Password,
+		DB:       conf.Conf.Redis.DB,
+	})
+	if err := redisClient.Ping().Err(); err != nil {
+		return err
+	}
+	return nil
+}
+
 func init() {
 	glog.Infoln("initilizing connections...")
 
@@ -37,6 +50,10 @@ func init() {
 		panic(err)
 	}
 	if err := InitElasticSearch(); err != nil {
+		glog.Fatalf("error occored: %s", err)
+		panic(err)
+	}
+	if err := InitRedis(); err != nil {
 		glog.Fatalf("error occored: %s", err)
 		panic(err)
 	}

@@ -28,7 +28,7 @@ func NewRender(template string, data interface{}) *Render {
 }
 
 func (r *Render) Render(w http.ResponseWriter) error {
-	util.WriteContentType(w, []string{"text/html; charset=utf-8"})
+	util.WriteContentType(w, "text/html; charset=utf-8")
 	t := template.New("")
 	if _, err := t.ParseGlob(path.Join(templateDir, commonDir, "*")); err != nil {
 		return err
@@ -37,4 +37,8 @@ func (r *Render) Render(w http.ResponseWriter) error {
 		return err
 	}
 	return t.ExecuteTemplate(w, r.templateName, r.data)
+}
+
+func (r *Render) WriteContentType(w http.ResponseWriter) {
+	util.WriteContentType(w, "text/html; charset=utf-8")
 }
