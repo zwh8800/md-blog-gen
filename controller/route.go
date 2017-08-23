@@ -1,15 +1,15 @@
-package route
+package controller
 
 import (
 	"errors"
 	"path"
 
 	"github.com/gin-gonic/gin"
-	"github.com/zwh8800/md-blog-gen/cache"
-	"github.com/zwh8800/md-blog-gen/index"
-	"github.com/zwh8800/md-blog-gen/opensearch"
-	"github.com/zwh8800/md-blog-gen/rss"
-	"github.com/zwh8800/md-blog-gen/sitemap"
+	"github.com/zwh8800/md-blog-gen/controller/index"
+	"github.com/zwh8800/md-blog-gen/controller/middleware/cache"
+	"github.com/zwh8800/md-blog-gen/controller/opensearch"
+	"github.com/zwh8800/md-blog-gen/controller/rss"
+	"github.com/zwh8800/md-blog-gen/controller/sitemap"
 	"github.com/zwh8800/md-blog-gen/util"
 )
 

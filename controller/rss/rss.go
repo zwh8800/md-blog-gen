@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/feeds"
 
 	"github.com/zwh8800/md-blog-gen/conf"
-	"github.com/zwh8800/md-blog-gen/index"
+	"github.com/zwh8800/md-blog-gen/controller/index"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/util"
 )

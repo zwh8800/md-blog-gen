@@ -11,8 +11,8 @@ import (
 	"github.com/golang/glog"
 
 	"github.com/zwh8800/md-blog-gen/conf"
+	"github.com/zwh8800/md-blog-gen/controller"
 	"github.com/zwh8800/md-blog-gen/crontab"
-	"github.com/zwh8800/md-blog-gen/route"
 	"github.com/zwh8800/md-blog-gen/service"
 	"github.com/zwh8800/md-blog-gen/spider"
 )
@@ -33,7 +33,7 @@ func startServer() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
-	route.Route(r)
+	controller.Route(r)
 
 	go func() {
 		err := r.Run(fmt.Sprintf("%v:%v", "", conf.Conf.Env.ServerPort))
