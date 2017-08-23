@@ -64,7 +64,7 @@ func RemoveTagCache(tag string) error {
 	if err := redisClient.Del(key).Err(); err != nil {
 		return err
 	}
-	key = CacheKey + util.GetTagNameUrl(tag)
+	key = CacheKey + util.UrlGetPath(util.GetTagNameUrl(tag))
 	if err := redisClient.Del(key).Err(); err != nil {
 		return err
 	}
@@ -80,7 +80,8 @@ func RemoveAllTagCache() error {
 }
 
 func RemoveNoteCache(notename string) error {
-	key := CacheKey + util.GetNoteUrlByNotename(notename)
+	key := CacheKey + util.UrlGetPath(util.GetNoteUrlByNotename(notename))
+
 	if err := redisClient.Del(key).Err(); err != nil {
 		return err
 	}
@@ -92,7 +93,7 @@ func RemoveArchiveCache(year, month int64) error {
 	if err := redisClient.Del(key).Err(); err != nil {
 		return err
 	}
-	key = CacheKey + util.GetArchiveMonthUrl(year, month)
+	key = CacheKey + util.UrlGetPath(util.GetArchiveMonthUrl(year, month))
 	if err := redisClient.Del(key).Err(); err != nil {
 		return err
 	}
