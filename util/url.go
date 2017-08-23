@@ -23,6 +23,15 @@ func UrlJoin(subUrl string) string {
 	return baseUrl.ResolveReference(u).String()
 }
 
+func UrlGetPath(rawUrl string) string {
+	u, err := url.Parse(rawUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return u.Path
+}
+
 func GetNoteBase() string {
 	return "/" + conf.Conf.Site.NoteUrl
 }
