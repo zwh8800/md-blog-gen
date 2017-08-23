@@ -46,11 +46,9 @@
                 }
             },
             open: function (event, ui) {
-                if ($(window).width() > MOBILE_WIDTH) {
-                    $(this).autocomplete("widget").css({
-                        "width": 193
-                    });
-                }
+                $(this).autocomplete("widget").css({
+                    "width": $(this).outerWidth() - 2
+                })
             }
 
         }).data('ui-autocomplete')._renderItem = function (ul, item) {
