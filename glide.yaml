@@ -4,8 +4,6 @@ import:
   version: ~6.5.7
 - package: gopkg.in/olivere/elastic.v3
   version: ~3.0.69
-- package: gopkg.in/gcfg.v1
-  version: ~1.2.0
 - package: github.com/robfig/cron
   version: ~1.0.0
 - package: github.com/mozillazg/go-pinyin
@@ -25,3 +23,5 @@ import:
   version: ~1.2.0
 - package: gopkg.in/go-playground/pool.v1
   version: ~1.2.2
+- package: github.com/BurntSushi/toml
+  version: ~0.3.0

@@ -1,5 +1,5 @@
-hash: 54ed5e8db8bf561b63fd95cff8fb4bad0f976c1989a8ee069231424e06bbafa7
-updated: 2017-08-22T19:52:00.342242706+08:00
+hash: 2f3bccd63d1d82cfdbd85234c9193373a0ff8df3e277cb0fe92956aed778cbb2
+updated: 2017-08-23T22:43:20.042264824+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -8,6 +8,8 @@ imports:
   subpackages:
   - qr
   - utils
+- name: github.com/BurntSushi/toml
+  version: b26d9c308763d68093482582cea63d69be07a0f0
 - name: github.com/chonglou/sitemap
   version: d07d4378937c751a8c1c505f7c782412a550afcc
 - name: github.com/gin-contrib/sse
@@ -62,12 +64,6 @@ imports:
   version: 07c182904dbd53199946ba614a412c61d3c548f5
   subpackages:
   - unix
-- name: gopkg.in/gcfg.v1
-  version: 27e4946190b4a327b539185f2b5b1f7c84730728
-  subpackages:
-  - scanner
-  - token
-  - types
 - name: gopkg.in/go-playground/pool.v1
   version: 011b92d08d42689e42a9b6b93e2d946304438d98
 - name: gopkg.in/go-playground/validator.v8
@@ -77,8 +73,6 @@ imports:
   subpackages:
   - backoff
   - uritemplates
-- name: gopkg.in/warnings.v0
-  version: 8a331561fe74dadba6edfc59f3be66c22c3b065d
 - name: gopkg.in/yaml.v2
   version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
 testImports: []

@@ -2,10 +2,9 @@ package conf
 
 import (
 	"flag"
-	"path/filepath"
 
+	"github.com/BurntSushi/toml"
 	"github.com/golang/glog"
-	"gopkg.in/gcfg.v1"
 )
 
 type config struct {
@@ -24,7 +23,7 @@ type config struct {
 	}
 	Env struct {
 		Prod          bool
-		ServerPort    string
+		ServerPort    int
 		StaticVersion int
 	}
 	Spider struct {
@@ -71,25 +70,12 @@ type config struct {
 
 var Conf config
 
-func ReadConf(filename string) error {
-	absFile := filename
-	if !filepath.IsAbs(filename) {
-		var err error
-		absFile, err = filepath.Abs(filename)
-		if err != nil {
-			return err
-		}
-	}
-	return gcfg.ReadFileInto(&Conf, absFile)
-}
-
 func init() {
-	configFilename := flag.String("config", "md-blog-gen.gcfg", "specify a config file")
+	configFilename := flag.String("config", "md-blog-gen.toml", "specify a config file")
 	flag.Parse()
 	glog.Infoln("configuring...")
 
-	if err := ReadConf(*configFilename); err != nil {
-		glog.Fatalf("error occored: %s", err)
+	if _, err := toml.DecodeFile(*configFilename, &Conf); err != nil {
 		panic(err)
 	}
 }
