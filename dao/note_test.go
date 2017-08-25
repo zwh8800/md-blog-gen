@@ -20,7 +20,7 @@ func TestRemoveUnpublishedNote(t *testing.T) {
 			UniqueId: 332154,
 		},
 	}
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tx, err := sess.Begin()
 	if err != nil {
 		t.Error(err)

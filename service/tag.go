@@ -6,7 +6,7 @@ import (
 )
 
 func Tags() ([]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tagList, err := dao.Tags(sess)
 	if err != nil {
 		return nil, err
@@ -16,7 +16,7 @@ func Tags() ([]*model.Tag, error) {
 }
 
 func TagsByCount() ([]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tagList, err := dao.TagsByCount(sess)
 	if err != nil {
 		return nil, err
@@ -26,6 +26,6 @@ func TagsByCount() ([]*model.Tag, error) {
 }
 
 func TagsByNoteId(noteId int64) ([]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	return dao.TagsByNoteId(sess, noteId)
 }

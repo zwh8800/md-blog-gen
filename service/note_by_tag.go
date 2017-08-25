@@ -6,7 +6,7 @@ import (
 )
 
 func NotesByTagId(id int64) (*model.Tag, []*model.Note, map[int64][]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tag, err := dao.TagById(sess, id)
 	if err != nil {
 		return nil, nil, nil, err
@@ -28,7 +28,7 @@ func NotesByTagId(id int64) (*model.Tag, []*model.Note, map[int64][]*model.Tag, 
 }
 
 func NotesByTagName(name string) (*model.Tag, []*model.Note, map[int64][]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tag, err := dao.TagByName(sess, name)
 	if err != nil {
 		return nil, nil, nil, err
@@ -50,7 +50,7 @@ func NotesByTagName(name string) (*model.Tag, []*model.Note, map[int64][]*model.
 }
 
 func AllNotesTags() ([]*model.Tag, map[int64][]*model.Note, map[int64][]*model.Tag, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tagList, err := dao.Tags(sess)
 	if err != nil {
 		return nil, nil, nil, err

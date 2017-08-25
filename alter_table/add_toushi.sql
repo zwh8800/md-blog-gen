@@ -1,0 +1,25 @@
+DROP TABLE `toushi`;
+CREATE TABLE IF NOT EXISTS `toushi` (
+  `id`                      BIGINT(20)    NOT NULL AUTO_INCREMENT,
+  `status`                  TINYINT(2)    NOT NULL DEFAULT 0,
+  `uuid`                    VARCHAR(255)  NOT NULL,
+  `price_in_cent`           INT(10)       NOT NULL,
+  `alipay_qrcode`           VARCHAR(255)  NOT NULL DEFAULT '',
+  `alipay_trade_no`         VARCHAR(255)  NOT NULL DEFAULT '',
+  `alipay_buyer_logon_id`   VARCHAR(255)  NOT NULL DEFAULT '',
+  `alipay_trade_status`     VARCHAR(255)  NOT NULL DEFAULT '',
+  `alipay_total_amount`     INT(10)       NOT NULL DEFAULT 0,
+  `alipay_receipt_amount`   INT(10)       NOT NULL DEFAULT 0,
+  `alipay_buyer_pay_amount` INT(10)       NOT NULL DEFAULT 0,
+  `alipay_point_amount`     INT(10)       NOT NULL DEFAULT 0,
+  `alipay_invoice_amount`   INT(10)       NOT NULL DEFAULT 0,
+  `alipay_send_pay_date`    DATETIME,
+  `alipay_fund_bill_list`   VARCHAR(1024) NOT NULL DEFAULT '',
+  `alipay_buyer_user_id`    VARCHAR(255)  NOT NULL DEFAULT '',
+  `created_at`              DATETIME      NOT NULL,
+  `alipay_created_at`       DATETIME,
+  `finish_at`               DATETIME,
+  PRIMARY KEY (id),
+  UNIQUE (uuid),
+  KEY `idx_toushi_created_at` (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;

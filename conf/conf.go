@@ -66,6 +66,16 @@ type config struct {
 	Haha struct {
 		Data []string
 	}
+	Alipay struct {
+		Prod       bool
+		AppId      string
+		PartnerId  string
+		PublicKey  string
+		PrivateKey string
+	}
+	Crypto struct {
+		AesKey string
+	}
 }
 
 var Conf config
