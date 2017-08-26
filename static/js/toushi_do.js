@@ -6,7 +6,7 @@
                 handleResult(data);
             });
         }, 5500);
-        var ws = new WebSocket("wss://lengzzz.com/alipay/ws");
+        var ws = new WebSocket("wss://ws.lengzzz.com/alipay/ws");
 
         ws.onopen = function(evt) {
             console.log("Connection open ...");
