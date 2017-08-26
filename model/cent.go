@@ -67,7 +67,7 @@ func (c Cent) CurrencyWithoutComma() (s string) {
 	if c == 0 {
 		return "0"
 	}
-	return fmt.Sprintf("%.1f", c.ToFloat())
+	return fmt.Sprintf("%.2f", c.ToFloat())
 }
 
 func (c Cent) ToFloat() float64 {
