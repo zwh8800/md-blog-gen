@@ -1,15 +1,15 @@
-package route
+package controller
 
 import (
 	"errors"
 	"path"
 
 	"github.com/gin-gonic/gin"
-	"github.com/zwh8800/md-blog-gen/cache"
-	"github.com/zwh8800/md-blog-gen/index"
-	"github.com/zwh8800/md-blog-gen/opensearch"
-	"github.com/zwh8800/md-blog-gen/rss"
-	"github.com/zwh8800/md-blog-gen/sitemap"
+	"github.com/zwh8800/md-blog-gen/controller/index"
+	"github.com/zwh8800/md-blog-gen/controller/middleware/cache"
+	"github.com/zwh8800/md-blog-gen/controller/opensearch"
+	"github.com/zwh8800/md-blog-gen/controller/rss"
+	"github.com/zwh8800/md-blog-gen/controller/sitemap"
 	"github.com/zwh8800/md-blog-gen/util"
 )
 
@@ -31,6 +31,13 @@ func Route(r *gin.Engine) {
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword"), index.Search)
 		indexGroup.GET(path.Join(util.GetSearchBase(), ":keyword", ":page"), index.Search)
 		indexGroup.GET(path.Join("api", util.GetSearchBase(), ":keyword"), index.SearchTitle)
+		indexGroup.GET("/alipay", index.AlipayIndex)
+		indexGroup.POST("/alipay/do", index.AlipayDo)
+		indexGroup.GET("/alipay/ws", index.AlipayWs)
+		indexGroup.GET("/alipay/query", index.AlipayQuery)
+		indexGroup.POST("/alipay/refund", index.AlipayRefund)
+		indexGroup.POST("/alipay/notify", index.AlipayNotify)
+		indexGroup.GET("/alipay/status", index.AlipayStatus)
 	}
 
 	r.GET("/search.xml", opensearch.OpenSearch)

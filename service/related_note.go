@@ -7,7 +7,7 @@ import (
 )
 
 func RelatedNote(id int64) ([]*model.Note, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tagIds, err := dao.TagIdsByNoteId(sess, id)
 	if err != nil {
 		return nil, err

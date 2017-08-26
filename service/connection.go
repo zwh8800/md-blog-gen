@@ -4,6 +4,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/gocraft/dbr"
 	"github.com/golang/glog"
+	"github.com/smartwalle/alipay"
 	"github.com/zwh8800/md-blog-gen/conf"
 	"gopkg.in/olivere/elastic.v3"
 )
@@ -11,6 +12,18 @@ import (
 var dbConn *dbr.Connection
 var esClient *elastic.Client
 var redisClient *redis.Client
+
+func newSession() *dbr.Session {
+	return dbConn.NewSession(nil)
+}
+
+func newAlipayClient() *alipay.AliPay {
+	return alipay.New(conf.Conf.Alipay.AppId,
+		conf.Conf.Alipay.PartnerId,
+		[]byte(conf.Conf.Alipay.PublicKey),
+		[]byte(conf.Conf.Alipay.PrivateKey),
+		conf.Conf.Alipay.Prod)
+}
 
 func InitDb() (err error) {
 	dbConn, err = dbr.Open(conf.Conf.DbConf.Driver, conf.Conf.DbConf.Dsn, nil)

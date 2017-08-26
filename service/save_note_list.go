@@ -8,7 +8,7 @@ import (
 )
 
 func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) error {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	for _, note := range noteList {
 		tagList, _ := tagListMap[note.UniqueId]
 
@@ -79,7 +79,7 @@ func SaveNoteList(noteList []*model.Note, tagListMap map[int64][]*model.Tag) err
 }
 
 func SaveNote(note *model.Note, tagList []*model.Tag) error {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	tx, err := sess.Begin()
 	if err != nil {
 		return err

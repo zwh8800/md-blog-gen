@@ -1,5 +1,5 @@
-hash: 2f3bccd63d1d82cfdbd85234c9193373a0ff8df3e277cb0fe92956aed778cbb2
-updated: 2017-08-23T22:43:20.042264824+08:00
+hash: 1a0cfb56db8239a91a26ec47696fc217c3504faa6bcaa25126e10e4fcf399984
+updated: 2017-08-24T19:21:58.937240727+08:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -41,6 +41,8 @@ imports:
   - proto
 - name: github.com/gorilla/feeds
   version: fa8f5548eedbe306d748925237a48d70ae4150de
+- name: github.com/gorilla/websocket
+  version: ea4d1f681babbce9545c9c5f3d5194a789c89f5b
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mozillazg/go-pinyin
@@ -49,6 +51,10 @@ imports:
   version: e1271ee34c6a305e38566ecd27ae374944907ee9
 - name: github.com/robfig/cron
   version: b024fc5ea0e34bc3f83d9941c8d60b0622bfaca4
+- name: github.com/smartwalle/alipay
+  version: 8913532fcc3d795625653d3528889f20a2f2c9bb
+  subpackages:
+  - encoding
 - name: github.com/ugorji/go
   version: 5efa3251c7f7d05e5d9704a69a984ec9f1386a40
   subpackages:

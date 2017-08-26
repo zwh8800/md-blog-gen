@@ -1,0 +1,39 @@
+{{ template "layout" . }}
+
+{{ define "title" }}
+向一只废喵投食 | {{ .site.Name }}
+{{ end }}
+{{ define "moreHeaders" }}
+<meta name="description" content="向一只废喵投食 | {{ .site.Description }}">
+{{ end }}
+{{ define "moreStyles" }}
+{{ end }}
+{{ define "moreScripts" }}
+<script src="/static/js/toushi_do.js"></script>
+{{ end }}
+{{ define "content" }}
+{{ $site := .site }}
+<div class="container wmd-preview wmd-preview-full-reader">
+    {{ template "header" . }}
+    <div class="alipay">
+        <hr>
+        <h2 class="toushi-header">
+            <i class="icon-food"></i>
+            使用支付宝扫码，向一只废喵投食
+            <i class="icon-food"></i>
+        </h2>
+        <p class="toushi-qr">
+            <img class="qrcode" src="{{ .qrcodeDataUrl }}" alt="二维码">
+            <br>订单号：{{ .orderId }}
+        </p>
+        <p class="toushi-scan-ok">
+            已扫码成功
+        </p>
+    </div>
+
+    <div class="footer">
+        <hr>
+        <a href="/"><i class="icon-home"></i> 返回</a>
+    </div>
+</div>
+{{ end }}

@@ -40,6 +40,8 @@ func AddCache(p, data string) error {
 		if err := redisClient.SAdd(SearchSetKey, key).Err(); err != nil {
 			return err
 		}
+	default:
+		return nil
 	}
 	if err := redisClient.Set(key, data, 0).Err(); err != nil {
 		return err

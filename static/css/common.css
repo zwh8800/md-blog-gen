@@ -214,3 +214,74 @@ a.no-color {
 	border: 1px solid transparent;
 	box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
 }
+
+.toushi {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.toushi .toushi-row {
+	display: flex;
+}
+
+.toushi .toushi-row .toushi-price {
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background: #FAFAFA;
+	border: 1px solid #E5E5E5;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 10px 5px;
+}
+
+.toushi .toushi-row .toushi-price:active {
+	border: 1px solid #E9203F;
+}
+
+.toushi .toushi-row .toushi-price.selected {
+	border: 1px solid #fd5670;
+}
+
+.toushi-button {
+	font-size: 28px;
+	color: #FFFFFF;
+	width: 120px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background: #fd5670;
+	border: 1px solid #E9203F;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 30px auto;
+	padding: 0;
+	display: block;
+}
+
+.toushi-button:active {
+	color: #FF91A2;
+}
+
+.toushi-header {
+	text-align: center;
+}
+
+.toushi-qr {
+	text-align: center;
+}
+
+.toushi-scan-ok {
+	text-align: center;
+	color: #fd5670;
+	font-size: 14px;
+	display: none;
+}
+
+.toushi-qr .qrcode {
+	margin: 10px;
+	padding: 10px;
+	background: #FFFFFF;
+}

@@ -47,7 +47,9 @@ func Middleware() gin.HandlerFunc {
 						contentType := c.Writer.Header().Get("Content-Type")
 
 						data, _ := ioutil.ReadAll(reader)
-						service.AddCache(path, contentType+":"+string(data))
+						if err := service.AddCache(path, contentType+":"+string(data)); err != nil {
+							glog.Error(err)
+						}
 					}
 				}()
 			} else {

@@ -6,7 +6,7 @@ import (
 )
 
 func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag, int64, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	noteCount, err := dao.CountNote(sess)
 	if err != nil {
 		return nil, nil, 0, err
@@ -34,7 +34,7 @@ func NotesOrderByTime(page, limit int64) ([]*model.Note, map[int64][]*model.Tag,
 }
 
 func NotesWithoutTagOrderByTime(page, limit int64) ([]*model.Note, int64, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	noteCount, err := dao.CountNote(sess)
 	if err != nil {
 		return nil, 0, err
@@ -51,7 +51,7 @@ func NotesWithoutTagOrderByTime(page, limit int64) ([]*model.Note, int64, error)
 }
 
 func NoteIdsOrderByTime(page, limit int64) ([]int64, int64, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	noteCount, err := dao.CountNote(sess)
 	if err != nil {
 		return nil, 0, err
@@ -68,7 +68,7 @@ func NoteIdsOrderByTime(page, limit int64) ([]int64, int64, error) {
 }
 
 func NoteGroupByMonth() ([]*model.YearMonth, map[*model.YearMonth][]*model.Note, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	monthList, err := dao.YearMonthList(sess, false)
 	if err != nil {
 		return nil, nil, err
@@ -97,7 +97,7 @@ func findMonth(monthList []*model.YearMonth, item *model.YearMonth) int {
 }
 
 func PrevNextMonth(month *model.YearMonth) (*model.YearMonth, *model.YearMonth, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	monthList, err := dao.YearMonthList(sess, true)
 	if err != nil {
 		return nil, nil, err
@@ -117,6 +117,6 @@ func PrevNextMonth(month *model.YearMonth) (*model.YearMonth, *model.YearMonth, 
 }
 
 func NotesByMonth(month *model.YearMonth) ([]*model.Note, error) {
-	sess := dbConn.NewSession(nil)
+	sess := newSession()
 	return dao.NotesMonth(sess, month)
 }
