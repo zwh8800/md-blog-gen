@@ -9,6 +9,15 @@ import (
 	"github.com/zwh8800/md-blog-gen/conf"
 )
 
+func GetSiteDomain() string {
+	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return baseUrl.Host
+}
+
 func UrlJoin(subUrl string) string {
 	baseUrl, err := url.Parse(conf.Conf.Site.BaseUrl)
 	if err != nil {

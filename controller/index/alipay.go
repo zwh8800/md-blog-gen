@@ -52,7 +52,7 @@ func AlipayDo(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/alipay")
 		return
 	}
-	c.SetCookie("tradeNo", cookie, 0, "", "", conf.Conf.Env.Prod, true)
+	c.SetCookie("tradeNo", cookie, 0, "", util.GetSiteDomain(), conf.Conf.Env.Prod, true)
 
 	c.Render(http.StatusOK, render.NewRender("alipay_do.html", gin.H{
 		"orderId":       output.OrderId,
@@ -126,7 +126,7 @@ func AlipayNotify(c *gin.Context) {
 }
 
 func AlipayStatus(c *gin.Context) {
-	c.SetCookie("tradeNo", "", -1, "", "", false, true)
+	c.SetCookie("tradeNo", "", -1, "", util.GetSiteDomain(), false, true)
 	cookie, err := c.Cookie("tradeNo")
 	if err != nil {
 		c.Redirect(http.StatusFound, "/alipay")
