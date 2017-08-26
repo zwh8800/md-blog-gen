@@ -3,6 +3,7 @@ package index
 import (
 	"html/template"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -69,6 +70,20 @@ var (
 		ReadBufferSize:    4096,
 		WriteBufferSize:   4096,
 		EnableCompression: true,
+		CheckOrigin: func(r *http.Request) bool {
+			if conf.Conf.Env.Prod {
+				return true
+			}
+			origin := r.Header["Origin"]
+			if len(origin) == 0 {
+				return true
+			}
+			u, err := url.Parse(origin[0])
+			if err != nil {
+				return false
+			}
+			return u.Host == util.GetSiteDomain()
+		},
 	}
 )
 
@@ -84,6 +99,10 @@ func AlipayWs(c *gin.Context) {
 		return
 	}
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		glog.Error(err)
+		return
+	}
 	defer ws.Close()
 
 	for {
