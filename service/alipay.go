@@ -36,15 +36,36 @@ func AddNotifyChan(orderId string, ch chan *OrderResult) {
 	orderNotifyMap[orderId] = list
 }
 
+func DeleteNotifyChan(orderId string, ch chan *OrderResult) {
+	orderNotifyMapLock.Lock()
+	defer orderNotifyMapLock.Unlock()
+	list, ok := orderNotifyMap[orderId]
+	if !ok {
+		return
+	}
+	for i, val := range list {
+		if val == ch {
+			list = append(list[:i], list[i+1:]...)
+		}
+	}
+	orderNotifyMap[orderId] = list
+}
+
 func NotifyAllChan(orderId string, result *OrderResult) {
 	orderNotifyMapLock.Lock()
 	defer orderNotifyMapLock.Unlock()
 	list := orderNotifyMap[orderId]
+	glog.Infoln("NotifyAllChan", orderId, result, len(list))
+
 	for _, ch := range list {
 		ch <- result
-		close(ch)
+		if result.Status.IsFinish() {
+			close(ch)
+		}
 	}
-	delete(orderNotifyMap, orderId)
+	if result.Status.IsFinish() {
+		delete(orderNotifyMap, orderId)
+	}
 }
 
 type CreateOrderInput struct {
@@ -116,7 +137,7 @@ func CreateOrder(input *CreateOrderInput) (*CreateOrderOutput, error) {
 }
 
 func PollAlipay(orderId string) {
-	for {
+	for i := 0; i < 180; i++ {
 		time.Sleep(5 * time.Second)
 
 		client := newAlipayClient()
@@ -225,7 +246,7 @@ func HandleAlipayResult(input *AlipayResultInput) bool {
 
 	switch input.TradeStatus {
 	case "WAIT_BUYER_PAY":
-		order.Status = model.ToushiStatusPending
+		order.Status = model.ToushiStatusOrderCreated
 		order.AlipayCreatedAt.Valid = true
 		order.AlipayCreatedAt.Time = targetTime
 
@@ -255,28 +276,24 @@ func HandleAlipayResult(input *AlipayResultInput) bool {
 		glog.Error(err)
 		return false
 	}
-	if finished {
-		NotifyAllChan(input.OutTradeNo, &OrderResult{
-			OrderId: input.OutTradeNo,
-			Status:  order.Status,
-		})
-	}
+
+	NotifyAllChan(input.OutTradeNo, &OrderResult{
+		OrderId: order.UUID,
+		Status:  order.Status,
+	})
 	return finished
 }
 
 func WaitOrderResult(orderId string) *OrderResult {
 	ch := make(chan *OrderResult)
 	AddNotifyChan(orderId, ch)
-
-	result := <-ch
-	if result == nil {
-		return &OrderResult{
-			OrderId: orderId,
-			Status:  model.ToushiStatusFailed,
-		}
+	defer DeleteNotifyChan(orderId, ch)
+	select {
+	case data := <-ch:
+		return data
+	case <-time.After(15 * time.Minute):
+		return nil
 	}
-
-	return result
 }
 
 func GetOrderResult(orderId string) (*OrderResult, error) {

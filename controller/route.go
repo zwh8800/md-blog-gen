@@ -37,6 +37,7 @@ func Route(r *gin.Engine) {
 		indexGroup.GET("/alipay/query", index.AlipayQuery)
 		indexGroup.POST("/alipay/refund", index.AlipayRefund)
 		indexGroup.POST("/alipay/notify", index.AlipayNotify)
+		indexGroup.GET("/alipay/status", index.AlipayStatus)
 	}
 
 	r.GET("/search.xml", opensearch.OpenSearch)

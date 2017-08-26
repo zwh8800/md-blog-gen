@@ -86,9 +86,17 @@ func AlipayWs(c *gin.Context) {
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	defer ws.Close()
 
-	output := service.WaitOrderResult(orderId)
-
-	ws.WriteJSON(output)
+	for {
+		output := service.WaitOrderResult(orderId)
+		glog.Infoln("websocket output:", output)
+		if output == nil {
+			return
+		}
+		if err := ws.WriteJSON(output); err != nil {
+			glog.Error(err)
+			return
+		}
+	}
 }
 
 func AlipayQuery(c *gin.Context) {
@@ -115,6 +123,37 @@ func AlipayQuery(c *gin.Context) {
 func AlipayNotify(c *gin.Context) {
 	service.HandleAlipayNotification(c.Request)
 	c.String(http.StatusOK, "OK")
+}
+
+func AlipayStatus(c *gin.Context) {
+	c.SetCookie("tradeNo", "", -1, "", "", false, true)
+	cookie, err := c.Cookie("tradeNo")
+	if err != nil {
+		c.Redirect(http.StatusFound, "/alipay")
+		return
+	}
+
+	orderId, err := util.AesDecrypt(cookie, []byte(conf.Conf.Crypto.AesKey))
+	if err != nil {
+		glog.Error(err)
+		c.Redirect(http.StatusFound, "/alipay")
+		return
+	}
+
+	output, err := service.GetOrderResult(orderId)
+	if err != nil {
+		glog.Error(err)
+		c.Redirect(http.StatusFound, "/alipay")
+		return
+	}
+
+	c.Render(http.StatusOK, render.NewRender("alipay_status.html", gin.H{
+		"status": output,
+		"site":   conf.Conf.Site,
+		"social": conf.Conf.Social,
+		"prod":   conf.Conf.Env.Prod,
+		"haha":   util.HahaGenarate(),
+	}))
 }
 
 func AlipayRefund(c *gin.Context) {

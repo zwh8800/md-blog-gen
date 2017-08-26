@@ -15,7 +15,6 @@
         ws.onmessage = function(evt) {
             console.log( "Received Message: " + evt.data);
             handleResult(JSON.parse(evt.data));
-            ws.close();
         };
 
         ws.onclose = function(evt) {
@@ -26,14 +25,11 @@
             if (!data) {
                 return
             }
-            if (data.status === "SUCCESS") {
-                $('.alipay').append('<p>投食成功</p>');
+            if (data.status === "SUCCESS" || data.status === "FAILED") {
+                window.location.href = "/alipay/status";
                 clearInterval(cancel);
-            } else if (data.status === "FAILED") {
-                $('.alipay').append('<p>投食失败</p>');
-                clearInterval(cancel);
-            } else {
-
+            } else if (data.status === "ORDER_CREATED") {
+                $('.toushi-scan-ok').show();
             }
         }
     });

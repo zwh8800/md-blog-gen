@@ -17,14 +17,17 @@
     {{ template "header" . }}
     <div class="alipay">
         <hr>
-        <h2>
+        <h2 class="toushi-header">
             <i class="icon-food"></i>
-            向一只废喵投食
+            使用支付宝扫码，向一只废喵投食
             <i class="icon-food"></i>
         </h2>
         <p class="toushi-qr">
             <img class="qrcode" src="{{ .qrcodeDataUrl }}" alt="二维码">
             <br>订单号：{{ .orderId }}
+        </p>
+        <p class="toushi-scan-ok">
+            已扫码成功
         </p>
     </div>
 

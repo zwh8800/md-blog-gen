@@ -265,8 +265,19 @@ a.no-color {
 	color: #FF91A2;
 }
 
+.toushi-header {
+	text-align: center;
+}
+
 .toushi-qr {
 	text-align: center;
+}
+
+.toushi-scan-ok {
+	text-align: center;
+	color: #fd5670;
+	font-size: 14px;
+	display: none;
 }
 
 .toushi-qr .qrcode {

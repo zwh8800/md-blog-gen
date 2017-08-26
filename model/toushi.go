@@ -35,6 +35,7 @@ type ToushiStatus int
 
 const (
 	ToushiStatusPending ToushiStatus = iota
+	ToushiStatusOrderCreated
 	ToushiStatusSuccess
 	ToushiStatusFailed
 )
@@ -47,11 +48,44 @@ func (t ToushiStatus) String() string {
 	switch t {
 	case ToushiStatusPending:
 		return "PENDING"
+	case ToushiStatusOrderCreated:
+		return "ORDER_CREATED"
 	case ToushiStatusSuccess:
 		return "SUCCESS"
 	case ToushiStatusFailed:
 		return "FAILED"
 	default:
 		return "UNKNOWN"
+	}
+}
+
+func (t ToushiStatus) IsPending() bool {
+	return t == ToushiStatusPending
+}
+
+func (t ToushiStatus) IsOrderCreated() bool {
+	return t == ToushiStatusOrderCreated
+}
+
+func (t ToushiStatus) IsSuccess() bool {
+	return t == ToushiStatusSuccess
+}
+
+func (t ToushiStatus) IsFailed() bool {
+	return t == ToushiStatusFailed
+}
+
+func (t ToushiStatus) IsFinish() bool {
+	switch t {
+	case ToushiStatusPending:
+		fallthrough
+	case ToushiStatusOrderCreated:
+		return false
+	case ToushiStatusSuccess:
+		fallthrough
+	case ToushiStatusFailed:
+		fallthrough
+	default:
+		return true
 	}
 }
