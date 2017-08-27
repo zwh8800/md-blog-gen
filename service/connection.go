@@ -18,11 +18,14 @@ func newSession() *dbr.Session {
 }
 
 func newAlipayClient() *alipay.AliPay {
-	return alipay.New(conf.Conf.Alipay.AppId,
+	client := alipay.New(conf.Conf.Alipay.AppId,
 		conf.Conf.Alipay.PartnerId,
 		[]byte(conf.Conf.Alipay.PublicKey),
 		[]byte(conf.Conf.Alipay.PrivateKey),
 		conf.Conf.Alipay.Prod)
+
+	client.AliPayPublicKey = []byte(conf.Conf.Alipay.PublicKey)
+	return client
 }
 
 func InitDb() (err error) {
