@@ -7,6 +7,10 @@ import (
 	"sync"
 	"time"
 
+	"bytes"
+	"io"
+	"io/ioutil"
+
 	"github.com/golang/glog"
 	"github.com/smartwalle/alipay"
 	"github.com/zwh8800/md-blog-gen/dao"
@@ -172,6 +176,13 @@ func PollAlipay(orderId string) {
 
 func HandleAlipayNotification(req *http.Request) {
 	client := newAlipayClient()
+
+	glog.Infoln("client: ", util.JsonStringify(client, true))
+
+	var buf bytes.Buffer
+	body, err := ioutil.ReadAll(io.TeeReader(req.Body, &buf))
+	glog.Infoln("notification.body: ", body, err)
+
 	notification, err := client.GetTradeNotification(req)
 	if err != nil {
 		glog.Error(err)
