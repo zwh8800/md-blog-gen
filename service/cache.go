@@ -19,24 +19,27 @@ const (
 func AddCache(p, data string) error {
 	key := CacheKey + p
 	switch {
-	case strings.Index(p, util.GetPageBase()) == 0:
+	case p == "/":
+		fallthrough
+	case strings.Index(p, util.GetPageBase()) == 0: // /page
 		if err := redisClient.SAdd(IndexSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(p, util.GetTagBase()) == 0:
+	case strings.Index(p, util.GetTagBase()) == 0: // /tag
 		if err := redisClient.SAdd(TagSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(p, util.GetNoteBase()) == 0:
+	case strings.Index(p, util.GetNoteBase()) == 0: // /note
 		if err := redisClient.SAdd(NoteSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(p, util.GetArchiveBase()) == 0:
+	case strings.Index(p, util.GetArchiveBase()) == 0: // /archive
 		if err := redisClient.SAdd(ArchiveSetKey, key).Err(); err != nil {
 			return err
 		}
-	case strings.Index(p, util.GetSearchBase()) == 0:
-	case strings.Index(p, path.Join("/api", util.GetSearchBase())) == 0:
+	case strings.Index(p, util.GetSearchBase()) == 0: // /search
+		fallthrough
+	case strings.Index(p, path.Join("/api", util.GetSearchBase())) == 0: // /api/search
 		if err := redisClient.SAdd(SearchSetKey, key).Err(); err != nil {
 			return err
 		}
