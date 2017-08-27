@@ -174,14 +174,23 @@ func PollAlipay(orderId string) {
 	}
 }
 
+type buffer struct {
+	bytes.Buffer
+}
+
+func (*buffer) Close() error {
+	return nil
+}
+
 func HandleAlipayNotification(req *http.Request) {
 	client := newAlipayClient()
 
 	glog.Infoln("client: ", util.JsonStringify(client, true))
 
-	var buf bytes.Buffer
+	var buf buffer
 	body, err := ioutil.ReadAll(io.TeeReader(req.Body, &buf))
-	glog.Infoln("notification.body: ", body, err)
+	glog.Infoln("notification.body: ", string(body), err)
+	req.Body = &buf
 
 	notification, err := client.GetTradeNotification(req)
 	if err != nil {

@@ -20,7 +20,7 @@ import (
 func main() {
 	defer glog.Flush()
 	block, rest := pem.Decode([]byte(conf.Conf.Alipay.PublicKey))
-	glog.Infoln("block: ", block, "err: ", rest)
+	glog.Infoln("block: ", block, "rest: ", rest)
 
 	startServer()
 	handleSignal()
