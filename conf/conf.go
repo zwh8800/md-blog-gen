@@ -67,11 +67,12 @@ type config struct {
 		Data []string
 	}
 	Alipay struct {
-		Prod       bool
-		AppId      string
-		PartnerId  string
-		PublicKey  string
-		PrivateKey string
+		Prod            bool
+		AppId           string
+		PartnerId       string
+		PublicKey       string
+		PrivateKey      string
+		AlipayPublicKey string
 	}
 	Crypto struct {
 		AesKey string
