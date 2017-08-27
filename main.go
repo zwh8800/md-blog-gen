@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/pem"
 	"fmt"
 	"os"
 	"os/signal"
@@ -10,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/glog"
+
 	"github.com/zwh8800/md-blog-gen/conf"
 	"github.com/zwh8800/md-blog-gen/controller"
 	"github.com/zwh8800/md-blog-gen/crontab"
@@ -19,9 +19,6 @@ import (
 
 func main() {
 	defer glog.Flush()
-	block, rest := pem.Decode([]byte(conf.Conf.Alipay.PublicKey))
-	glog.Infoln("block: ", block, "rest: ", rest)
-
 	startServer()
 	handleSignal()
 	glog.Infoln("signal received")
