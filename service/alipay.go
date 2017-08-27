@@ -98,7 +98,7 @@ func CreateOrder(input *CreateOrderInput) (*CreateOrderOutput, error) {
 		return nil, err
 	}
 
-	client := newAlipayClient()
+	client := newAlipayClient(false)
 	request := alipay.AliPayTradePreCreate{
 		OutTradeNo:     orderId,
 		Subject:        "向一只废喵投食",
@@ -140,7 +140,7 @@ func PollAlipay(orderId string) {
 	for i := 0; i < 180; i++ {
 		time.Sleep(5 * time.Second)
 
-		client := newAlipayClient()
+		client := newAlipayClient(false)
 		response, err := client.TradeQuery(alipay.AliPayTradeQuery{
 			OutTradeNo: orderId,
 		})
@@ -171,7 +171,7 @@ func PollAlipay(orderId string) {
 }
 
 func HandleAlipayNotification(req *http.Request) {
-	client := newAlipayClient()
+	client := newAlipayClient(true)
 	notification, err := client.GetTradeNotification(req)
 	if err != nil {
 		glog.Error(err)
