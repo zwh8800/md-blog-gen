@@ -17,16 +17,13 @@ func newSession() *dbr.Session {
 	return dbConn.NewSession(nil)
 }
 
-func newAlipayClient(addPublicKey bool) *alipay.AliPay {
+func newAlipayClient() *alipay.AliPay {
 	client := alipay.New(conf.Conf.Alipay.AppId,
 		conf.Conf.Alipay.PartnerId,
 		[]byte(conf.Conf.Alipay.PublicKey),
 		[]byte(conf.Conf.Alipay.PrivateKey),
 		conf.Conf.Alipay.Prod)
-
-	if addPublicKey {
-		client.AliPayPublicKey = []byte(conf.Conf.Alipay.PublicKey)
-	}
+	client.AliPayPublicKey = []byte(conf.Conf.Alipay.AlipayPublicKey)
 	return client
 }
 

@@ -30,6 +30,7 @@ func AlipayDo(c *gin.Context) {
 	if err != nil {
 		glog.Error(err)
 		c.Redirect(http.StatusFound, "/alipay")
+		return
 	}
 
 	output, err := service.CreateOrder(&service.CreateOrderInput{
@@ -37,6 +38,7 @@ func AlipayDo(c *gin.Context) {
 	})
 	if err != nil {
 		glog.Error(err)
+		c.Redirect(http.StatusFound, "/alipay")
 		return
 	}
 
@@ -121,12 +123,15 @@ func AlipayWs(c *gin.Context) {
 func AlipayQuery(c *gin.Context) {
 	cookie, err := c.Cookie("tradeNo")
 	if err != nil {
+		glog.Error(err)
+		c.JSON(http.StatusOK, nil)
 		return
 	}
 
 	orderId, err := util.AesDecrypt(cookie, []byte(conf.Conf.Crypto.AesKey))
 	if err != nil {
 		glog.Error(err)
+		c.JSON(http.StatusOK, nil)
 		return
 	}
 
@@ -148,6 +153,7 @@ func AlipayStatus(c *gin.Context) {
 	c.SetCookie("tradeNo", "", -1, "", util.GetSiteDomain(), false, true)
 	cookie, err := c.Cookie("tradeNo")
 	if err != nil {
+		glog.Error(err)
 		c.Redirect(http.StatusFound, "/alipay")
 		return
 	}

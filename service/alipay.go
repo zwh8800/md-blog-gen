@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 	"sync"
@@ -98,7 +97,7 @@ func CreateOrder(input *CreateOrderInput) (*CreateOrderOutput, error) {
 		return nil, err
 	}
 
-	client := newAlipayClient(false)
+	client := newAlipayClient()
 	request := alipay.AliPayTradePreCreate{
 		OutTradeNo:     orderId,
 		Subject:        "向一只废喵投食",
@@ -112,9 +111,7 @@ func CreateOrder(input *CreateOrderInput) (*CreateOrderOutput, error) {
 	response, err := client.TradePreCreate(request)
 	if err != nil {
 		glog.Error(err)
-		return nil, fmt.Errorf("Code: %s, Msg: %s, SubCode: %s, SubMsg: %s",
-			response.AliPayPreCreateResponse.Code, response.AliPayPreCreateResponse.Msg,
-			response.AliPayPreCreateResponse.SubCode, response.AliPayPreCreateResponse.SubMsg)
+		return nil, err
 	}
 	glog.Infoln("response:", util.JsonStringify(response, true))
 
@@ -140,7 +137,7 @@ func PollAlipay(orderId string) {
 	for i := 0; i < 180; i++ {
 		time.Sleep(5 * time.Second)
 
-		client := newAlipayClient(false)
+		client := newAlipayClient()
 		response, err := client.TradeQuery(alipay.AliPayTradeQuery{
 			OutTradeNo: orderId,
 		})
@@ -171,7 +168,7 @@ func PollAlipay(orderId string) {
 }
 
 func HandleAlipayNotification(req *http.Request) {
-	client := newAlipayClient(true)
+	client := newAlipayClient()
 	notification, err := client.GetTradeNotification(req)
 	if err != nil {
 		glog.Error(err)
