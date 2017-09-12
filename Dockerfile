@@ -1,17 +1,17 @@
-FROM golang:1.8-alpine
+FROM golang:1.9-alpine
 MAINTAINER zwh8800 <496781108@qq.com>
 
 WORKDIR /app
 
 RUN apk update && apk add ca-certificates && apk add git && \
     apk add tzdata && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && go get -v github.com/Masterminds/glide
+    echo "Asia/Shanghai" > /etc/timezone && go get -v -u github.com/golang/dep/cmd/dep 
 
 ADD ./template /app/template
 ADD ./static /app/static
 ADD . $GOPATH/src/github.com/zwh8800/md-blog-gen/
 
-RUN cd $GOPATH/src/github.com/zwh8800/md-blog-gen && glide install && go install
+RUN cd $GOPATH/src/github.com/zwh8800/md-blog-gen && dep ensure && dep prune && go install
 
 VOLUME /app/log
 VOLUME /app/config
