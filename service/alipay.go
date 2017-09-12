@@ -102,6 +102,7 @@ func CreateOrder(input *CreateOrderInput) (*CreateOrderOutput, error) {
 		OutTradeNo:     orderId,
 		Subject:        "向一只废喵投食",
 		StoreId:        "废喵一号店",
+		Body:           "向一只废喵投食 " + model.Cent(input.Price).CurrencyWithoutComma() + " 元",
 		TotalAmount:    model.Cent(input.Price).CurrencyWithoutComma(),
 		TimeoutExpress: "90m",
 		NotifyURL:      "https://lengzzz.com/alipay/notify",
